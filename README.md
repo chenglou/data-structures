@@ -1,4 +1,3 @@
-DataStructures
-==============
+# DataStructures.js
 
-JavaScript data structures
+JavaScript data structures.
