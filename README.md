@@ -1,3 +1,3 @@
-# DataStructures.js
+# Data Structures
 
-JavaScript data structures.
+Written in CoffeeScript.
