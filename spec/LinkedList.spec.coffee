@@ -117,7 +117,6 @@ describe "Get node", ->
 	it "should return the value for a valid node", ->
 		expect(linkedList.get(0).value).toBe("item0")
 		expect(linkedList.get(1).value).toBe("item1")
-		
 
 describe "indexOf", ->
 	linkedList = new LinkedList()
