@@ -6,61 +6,38 @@ LinkedList = ->
 	this.head = undefined
 	this.length = 0
 
-LinkedList.prototype.add = (value, position) ->
+LinkedList.prototype.add = (value, position = this.length) ->
+	if position < 0 or position > this.length then return
 	nodeToAdd = new Node(value)
-	if position is undefined
-		if this.length is 0
-			this.head = nodeToAdd
-		else
-			currentNode = this.head
-			until currentNode.next is undefined
-				currentNode = currentNode.next
-			currentNode.next = nodeToAdd
+	if position is 0
+		# If empty, oldHead is undefined
+		oldHead = this.head
+		this.head = nodeToAdd
+		nodeToAdd.next = oldHead
 	else
-		if position < 0 or position > this.length then return
 		currentNode = this.head
-		# Get to the node before the inserting position.
-		# Explicit increment by 1, since [0...-1] is [0].
-		for i in [0...position - 1] by 1
+		# Get to the node before the insertion position.
+		for i in [0...position - 1]
 			currentNode = currentNode.next
-		if position is 0
-			oldHead = this.head
-			this.head = nodeToAdd
-			nodeToAdd.next = oldHead
-		else
-			oldCurrentNodeNext = currentNode.next
-			currentNode.next = nodeToAdd
-			nodeToAdd.next = oldCurrentNodeNext
+		oldCurrentNodeNext = currentNode.next
+		currentNode.next = nodeToAdd
+		nodeToAdd.next = oldCurrentNodeNext
 	this.length++
 	return nodeToAdd.value
 
-LinkedList.prototype.remove = (position) ->
-	if this.length is 0 then return
-	if position is undefined
-		if this.length is 1
-			nodeToRemove = this.head
-			this.head = undefined
-		else
-			currentNode = this.head
-			# Get to the node before the one to remove
-			until currentNode.next.next is undefined
-				currentNode = currentNode.next
-			nodeToRemove = currentNode.next
-			currentNode.next = nodeToRemove.next
+LinkedList.prototype.remove = (position = this.length - 1) ->
+	if this.length is 0 or position < 0 or position >= this.length then return
+	if this.length is 1 or position is 0
+		nodeToRemove = this.head
+		# In the case of length === 1, this.head.next is undefined
+		this.head = this.head.next
 	else
-		if position < 0 or position >= this.length then return
 		currentNode = this.head
-		if position is 0
-			nodeToRemove = this.head
-			this.head = nodeToRemove.next
-		else
-			# Get to the node before the removing position.
-			# Explicit increment by 1, since [0...-1] is [0].
-			for i in [0...position - 1] by 1
-				currentNode = currentNode.next
-			nodeToRemove = currentNode.next
-			currentNode.next = nodeToRemove.next
-
+		# Get to the node before the removing position.
+		for i in [0...position - 1]
+			currentNode = currentNode.next
+		nodeToRemove = currentNode.next
+		currentNode.next = nodeToRemove.next
 	this.length--
 	return nodeToRemove.value
 
