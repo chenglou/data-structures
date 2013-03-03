@@ -10,18 +10,14 @@ LinkedList.prototype.add = (value, position = this.length) ->
 	if position < 0 or position > this.length then return
 	nodeToAdd = new Node(value)
 	if position is 0
-		# If empty, oldHead is undefined
-		oldHead = this.head
-		this.head = nodeToAdd
-		nodeToAdd.next = oldHead
+		# If list empty, old this.head is undefined
+		[this.head, nodeToAdd.next] = [nodeToAdd, this.head]
 	else
 		currentNode = this.head
 		# Get to the node before the insertion position.
 		for i in [0...position - 1]
 			currentNode = currentNode.next
-		oldCurrentNodeNext = currentNode.next
-		currentNode.next = nodeToAdd
-		nodeToAdd.next = oldCurrentNodeNext
+		[currentNode.next, nodeToAdd.next] = [nodeToAdd, currentNode.next]
 	this.length++
 	return nodeToAdd.value
 
@@ -37,7 +33,7 @@ LinkedList.prototype.remove = (position = this.length - 1) ->
 		for i in [0...position - 1]
 			currentNode = currentNode.next
 		nodeToRemove = currentNode.next
-		currentNode.next = nodeToRemove.next
+		currentNode.next = currentNode.next.next
 	this.length--
 	return nodeToRemove.value
 
