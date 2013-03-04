@@ -5,7 +5,7 @@ describe "Create queue", ->
 	queue = new Queue()
 	it "creates a queue with length 0", ->
 		expect(queue.length).toBe(0)
-	xit "should be empty in the beginning", ->
+	it "should be empty in the beginning", ->
 		expect(queue.peek()).toBeUndefined()
 
 describe "Enqueue, dequeue and peek", ->
@@ -56,17 +56,14 @@ describe "Enqueue, dequeue and peek", ->
 
 describe "ToString", ->
 	queue = new Queue()
-	expect(queue.toString()).toBe("")
-	queue.enqueue(1)
-	queue.enqueue("hi")
-	queue.enqueue([1, 2, 3])
-	queue.enqueue(undefined)
-	queue.enqueue({"name": "Steve"})
-	expect(queue.toString()).toBe("1,hi,1,2,3,,[object Object]")
+	it "should print empty string for empty queue", ->
+		expect(queue.toString()).toBe("")
+	it "should pretty print", ->
+		queue.enqueue(1)
+		queue.enqueue("hi")
+		queue.enqueue([1, 2, 3])
+		queue.enqueue(undefined)
+		queue.enqueue({"name": "Steve"})
+		expect(queue.toString()).toBe("1,hi,1,2,3,,[object Object]")
 
-xdescribe "Private members", ->
-	queue = new Queue()
-	it "shouldn't be accessible", ->
-		expect(queue._length).toBeUndefined()
-		expect(queue._content).toBeUndefined()
-		expect(queue._dequeueIndex).toBeUndefined()
+		

@@ -59,10 +59,10 @@ describe "Add node", ->
 describe "Remove node", ->
 	describe "from the end", ->
 		linkedList = new LinkedList()
-		linkedList.add("item0")
-		linkedList.add("item1")
-		linkedList.add("item2")
 		it "should remove correctly", ->
+			linkedList.add("item0")
+			linkedList.add("item1")
+			linkedList.add("item2")
 			expect(linkedList.remove()).toBe("item2")
 			expect(linkedList.head.value).toBe("item0")
 			expect(linkedList.head.next.value).toBe("item1")
@@ -77,11 +77,11 @@ describe "Remove node", ->
 
 	describe "using offset", ->
 		linkedList = new LinkedList()
-		linkedList.add("item0")
-		linkedList.add("item1")
-		linkedList.add("item2")
-		linkedList.add("item3")
 		it "should remove the right item", ->
+			linkedList.add("item0")
+			linkedList.add("item1")
+			linkedList.add("item2")
+			linkedList.add("item3")
 			expect(linkedList.remove(1)).toBe("item1")
 			expect(linkedList.head.value).toBe("item0")
 			expect(linkedList.head.next.value).toBe("item2")
@@ -97,14 +97,14 @@ describe "Remove node", ->
 			expect(linkedList.remove(0)).toBe("item2")
 			expect(linkedList.head).toBeUndefined()
 		linkedList2 = new LinkedList()
-		linkedList2.add("item0")
-		linkedList2.add("item1")
 		it "should return undefined when the remove is invalid", ->
+			linkedList2.add("i0")
+			linkedList2.add("i1")
 			expect(linkedList2.remove(99)).toBeUndefined()
 			expect(linkedList2.remove(-1)).toBeUndefined()
 		it "should not modify linked list after invalid removes", ->
-			expect(linkedList2.head.value).toBe("item0")
-			expect(linkedList2.head.next.value).toBe("item1")
+			expect(linkedList2.head.value).toBe("i0")
+			expect(linkedList2.head.next.value).toBe("i1")
 			expect(linkedList2.head.next.next).toBeUndefined()
 
 describe "Get node", ->
@@ -120,15 +120,15 @@ describe "Get node", ->
 
 describe "indexOf", ->
 	linkedList = new LinkedList()
-	linkedList.add("hello")
-	linkedList.add(-1)
 	array = [1, 2, 3]
-	linkedList.add([1, 2, 3])
-	linkedList.add(array)
-	linkedList.add(10)
-	linkedList.add(10)
-	linkedList.add("")
 	it "returns -1 if the item isn't found", ->
+		linkedList.add("hello")
+		linkedList.add(-1)
+		linkedList.add([1, 2, 3])
+		linkedList.add(array)
+		linkedList.add(10)
+		linkedList.add(10)
+		linkedList.add("")
 		expect(linkedList.indexOf([1, 2, 3])).toBe(-1)
 		expect(linkedList.indexOf(99)).toBe(-1)
 	it "returns the index of the item found", ->
@@ -160,10 +160,11 @@ describe "Get length", ->
 		linkedList.remove()
 		expect(linkedList.length).toBe(0)
 
-describe "Display as string", ->
+describe "ToString", ->
 	linkedList = new LinkedList()
-	linkedList.add("asd")
-	linkedList.add(1)
-	linkedList.add([4, 5, 6])
-	expect(linkedList.toString()).toBe("[asd,1,4,5,6]")
+	it "should pretty print", ->
+		linkedList.add("asd")
+		linkedList.add(1)
+		linkedList.add([4, 5, 6])
+		expect(linkedList.toString()).toBe("[asd,1,4,5,6]")
 
