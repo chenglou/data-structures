@@ -1,27 +1,27 @@
 Queue = ->
-	@content = []
+	@_content = []
 	@length = 0
-	@dequeueIndex = 0
+	@_dequeueIndex = 0
 
 Queue.prototype.enqueue = (item) ->
 	@length++
-	@content.push(item)
+	@_content.push(item)
 	return item
 
 Queue.prototype.dequeue = ->
 	if @length is 0 then return
 	@length--
-	itemToDequeue = @content[@dequeueIndex]
-	@dequeueIndex++
-	if @dequeueIndex * 2 > @content.length
-		@content = @content.slice(@dequeueIndex)
-		@dequeueIndex = 0
+	itemToDequeue = @_content[@_dequeueIndex]
+	@_dequeueIndex++
+	if @_dequeueIndex * 2 > @_content.length
+		@_content = @_content.slice(@_dequeueIndex)
+		@_dequeueIndex = 0
 	return itemToDequeue
 
 Queue.prototype.peek = ->
-	return @content[@dequeueIndex]
+	return @_content[@_dequeueIndex]
 
 Queue.prototype.toString = ->
-	return @content.toString()
+	return @_content.toString()
 
 module.exports = Queue
