@@ -145,8 +145,8 @@ describe "indexOf", ->
 
 describe "Get length", ->
 	# Initialized value to 0 already tested
+	linkedList = new LinkedList()
 	it "should return the correct value", ->
-		linkedList = new LinkedList()
 		linkedList.add(0)
 		expect(linkedList.length).toBe(1)
 		linkedList.add(0.5, 99)

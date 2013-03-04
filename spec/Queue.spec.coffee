@@ -50,7 +50,7 @@ describe "Enqueue, dequeue and peek", ->
 		expect(queue.dequeue()).toEqual("")
 		expect(queue.peek()).toBeUndefined()
 		expect(queue.length).toBe(0)
-	it "should have the correct length when doing empty dequeue", ->
+	it "should have the correct length when doing empty dequeue on a previously operated queue", ->
 		expect(queue.dequeue()).toBeUndefined()
 		expect(queue.length).toBe(0)
 
