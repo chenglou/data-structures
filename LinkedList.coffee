@@ -33,7 +33,8 @@ LinkedList.prototype.remove = (position = @length - 1) ->
 		for i in [0...position - 1]
 			currentNode = currentNode.next
 		nodeToRemove = currentNode.next
-		currentNode.next = currentNode.next.next
+		currentNode.next = nodeToRemove.next
+		nodeToRemove.next = undefined
 	@length--
 	return nodeToRemove.value
 
