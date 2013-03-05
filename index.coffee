@@ -1,4 +1,5 @@
 module.exports =
-	Linkedlist : require './LinkedList'
-	Queue : require './Queue'
+	Linkedlist: require './LinkedList'
+	Queue: require './Queue'
+	BST: require './BST'
 	
