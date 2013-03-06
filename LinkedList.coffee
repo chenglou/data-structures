@@ -48,17 +48,17 @@ LinkedList.prototype.get = (position) ->
 LinkedList.prototype.indexOf = (value) ->
 	currentNode = @head
 	position = 0
-	while currentNode isnt undefined
+	while currentNode
 		if currentNode.value is value then break
 		currentNode = currentNode.next
 		position++
 	return if position is @length then -1 else position
 
 LinkedList.prototype.toString = ->
-	if @head is undefined then return "[]"
+	if not @head then return "[]"
 	output = "[" + @head.value.toString()
 	currentNode = @head.next
-	while currentNode isnt undefined
+	while currentNode
 		output += "," + currentNode.value.toString()
 		currentNode = currentNode.next
 	output += "]"

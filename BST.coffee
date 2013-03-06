@@ -14,14 +14,14 @@ NODE_TOO_SMALL = 1
 
 BST.prototype.add = (value) ->
 	nodeToInsert = new Node(value)
-	if @root is undefined
+	if not @root
 		@root = nodeToInsert
 	else
 		_findNode @root, (node) ->
 			if value is node.value then NODE_FOUND
 			else
 				if value < node.value
-					if node.leftChild isnt undefined then NODE_TOO_BIG
+					if node.leftChild then NODE_TOO_BIG
 					else
 						nodeToInsert.parent = node
 						node.leftChild = nodeToInsert
@@ -29,7 +29,7 @@ BST.prototype.add = (value) ->
 				# Inserting "undefined" will go to right child. Important to keep
 				# this conditional in sync with find().
 				else
-					if node.rightChild isnt undefined then NODE_TOO_SMALL
+					if node.rightChild then NODE_TOO_SMALL
 					else
 						nodeToInsert.parent = node
 						node.rightChild = nodeToInsert
@@ -52,13 +52,13 @@ BST.prototype.peekMaximum = ->
 
 BST.prototype.remove = (value) ->
 	node = @find(value)
-	if node is undefined then return
+	if not node then return
 	if _removeNode(@root, node) then @root = undefined
 	return value
 
 BST.prototype.removeMinimum = ->
 	nodeToRemove = _peekMinimumNode(@root)
-	if nodeToRemove is undefined then return
+	if not nodeToRemove then return
 	# Store in. Might destroy the node during removal in the future, so can't just return nodeToRemove.value.
 	valueToReturn = nodeToRemove.value
 	if _removeNode(@root, nodeToRemove) then @root = undefined
@@ -66,7 +66,7 @@ BST.prototype.removeMinimum = ->
 
 BST.prototype.removeMaximum = ->
 	nodeToRemove = _peekMaximumNode(@root)
-	if nodeToRemove is undefined then return
+	if not nodeToRemove then return
 	# Store in. Might destroy the node during removal in the future, so can't just return nodeToRemove.value.
 	valueToReturn = nodeToRemove.value
 	if _removeNode(@root, nodeToRemove) then @root = undefined
@@ -75,13 +75,13 @@ BST.prototype.removeMaximum = ->
 _removeNode = (root, node) ->
 	isRoot = no
 	# Leaf.
-	if node.leftChild is undefined and node.rightChild is undefined
+	if not node.leftChild and not node.rightChild
 		if node is root then isRoot = yes
 		else
 			node.parent[_leftOrRightChild(node)] = undefined
 			node.parent = undefined
 	# Internal node with two children.
-	else if node.leftChild isnt undefined and node.rightChild isnt undefined
+	else if node.leftChild and node.rightChild
 		# In-order successor. Left-most child of right subtree.
 		# Or in-order precessor. Right-most child of left subtree.
 		successor = _peekMinimumNode(node.rightChild) or _peekMaximumNode(node.leftChild)
@@ -118,7 +118,7 @@ _leftOrRightChild = (node) ->
 _findNode = (startingNode, comparator) ->
 	currentNode = startingNode
 	foundNode = undefined
-	while currentNode isnt undefined
+	while currentNode
 		comparisonResult = comparator(currentNode)
 		if comparisonResult is NODE_FOUND
 			foundNode = currentNode
@@ -131,11 +131,11 @@ _findNode = (startingNode, comparator) ->
 
 _peekMinimumNode = (startingNode) ->
 	_findNode startingNode, (node) ->
-		if node.leftChild isnt undefined then NODE_TOO_BIG else NODE_FOUND
+		if node.leftChild then NODE_TOO_BIG else NODE_FOUND
 
 _peekMaximumNode = (startingNode) ->
 	_findNode startingNode, (node) ->
-		if node.rightChild isnt undefined then NODE_TOO_SMALL else NODE_FOUND
+		if node.rightChild then NODE_TOO_SMALL else NODE_FOUND
 
 module.exports = BST
 
