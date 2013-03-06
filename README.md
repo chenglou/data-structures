@@ -1,10 +1,10 @@
 # Data Structures
 Written in CoffeeScript.
 # Road Map
+- Graph
+- Node
 - Heap
 - Trie
 - *Mystery!*
-- Graph
-- *Mystery*
 - Red-black tree
 - Hash map
