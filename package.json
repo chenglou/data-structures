@@ -1,0 +1,31 @@
+{
+	"name": "data-structures",
+	"version": "0.0.5",
+	"author": "flsg <chenglou92@gmail.com>",
+	"description": "JavaScript data structures written in CoffeeScript.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/flsg/DataStructures.git"
+	},
+	"main": "./index.coffee",
+	"scripts": {
+		"test": "jasmine-node --coffee spec/"
+	},
+	"keywords": [
+		"data structure",
+		"linked list",
+		"bst",
+		"graph",
+		"queue"
+	],
+	"dependencies": {
+		"coffee-script": "1.6.x"
+	},
+	"devDependencies": {
+		"jasmine-node": "1.3.x"
+	},
+	"engines": {
+		"node": "*"
+	},
+	"license": "MIT"
+}
