@@ -19,7 +19,7 @@ LinkedList.prototype.add = (value, position = @length) ->
 			currentNode = currentNode.next
 		[currentNode.next, nodeToAdd.next] = [nodeToAdd, currentNode.next]
 	@length++
-	return nodeToAdd.value
+	return value
 
 LinkedList.prototype.remove = (position = @length - 1) ->
 	if @length is 0 or position < 0 or position >= @length then return
