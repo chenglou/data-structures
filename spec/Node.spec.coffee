@@ -10,6 +10,6 @@ describe "Change value", ->
 	node = new Node(5)
 	it "should work", ->
 		node.value = 5
-		expect(node.value).toBe(5)
+		expect(node.value).toBe 5
 		node.value = undefined
 		expect(node.value).toBeUndefined()
