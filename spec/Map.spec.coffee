@@ -170,3 +170,27 @@ describe "Delete", ->
 		expect(date1._mapId_3).toBeUndefined()
 		expect(date2._mapId_3).toBeUndefined()
 
+describe "Iterate through items", ->
+	map = new Map()
+	it "should return empty for an empty map", ->
+		map.forEach (key, value) ->
+			expect(key).toBe("this expect shouldn't even execute")
+			expect(value).toBe("this either")
+	it "returns every item", ->
+		map.set(5, "number 6")
+		map.set("5", "string 6")
+		map.set(undefined, [3, 2])
+		map.set(null, {b: 12})
+		map.set(true, "okay")
+		map.set(/asd/, true)
+		map.set((-> "hello"), 10)
+		map.forEach (key, value) ->
+			expect(key).toEqual any String
+			expect(value).toBeDefined()
+
+
+
+
+
+
+
