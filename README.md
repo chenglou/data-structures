@@ -1,10 +1,10 @@
 # Data Structures
 Written in CoffeeScript.
 # Road Map
-- Hash map
-- Graph (use linked list. Weighted?)
-- Node
+- Graph
+- Improve graph (use linked list? Weighted? Directed / non-directed?)
 - Heap
 - Trie
 - *Mystery!*
 - Red-black tree
+- Consider linked list with arrays
