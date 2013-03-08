@@ -1,11 +1,11 @@
 {
 	"name": "data-structures",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"author": "flsg <chenglou92@gmail.com>",
 	"description": "JavaScript data structures written in CoffeeScript.",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/flsg/DataStructures.git"
+		"url": "https://github.com/flsg/data-structures.git"
 	},
 	"main": "./index.coffee",
 	"scripts": {
@@ -16,7 +16,8 @@
 		"linked list",
 		"bst",
 		"graph",
-		"queue"
+		"queue",
+		"map"
 	],
 	"dependencies": {
 		"coffee-script": "1.6.x"
