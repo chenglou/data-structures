@@ -47,6 +47,9 @@ class Map
 			return true
 		return false
 
+	forEach: (func) ->
+		func(key, value) for key, value of @_content
+
 _isSpecialType = (key) ->
 	type = Object.prototype.toString.apply(key)
 	type is '[object Object]' or type is '[object Array]' or type is '[object Date]'
