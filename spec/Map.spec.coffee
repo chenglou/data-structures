@@ -112,7 +112,13 @@ describe "Set and get/has", ->
 		expect(map.get(date2)).toBe "date 2"
 		expect(map.get(new Date())).toBeUndefined()
 		expect(map.has(new Date())).toBeFalsy()
-	
+	map2 = new Map()
+	it "should store a id on the key that's unique to each map", ->
+		expect(map2.get(date1)).toBeUndefined()
+		map2.set(date1, "date 1 on map 2")
+		expect(map.get(date1)).toBe "date 1"
+		expect(map2.get(date1)).toBe "date 1 on map 2"
+
 describe "Delete", ->
 	map = new Map()
 	it "should return false for deleting nonexistent keys", ->
