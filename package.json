@@ -1,11 +1,11 @@
 {
 	"name": "data-structures",
 	"version": "0.0.9",
-	"author": "flsg <chenglou92@gmail.com>",
+	"author": "chenglou <chenglou92@gmail.com>",
 	"description": "JavaScript data structures written in CoffeeScript.",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/flsg/data-structures.git"
+		"url": "https://github.com/chenglou/data-structures.git"
 	},
 	"main": "./index.coffee",
 	"scripts": {
