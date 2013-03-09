@@ -1,6 +1,5 @@
-# TODO: change outEdges, inEdges and vertices to using Map
+# TODO: give option for weighted / non-directed
 Node = require './Node'
-Map = require './Map'
 
 class Vertex extends Node
 	constructor: (value) ->
@@ -12,44 +11,66 @@ class Vertex extends Node
 
 class Graph
 	constructor: ->
-		@vertices = {}
+		@_vertices = {}
 
-# TODO: maybe verify node's not already in the graph.
-Graph.prototype.add = (value) ->
-	nodeToAdd = new Vertex(value)
-	@vertices[value] = nodeToAdd
-	return value
+	# TODO: maybe verify node's not already in the graph.
+	add: (value) ->
+		@_vertices[value] = new Vertex(value)
+		return value
 
-Graph.prototype.remove = (value) ->
-	nodeToRemove = @vertices[value]
-	if nodeToRemove
-		@vertices[value] = nodeToRemove = undefined
-	return value
+	get: (value) ->
+		@_vertices[value]
 
-Graph.prototype.addEdge = (value1, value2) ->
-	node1 = @vertices[value1]
-	node2 = @vertices[value2]
-	if not node1 or not node2 then return
-	node1.outEdges[value2] = node2
-	node2.inEdges[value1] = node1
+	remove: (value) ->
+		if @_vertices[value]
+			vertexToRemove = @_vertices[value]
+			for inValue, inVertex of vertexToRemove.inEdges
+				delete inVertex.outEdges[value]
+			for outValue, outVertex of vertexToRemove.outEdges
+				delete outVertex.inEdges[value]
+			delete @_vertices[value]
+			return true
+		return false
 
-Graph.removeEdge = (value1, value2) ->
-	node1 = @vertices[value1]
-	node2 = @vertices[value2]
-	if not node1 or not node2 then return
-	delete node1.outEdges[value2]
-	delete node2.inEdges[value1]
+	addEdge: (fromValue, toValue) ->
+		fromVertex = @_vertices[fromValue]
+		toVertex = @_vertices[toValue]
+		if not fromVertex or not toVertex then return false
+		fromVertex.outEdges[toValue] = toVertex
+		toVertex.inEdges[fromValue] = fromVertex
+		return true
 
-Graph.prototype.depthFirstTraversal = ->
-	for key, node of @vertices
-		console.log key, node
+	removeEdge: (fromValue, toValue) ->
+		fromVertex = @_vertices[fromValue]
+		toVertex = @_vertices[toValue]
+		if not fromVertex or not toVertex then return false
+		delete fromVertex.outEdges[toValue]
+		delete toVertex.inEdges[fromValue]
+		return true
 
-directedGraph = new Graph()
-directedGraph.add("A")
-directedGraph.add("B")
-directedGraph.add("C")
-directedGraph.addEdge("A", "B")
+	checkForEdge: (fromValue, toValue) ->
+		# Check in both vertices. Inconsistency means bug.
+		fromVertex = @_vertices[fromValue]
+		toVertex = @_vertices[toValue]
+		if not fromVertex or not toVertex then return no
+		return fromVertex.outEdges[toValue] and toVertex.inEdges[fromValue]
 
-# directedGraph.depthFirstTraversal()
+	depthFirstTraversal: (operationOnVertex) ->
+		# Clean up first.
+		randomVertex
+		for value, vertex of @_vertices
+			vertex.visited = no
+			randomVertex = vertex
+		if randomVertex then _traversalPostCleanUp(randomVertex, operationOnVertex)
+
+_traversalPostCleanUp = (vertex, operationOnVertex) ->
+	vertex.visited = yes
+	operationOnVertex(vertex)
+	for outValue, outVertex of vertex.outEdges
+		if not outVertex.visited
+			_traversalPostCleanUp(outVertex, operationOnVertex)
 
 module.exports = Graph
+
+
+
