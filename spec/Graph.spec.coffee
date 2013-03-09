@@ -119,6 +119,14 @@ describe "Remove vertex", ->
 		expect(graph.get("3").inEdges["2"]).toBeUndefined()
 		expect(graph.get("3").outEdges["2"]).toBeUndefined()
 
+describe "forEach traversal", ->
+	graph = new Graph()
+	it "should reach each vertex", ->
+		generateGraph(graph)
+		i = 1
+		graph.forEach (vertex) ->
+			expect(vertex.value).toBe String(i++)
+
 describe "Depth first traversal", ->
 	graph = new Graph()
 	it "should read nothing from an empty graph", ->

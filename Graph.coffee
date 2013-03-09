@@ -55,6 +55,10 @@ class Graph
 		if not fromVertex or not toVertex then return no
 		return fromVertex.outEdges[toValue] and toVertex.inEdges[fromValue]
 
+	forEach: (operationOnVertex) ->
+		for value, vertex of @_vertices
+			operationOnVertex(vertex)
+
 	depthFirstTraversal: (operationOnVertex) ->
 		# Clean up first.
 		randomVertex
