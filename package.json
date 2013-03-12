@@ -9,6 +9,7 @@
 	},
 	"main": "./index.coffee",
 	"scripts": {
+		"preinstall": "npm i -g jasmine-node",
 		"test": "jasmine-node --coffee spec/"
 	},
 	"keywords": [
