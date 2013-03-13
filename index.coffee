@@ -5,4 +5,5 @@ module.exports =
 	Node: require './Node'
 	Graph: require './Graph'
 	Map: require './Map'
+	Heap: require './Heap'
 	
