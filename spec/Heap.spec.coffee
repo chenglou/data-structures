@@ -1,4 +1,3 @@
-jasmine = require 'jasmine-node'
 Heap = require '../Heap'
 
 # Shorthand for logging tree

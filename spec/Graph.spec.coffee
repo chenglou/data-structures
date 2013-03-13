@@ -1,4 +1,3 @@
-jasmine = require 'jasmine-node'
 Graph = require '../Graph'
 
 # Shorthand for logging

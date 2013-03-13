@@ -18,7 +18,8 @@
 		"bst",
 		"graph",
 		"queue",
-		"map"
+		"map",
+		"heap"
 	],
 	"dependencies": {
 		"coffee-script": "1.6.x"

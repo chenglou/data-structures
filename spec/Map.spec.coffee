@@ -1,4 +1,3 @@
-jasmine = require 'jasmine-node'
 Map = require '../Map'
 
 describe "Create hash map", ->

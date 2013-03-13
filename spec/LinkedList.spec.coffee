@@ -1,4 +1,3 @@
-jasmine = require 'jasmine-node'
 LinkedList = require '../LinkedList'
 	
 describe "Create new linked list", ->

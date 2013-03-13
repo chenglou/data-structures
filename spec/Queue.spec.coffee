@@ -1,4 +1,3 @@
-jasmine = require 'jasmine-node'
 Queue = require '../Queue'
 
 describe "Create queue", ->

@@ -1,4 +1,3 @@
-jasmine = require 'jasmine-node'
 BST = require '../BST'
 
 # Shorthand for logging tree

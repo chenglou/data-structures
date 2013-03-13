@@ -1,4 +1,3 @@
-jasmine = require 'jasmine-node'
 Node = require '../Node'
 
 describe "Create node", ->
