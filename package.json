@@ -1,6 +1,6 @@
 {
 	"name": "data-structures",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"author": "chenglou <chenglou92@gmail.com>",
 	"description": "JavaScript data structures written in CoffeeScript.",
 	"repository": {
@@ -9,17 +9,19 @@
 	},
 	"main": "./index.coffee",
 	"scripts": {
-		"preinstall": "npm i -g jasmine-node",
-		"test": "jasmine-node --coffee spec/"
+		"test": "jasmine-node --coffee --noStack spec/"
 	},
 	"keywords": [
 		"data structure",
 		"linked list",
 		"bst",
+		"tree",
 		"graph",
 		"queue",
 		"map",
-		"heap"
+		"heap",
+		"trie",
+		"hash"
 	],
 	"dependencies": {
 		"coffee-script": "1.6.x"
