@@ -30,8 +30,10 @@ describe "Add, peek minimum and remove it", ->
 		output = []
 		removeAllMins(heap, output)
 		expect(output).toEqual [-10, -6, -2, -1, 0, 4, 7, 8, 9, 99, undefined]		
+
+describe "Initialization passing an array", ->
 	heap2 = new Heap([undefined, 4, 6, -8, null, 5, -3, 2, 5, 6, -7])
-	it "should initialize a heap if an array is passed", ->
+	it "should heapify the array", ->
 		output = []
 		removeAllMins(heap2, output)
 		expect(output).toEqual [-8, -7, -3, 2, 4, 5, 5, 6, 6, null, undefined]		
