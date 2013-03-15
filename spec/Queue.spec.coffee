@@ -53,6 +53,19 @@ describe "Enqueue, dequeue and peek", ->
 		expect(queue.dequeue()).toBeUndefined()
 		expect(queue.length).toBe 0
 
+describe "Initialize with an array, first element to deqeue being array[0]", ->
+	queue = new Queue([1, 5, 4, 6, 7, undefined, null, "hi"])
+	it "should fill the queue with the parameter", ->
+		expect(queue.dequeue()).toBe 1
+		expect(queue.dequeue()).toBe 5
+		expect(queue.dequeue()).toBe 4
+		expect(queue.dequeue()).toBe 6
+		expect(queue.dequeue()).toBe 7
+		expect(queue.dequeue()).toBeUndefined()
+		expect(queue.dequeue()).toBeNull()
+		expect(queue.dequeue()).toBe "hi"
+		expect(queue.dequeue()).toBeUndefined()
+
 describe "Two queues", ->
 	queue = new Queue()
 	queue2 = new Queue()

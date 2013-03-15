@@ -1,8 +1,8 @@
 class Queue
-	constructor: ->
-		@_content = []
+	constructor: (initialArray = []) ->
+		@_content = initialArray
 		@_dequeueIndex = 0
-		@length = 0
+		@length = @_content.length
 
 	enqueue: (item) ->
 		@length++
@@ -20,10 +20,8 @@ class Queue
 			@_dequeueIndex = 0
 		return itemToDequeue
 
-	peek: ->
-		return @_content[@_dequeueIndex]
+	peek: -> @_content[@_dequeueIndex]
 
-	toString: ->
-		return @_content.toString()
+	toString: -> @_content.toString()
 
 module.exports = Queue
