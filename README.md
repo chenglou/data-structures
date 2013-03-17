@@ -2,14 +2,15 @@
 Fast, light and hassle-free JavaScript data structures, written in CoffeeScript.
 - Binary Search Tree
 - Graph
-- Linked List
 - Hash Map
+- Heap
+- Linked List
 - Queue
 - Trie
 
 Check out the wiki page for roadmap, changelog, etc.
 ## Installation
-Using [npm](npmjs.org):
+Using [npm](http://npmjs.org):
 ```bash
 npm install data-structures
 ```
