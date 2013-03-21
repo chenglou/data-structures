@@ -24,13 +24,14 @@
 		"hash"
 	],
 	"dependencies": {
-		"coffee-script": "1.6.x"
+		"coffee-script": ">=1.6.0"
 	},
 	"devDependencies": {
-		"jasmine-node": "*"
+		"jasmine-node": ">=1.4.0"
 	},
 	"engines": {
 		"node": "*"
 	},
 	"license": "MIT"
 }
+
