@@ -27,7 +27,8 @@
 		"coffee-script": ">=1.6.0"
 	},
 	"devDependencies": {
-		"jasmine-node": ">=1.4.0"
+		"jasmine-node": ">=1.4.0",
+		"benchmark": ">=1.0.0"
 	},
 	"engines": {
 		"node": "*"
