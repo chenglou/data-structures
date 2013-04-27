@@ -11,7 +11,7 @@ Fast, light and hassle-free JavaScript data structures, written in CoffeeScript.
 
 # [Roadmap](https://github.com/chenglou/data-structures/wiki)
 
-Notice: main branch currently messy. Will be fixed shortly.
+**Notice:** main branch currently messy. Will be fixed shortly.
 
 Changelog coming soon.
 
