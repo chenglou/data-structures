@@ -110,6 +110,12 @@ class BST
 			node.rightChild = successor.rightChild
 			# successor is now detached
 
+			# Alt version:
+			# successor = node.leftChild or node.rightChild
+			# if node is @root then @root = successor
+			# successor.parent = node.parent
+			# node.parent?[_leftOrRightChild node] = successor
+
 _leftOrRightChild = (node) ->
 	# No need to check if parent exist. It's never used this way.
 	if node is node.parent.leftChild then "leftChild" else "rightChild"
