@@ -1,17 +1,15 @@
 # Data Structures
 Fast, light and hassle-free JavaScript data structures, written in CoffeeScript.
 
-- Binary Search Tree
+- Self-Balancing Binary Search Tree (Red-Black Tree)
 - Graph
 - Hash Map
 - Heap
-- Linked List
+- (Doubly) Linked List
 - Queue
 - Trie
 
 # [Roadmap](https://github.com/chenglou/data-structures/wiki)
-
-**Notice:** main branch currently messy. Will be fixed shortly.
 
 Changelog coming soon.
 
@@ -25,6 +23,7 @@ npm install data-structures
 ```coffeescript
 Heap = require('data-structures').Heap
 heap = new Heap()
+heap.add 3
 ```
 
 [Read this tip if you wish to modify the code.](https://www.github.com/chenglou/data-structures/wiki/Literate-CoffeeScript-setup-in-Sublime-Text)
