@@ -133,28 +133,28 @@ describe "Find", ->
 describe "Peek minimum", ->
     rbt = new RedBlackTree()
     it "should return undefined if the tree's empty", ->
-        expect(rbt.peekMinimum()).toBeUndefined()
+        expect(rbt.peekMin()).toBeUndefined()
     rbt2 = new RedBlackTree()
     it "should return the node if there's only one", ->
         rbt2.add 1
-        expect(rbt2.peekMinimum()).toBe 1
+        expect(rbt2.peekMin()).toBe 1
     it "should return the minimum but does not remove it", ->
-        fill(rbt)
-        expect(rbt.peekMinimum()).toBe 1
-        expect(rbt.peekMinimum()).toBe 1
+        fill rbt
+        expect(rbt.peekMin()).toBe 1
+        expect(rbt.peekMin()).toBe 1
 
 describe "Peek maximum", ->
     rbt = new RedBlackTree()
     it "should return undefined if the tree's empty", ->
-        expect(rbt.peekMaximum()).toBeUndefined()
+        expect(rbt.peekMax()).toBeUndefined()
     rbt2 = new RedBlackTree()
     it "should return the node if there's only one", ->
         rbt2.add 1
-        expect(rbt2.peekMinimum()).toBe 1
+        expect(rbt2.peekMin()).toBe 1
     it "should return the maximum but does not remove it", ->
-        fill(rbt)
-        expect(rbt.peekMaximum()).toBe 14
-        expect(rbt.peekMaximum()).toBe 14
+        fill rbt
+        expect(rbt.peekMax()).toBe 14
+        expect(rbt.peekMax()).toBe 14
 
 describe "Remove", ->
     rbt = new RedBlackTree()
@@ -162,7 +162,7 @@ describe "Remove", ->
         expect(rbt.remove "hello").toBeUndefined()
         expect(rbt.remove undefined).toBeUndefined()
     it "should return undefined for deleting a non-existent value", ->
-        fill(rbt)
+        fill rbt
         validate rbt, [8, 3, 13, 1, 6, 10, 14, 4, 7]
         expect(rbt.remove "hello").toBeUndefined()
         expect(rbt.remove undefined).toBeUndefined()
@@ -190,38 +190,38 @@ describe "Remove", ->
 describe "Remove minimum", ->
     rbt = new RedBlackTree()
     it "returns undefined when tree's empty", ->
-        expect(rbt.removeMinimum()).toBeUndefined()
+        expect(rbt.removeMin()).toBeUndefined()
     it "returns the smallest value", ->
-        fill(rbt)
-        expect(rbt.removeMinimum()).toBe 1
-        expect(rbt.removeMinimum()).toBe 3
-        expect(rbt.removeMinimum()).toBe 4
-        expect(rbt.removeMinimum()).toBe 6
-        expect(rbt.removeMinimum()).toBe 7
-        expect(rbt.removeMinimum()).toBe 8
-        expect(rbt.removeMinimum()).toBe 10
-        expect(rbt.removeMinimum()).toBe 13
-        expect(rbt.removeMinimum()).toBe 14
+        fill rbt
+        expect(rbt.removeMin()).toBe 1
+        expect(rbt.removeMin()).toBe 3
+        expect(rbt.removeMin()).toBe 4
+        expect(rbt.removeMin()).toBe 6
+        expect(rbt.removeMin()).toBe 7
+        expect(rbt.removeMin()).toBe 8
+        expect(rbt.removeMin()).toBe 10
+        expect(rbt.removeMin()).toBe 13
+        expect(rbt.removeMin()).toBe 14
     it "should return undefined for a newly emptied tree", ->
-        expect(rbt.removeMinimum()).toBeUndefined()
+        expect(rbt.removeMin()).toBeUndefined()
 
 describe "Remove maximum", ->
     rbt = new RedBlackTree()
     it "returns undefined when tree's empty", ->
-        expect(rbt.removeMinimum()).toBeUndefined()
+        expect(rbt.removeMin()).toBeUndefined()
     it "returns the biggest value", ->
-        fill(rbt)
-        expect(rbt.removeMaximum()).toBe 14
-        expect(rbt.removeMaximum()).toBe 13
-        expect(rbt.removeMaximum()).toBe 10
-        expect(rbt.removeMaximum()).toBe 8
-        expect(rbt.removeMaximum()).toBe 7
-        expect(rbt.removeMaximum()).toBe 6
-        expect(rbt.removeMaximum()).toBe 4
-        expect(rbt.removeMaximum()).toBe 3
-        expect(rbt.removeMaximum()).toBe 1
+        fill rbt
+        expect(rbt.removeMax()).toBe 14
+        expect(rbt.removeMax()).toBe 13
+        expect(rbt.removeMax()).toBe 10
+        expect(rbt.removeMax()).toBe 8
+        expect(rbt.removeMax()).toBe 7
+        expect(rbt.removeMax()).toBe 6
+        expect(rbt.removeMax()).toBe 4
+        expect(rbt.removeMax()).toBe 3
+        expect(rbt.removeMax()).toBe 1
     it "should return undefined for a newly emptied tree", ->
-        expect(rbt.removeMinimum()).toBeUndefined()
+        expect(rbt.removeMin()).toBeUndefined()
 
 describe "Randomized tests", ->
     for i in [0..10]

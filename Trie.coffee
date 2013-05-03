@@ -6,8 +6,7 @@ WORD_END = "end"
 class Trie
     constructor: (words = []) ->
         @_root = {}
-        for word in words
-            @add word
+        @add word for word in words
 
     add: (word) ->
         if not word? then return word

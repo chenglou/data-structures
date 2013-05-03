@@ -114,9 +114,9 @@ class RBT
             else NODE_TOO_SMALL
         if foundNode then yes else no
 
-    peekMinimum: -> _peekMinimumNode(@root)?.value
+    peekMin: -> _peekMinNode(@root)?.value
 
-    peekMaximum: -> _peekMaximumNode(@root)?.value
+    peekMax: -> _peekMaxNode(@root)?.value
 
     remove: (value) ->
         foundNode = _findNode @root, (node) ->
@@ -130,8 +130,8 @@ class RBT
         @_removeNode @root, foundNode
         return value
 
-    removeMinimum: ->
-        nodeToRemove = _peekMinimumNode @root
+    removeMin: ->
+        nodeToRemove = _peekMinNode @root
         if not nodeToRemove then return
         # Store in. Might destroy the node during removal in the future, so
         # can't just return nodeToRemove.value.
@@ -139,8 +139,8 @@ class RBT
         @_removeNode @root, nodeToRemove
         return valueToReturn
 
-    removeMaximum: ->
-        nodeToRemove = _peekMaximumNode @root
+    removeMax: ->
+        nodeToRemove = _peekMaxNode @root
         if not nodeToRemove then return
         # Store in. Might destroy the node during removal in the future, so
         # can't just return nodeToRemove.value.
@@ -164,7 +164,7 @@ class RBT
     ###
     _removeNode: (root, node) ->
         if node.leftChild and node.rightChild
-            successor = _peekMinimumNode node.rightChild
+            successor = _peekMinNode node.rightChild
             node.value = successor.value
             node = successor
         # At this point, the node to remove has only one child.
@@ -292,11 +292,11 @@ _findNode = (startingNode, comparator) ->
             break
     return foundNode
 
-_peekMinimumNode = (startingNode) ->
+_peekMinNode = (startingNode) ->
     _findNode startingNode, (node) ->
         if node.leftChild then NODE_TOO_BIG else NODE_FOUND
 
-_peekMaximumNode = (startingNode) ->
+_peekMaxNode = (startingNode) ->
     _findNode startingNode, (node) ->
         if node.rightChild then NODE_TOO_SMALL else NODE_FOUND
 
