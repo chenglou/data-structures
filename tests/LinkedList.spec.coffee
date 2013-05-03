@@ -50,7 +50,7 @@ describe "Create new linked list", ->
     it "should create a list prepopulated with items of the passed array", ->
         validate linkedList3, 1, 2, 3, 4
 
-describe "Add node", -> 
+describe "Add node", ->
     describe "at the end", ->
         linkedList = new LinkedList()
         it "should return the value added", ->
@@ -67,7 +67,7 @@ describe "Add node", ->
         it "should add items in order", ->
             fill linkedList2
             validate linkedList2, "item0", "item1", 5, 2, 9, 0, 12
-            
+
     describe "using offset", ->
         linkedList = new LinkedList()
         it "should return the value added", ->
@@ -169,8 +169,8 @@ describe "Get node", ->
         expect(linkedList.get(4).value).toBe 12
         expect(linkedList.get(-1).value).toBe 12
 
-describe "indexOf", ->
-    xdescribe "starting at the beginning", ->
+describe "Find index of node", ->
+    describe "starting at the beginning", ->
         linkedList = new LinkedList()
         array = [1, 2, 3]
         it "returns -1 if the item isn't found", ->
@@ -203,20 +203,22 @@ describe "indexOf", ->
             expect(linkedList3.indexOf null).toBe 1
     describe "starting at an arbitrary index", ->
         linkedList = new LinkedList()
-        xit "should return -1 for invalid positive index", ->
+        it "should return -1 for invalid positive index", ->
             expect(linkedList.indexOf 2, 0).toBe -1
             expect(linkedList.indexOf 2, 10).toBe -1
             fill linkedList
             expect(linkedList.indexOf 2, 99).toBe -1
-        xit "should return the correct value for a negative index", ->
+        it "should return the correct value for a negative index", ->
             expect(linkedList.indexOf 2, -99).toBe 1
             expect(linkedList.indexOf 0, -2).toBe 3
             linkedList.add 9
             expect(linkedList.indexOf 9, -3).toBe 5
-        xit "returns -1 if the item isn't found starting at the indicated index", ->
+            expect(linkedList.indexOf 9, -1).toBe 5
+            expect(linkedList.indexOf 9, 0).toBe 2
+        it "returns -1 if the item isn't found starting at the indicated index", ->
             expect(linkedList.indexOf 2, 2).toBe -1
             expect(linkedList.indexOf 5, 1).toBe -1
-        xit "returns the index of the item found", ->
+        it "returns the index of the item found", ->
             expect(linkedList.indexOf 9, 2).toBe 2
             expect(linkedList.indexOf 5, 0).toBe 0
             expect(linkedList.indexOf 12, 4).toBe 4
@@ -228,7 +230,3 @@ describe "indexOf", ->
             expect(linkedList2.indexOf 5, -5).toBe 0
             expect(linkedList2.indexOf 12, -1).toBe 4
             expect(linkedList2.indexOf 0, -3).toBe 3
-
-
-
-
