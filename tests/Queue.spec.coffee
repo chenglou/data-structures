@@ -1,4 +1,4 @@
-Queue = require '../Queue'
+Queue = require '../Queue2'
 
 describe "Create queue", ->
 	queue = new Queue()
@@ -65,24 +65,3 @@ describe "Initialize with an array, first element to deqeue being array[0]", ->
 		expect(queue.dequeue()).toBeNull()
 		expect(queue.dequeue()).toBe "hi"
 		expect(queue.dequeue()).toBeUndefined()
-
-describe "Two queues", ->
-	queue = new Queue()
-	queue2 = new Queue()
-	it "shouldn't enter in conflict", ->
-		queue.enqueue(1)
-		expect(queue2.peek()).toBeUndefined()
-
-describe "ToString", ->
-	queue = new Queue()
-	it "should print empty string for empty queue", ->
-		expect(queue.toString()).toBe ""
-	it "should pretty print", ->
-		queue.enqueue(1)
-		queue.enqueue("hi")
-		queue.enqueue([1, 2, 3])
-		queue.enqueue(undefined)
-		queue.enqueue({"name": "Steve"})
-		expect(queue.toString()).toBe "1,hi,1,2,3,,[object Object]"
-
-		

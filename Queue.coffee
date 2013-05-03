@@ -1,3 +1,11 @@
+###
+Array under the hood. The slow operation is `array.shift()` at O(n). So instead
+of simply removing the head, mark it as "garbage collectable" by moving up the
+dequeue index up (i.e. "dequeue this element next time").
+
+When half of array is garbage collectable, slice these items.
+###
+
 class Queue
 	constructor: (initialArray = []) ->
 		@_content = initialArray
@@ -9,7 +17,6 @@ class Queue
 		@_content.push(item)
 		return item
 
-	# Do not pop. Slice, when half of array is empty.
 	dequeue: ->
 		if @length is 0 then return
 		@length--
@@ -21,7 +28,5 @@ class Queue
 		return itemToDequeue
 
 	peek: -> @_content[@_dequeueIndex]
-
-	toString: -> @_content.toString()
 
 module.exports = Queue

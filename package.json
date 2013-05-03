@@ -15,6 +15,8 @@
 		"data structure",
 		"linked list",
 		"bst",
+		"binary search tree",
+		"red black tree",
 		"tree",
 		"graph",
 		"queue",
@@ -27,8 +29,7 @@
 		"coffee-script": ">=1.6.0"
 	},
 	"devDependencies": {
-		"jasmine-node": ">=1.4.0",
-		"benchmark": ">=1.0.0"
+		"jasmine-node": ">=1.4.0"
 	},
 	"engines": {
 		"node": "*"

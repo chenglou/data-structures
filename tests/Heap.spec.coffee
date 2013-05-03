@@ -1,7 +1,7 @@
 Heap = require '../Heap'
 
-# Shorthand for logging tree
-l = (x) -> console.log require('util').inspect(x, true, 10)
+# Shorthand for logging.
+l = (x) -> console.log require('util').inspect x, true, 10
 
 removeAllMins = (heap, outputContainer) ->
 	for i in [0..10]
@@ -15,25 +15,25 @@ describe "Add, peek minimum and remove it", ->
 		expect(heap.peekMin()).toBeUndefined()
 		expect(heap.removeMin()).toBeUndefined()
 	it "should return the value added, even negative and undefined ones", ->
-		expect(heap.add(-1)).toBe -1
-		expect(heap.add(0)).toBe 0
-		expect(heap.add(-2)).toBe -2
-		heap.add(undefined)
-		heap.add(-10)
-		heap.add(4)
-		heap.add(9)
-		heap.add(99)
-		heap.add(-6)
-		heap.add(8)
-		heap.add(7)
+		expect(heap.add -1).toBe -1
+		expect(heap.add 0).toBe 0
+		expect(heap.add -2).toBe -2
+		heap.add undefined
+		heap.add -10
+		heap.add 4
+		heap.add 9
+		heap.add 99
+		heap.add -6
+		heap.add 8
+		heap.add 7
 	it "should have the correct minimum", ->
 		output = []
-		removeAllMins(heap, output)
-		expect(output).toEqual [-10, -6, -2, -1, 0, 4, 7, 8, 9, 99, undefined]		
+		removeAllMins heap, output
+		expect(output).toEqual [-10, -6, -2, -1, 0, 4, 7, 8, 9, 99, undefined]
 
 describe "Initialization passing an array", ->
 	heap2 = new Heap([undefined, 4, 6, -8, null, 5, -3, 2, 5, 6, -7])
 	it "should heapify the array", ->
 		output = []
-		removeAllMins(heap2, output)
-		expect(output).toEqual [-8, -7, -3, 2, 4, 5, 5, 6, 6, null, undefined]		
+		removeAllMins heap2, output
+		expect(output).toEqual [-8, -7, -3, 2, 4, 5, 5, 6, 6, null, undefined]

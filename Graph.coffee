@@ -1,9 +1,7 @@
 # TODO: give option for weighted / non-directed
-Node = require './Node'
 
-class Vertex extends Node
-	constructor: (value) ->
-		super(value)
+class Vertex
+	constructor: (@value) ->
 		@outEdges = {}
 		@inEdges = {}
 		# For graph traversal

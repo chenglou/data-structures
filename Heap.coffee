@@ -1,22 +1,23 @@
-# Minimum heap.
+# Minimum heap, i.e. smallest node at root.
 class Heap
 	constructor: (dataToHeapify = []) ->
 		@_data = dataToHeapify
-		# Use 1-indexed array. Simpler for calculating parent, leftChild and rightChild.
-		# Unshift null to the first position
+		# Use 1-indexed array. Simpler for calculating parent, leftChild and
+		# rightChild. Item 0 is null.
 		@_data.push @_data[0]
 		@_data[0] = null
 		if @_data.length > 1 then @_upHeap i for i in [2...@_data.length]
 
 	add: (value) ->
-		@_data.push(value)
-		@_upHeap(@_data.length - 1)
+		@_data.push value
+		@_upHeap @_data.length - 1
 		return value
 
 	removeMin: ->
-		min = @_data[1]
 		return undefined if @_data.length is 1
 		return @_data.pop() if @_data.length is 2
+		min = @_data[1]
+		# Replace the removed root with the last item, then trickle it down.
 		@_data[1] = @_data.pop()
 		@_downHeap()
 		return min
@@ -40,7 +41,8 @@ class Heap
 		while _leftChild currentIndex < @_data.length # There's a left child.
 			smallerChild = _leftChild currentIndex
 			if smallerChild < @_data.length - 1 # There's a right child.
-				# Choose right child if it's smaller or if left child is of value undefined/null.
+				# Choose right child if it's smaller or if left child is of
+				# value undefined/null.
 				if @_data[_rightChild currentIndex] < @_data[smallerChild] or not @_data[smallerChild]?
 					smallerChild = _rightChild currentIndex
 			if @_data[smallerChild] < @_data[currentIndex]
@@ -55,4 +57,3 @@ _leftChild = (index) -> index << 1 # Fast multiply by 2.
 _rightChild = (index) -> (index << 1) + 1
 
 module.exports = Heap
-
