@@ -1,12 +1,12 @@
 # Data Structures
 Fast, light and hassle-free JavaScript data structures, written in CoffeeScript.
 
-- Self-Balancing Binary Search Tree (Red-Black Tree)
-- Graph
 - Hash Map
 - Heap
+- Graph
 - (Doubly) Linked List
 - Queue
+- Self-Balancing Binary Search Tree (Red-Black Tree)
 - Trie
 
 # [Roadmap](https://github.com/chenglou/data-structures/wiki)
