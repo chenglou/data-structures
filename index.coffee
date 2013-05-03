@@ -1,9 +1,8 @@
 module.exports =
-	Linkedlist: require './LinkedList'
-	Queue: require './Queue'
-	BST: require './BST'
-	Node: require './Node'
-	Graph: require './Graph'
-	Map: require './Map'
-	Heap: require './Heap'
-	
+    Graph: require './Graph'
+    Heap: require './Heap'
+    Linkedlist: require './LinkedList'
+    Map: require './Map'
+    Queue: require './Queue'
+    RedBlackTree: require './RedBlackTree'
+    Trie: require './Trie'
