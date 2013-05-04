@@ -1,6 +1,3 @@
-# NOTE: doesn't handle duplicate entries. This is by design. File an issue if
-# you think this should be changed.
-
 # TODO: consider if remove and peek should return empty node instead of
 # undefined. Also check if undefined and null work well with rotations.
 
@@ -11,30 +8,43 @@ STOP_SEARCHING = 3
 RED = "RED"
 BLACK = "BLACK"
 
-###
-Property of a red-black tree, taken from Wikipedia:
 
-1. A node is either red or black.
-2. Root is black.
-3. Leaves are all null and considered black.
-4. Both children of a red node are black.
-5. Every path from a node to any of its descendent leaves contains the same
-number of black nodes.
-
-In our implementation, leaves are simply undefined.
 ###
+Credit to Wikipedia's article on [Red-black
+tree](http://en.wikipedia.org/wiki/Red–black_tree)
+
+**Note:** doesn't handle duplicate entries. This is by design.
+###
+
+# Property of a red-black tree, taken from Wikipedia:
+
+# 1. A node is either red or black.
+# 2. Root is black.
+# 3. Leaves are all null and considered black.
+# 4. Both children of a red node are black.
+# 5. Every path from a node to any of its descendent leaves contains the same
+# number of black nodes.
+
+# In our implementation, leaves are simply undefined.
 class RedBlackTree
     constructor: (valuesToAdd = []) ->
+        ###
+        Pass an optional array to be turned into binary tree.
+        ###
         @root
         @add value for value in valuesToAdd
 
     add: (value) ->
+        ###
+        Again, make sure to not pass a value already in the tree.
+
+        _Returns:_ value added.
+        ###
         nodeToInsert =
             value: value
             color: RED
 
-        if not @root
-            @root = nodeToInsert
+        if not @root then @root = nodeToInsert
         else
             foundNode = _findNode @root, (node) ->
                 if value is node.value then NODE_FOUND
@@ -105,6 +115,9 @@ class RedBlackTree
         return value
 
     has: (value) ->
+        ###
+        _Returns:_ true or false.
+        ###
         foundNode = _findNode @root, (node) ->
             if value is node.value then NODE_FOUND
             # Keep the conditional this way; node.value > value wouldn't work.
@@ -114,11 +127,26 @@ class RedBlackTree
             else NODE_TOO_SMALL
         if foundNode then yes else no
 
-    peekMin: -> _peekMinNode(@root)?.value
+    peekMin: ->
+        ###
+        Check the minimum value without removing it.
 
-    peekMax: -> _peekMaxNode(@root)?.value
+        _Returns:_ the minimum value.
+        ###
+        _peekMinNode(@root)?.value
+
+    peekMax: ->
+        ###
+        Check the maximum value without removing it.
+
+        _Returns:_ the maximum value.
+        ###
+        _peekMaxNode(@root)?.value
 
     remove: (value) ->
+        ###
+        _Returns:_ the value removed, or undefined if the value's not found.
+        ###
         foundNode = _findNode @root, (node) ->
             if value is node.value then NODE_FOUND
             # Keep the conditional this way; node.value > value wouldn't work.
@@ -131,6 +159,9 @@ class RedBlackTree
         return value
 
     removeMin: ->
+        ###
+        _Returns:_ smallest item removed, or undefined if tree's empty.
+        ###
         nodeToRemove = _peekMinNode @root
         if not nodeToRemove then return
         # Store in. Might destroy the node during removal in the future, so
@@ -140,6 +171,9 @@ class RedBlackTree
         return valueToReturn
 
     removeMax: ->
+        ###
+        _Returns:_ biggest item removed, or undefined if tree's empty.
+        ###
         nodeToRemove = _peekMaxNode @root
         if not nodeToRemove then return
         # Store in. Might destroy the node during removal in the future, so
@@ -148,20 +182,19 @@ class RedBlackTree
         @_removeNode @root, nodeToRemove
         return valueToReturn
 
-    ###
-    To simplify removal cases, we can notice this:
 
-    1. Node has no child.
+    # To simplify removal cases, we can notice this:
 
-    2. Node has two children. Select the smallest child on the right branch
-    (leftmost) and copy its value into the node to delete. This replacement node
-    certainly has less than two children or it wouldn't be the smallest. Then
-    delete this replacement node.
+    # 1. Node has no child.
 
-    3. Node has one child.
+    # 2. Node has two children. Select the smallest child on the right branch
+    # (leftmost) and copy its value into the node to delete. This replacement
+    # node certainly has less than two children or it wouldn't be the smallest.
+    # Then delete this replacement node.
 
-    They all come down to removing a node with maximum one child.
-    ###
+    # 3. Node has one child.
+
+    # They all come down to removing a node with maximum one child.
     _removeNode: (root, node) ->
         if node.leftChild and node.rightChild
             successor = _peekMinNode node.rightChild

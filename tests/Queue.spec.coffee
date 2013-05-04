@@ -1,4 +1,4 @@
-Queue = require '../Queue2'
+Queue = require '../Queue'
 
 describe "Create queue", ->
     queue = new Queue()

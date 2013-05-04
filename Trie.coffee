@@ -5,11 +5,20 @@ Queue = require './Queue'
 WORD_END = "end"
 class Trie
     constructor: (words = []) ->
+        ###
+        Pass an optional array of strings to be made into the trie.
+        ###
         @_root = {}
         @add word for word in words
 
     add: (word) ->
-        if not word? then return word
+        ###
+        Add a whole string to the trie.
+
+        _Returns:_ the word added. Will return undefined (without adding the
+        value) if the word passed is null or undefined.
+        ###
+        if not word? then return undefined
         currentNode = @_root
         for letter in word
             if not currentNode[letter]? then currentNode[letter] = {}
@@ -21,6 +30,9 @@ class Trie
         return word
 
     hasWord: (word) ->
+        ###
+        __Returns:_ true or false.
+        ###
         if not word? then return no
         currentNode = @_root
         for letter in word
@@ -31,6 +43,19 @@ class Trie
         else no
 
     longestPrefixOf: (word) ->
+        ###
+        Find all words containing the prefix. The word itself counts as a
+        prefix.
+        ```coffee
+        trie = new Trie()
+        trie.add("hello")
+        trie.longestPrefixOf("he") # "he"
+        trie.longestPrefixOf("hello") # "hello"
+        trie.longestPrefixOf("helloha!") # "hello"
+        ```
+
+        _Returns:_ the prefix string, or empty string if no prefix found.
+        ###
         if not word? then return ""
         currentNode = @_root
         prefix = ""
@@ -41,6 +66,25 @@ class Trie
         return prefix
 
     wordsWithPrefix: (prefix) ->
+        ###
+        Find all words containing the prefix. The word itself counts as a
+        prefix. **Watch out for edge cases.**
+        ```coffee
+        trie = new Trie()
+        trie.wordsWithPrefix("") # []. Check later case below.
+        trie.add("")
+        trie.wordsWithPrefix("") # [""]
+        trie.add "he"
+        trie.add "hello"
+        trie.add "hell"
+        trie.add "bear"
+        trie.add "z"
+        trie.add "zebra"
+        trie.wordsWithPrefix("hel") # ["hell", "hello"]
+
+        _Returns:_ an array of strings, or empty array if no word found.
+        ```
+        ###
         if not prefix? then return []
         # Cannot put default value to parameter. It'll transform undefined and null into "".
         prefix? or prefix = ""
@@ -55,7 +99,6 @@ class Trie
         queue.enqueue [currentNode, ""]
         while queue.length isnt 0
             [node, accumulatedLetters] = queue.dequeue()
-            # console.log "yo", node
             if node[WORD_END]
                 words.push prefix + accumulatedLetters
             for letter, subNode of node
