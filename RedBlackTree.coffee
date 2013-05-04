@@ -23,7 +23,7 @@ number of black nodes.
 
 In our implementation, leaves are simply undefined.
 ###
-class RBT
+class RedBlackTree
     constructor: (valuesToAdd = []) ->
         @root
         @add value for value in valuesToAdd
@@ -313,5 +313,5 @@ _siblingOf = (node) ->
     if _isLeftChild node then node.parent.rightChild
     else node.parent.leftChild
 
-module.exports = RBT
+module.exports = RedBlackTree
 
