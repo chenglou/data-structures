@@ -36,7 +36,7 @@ describe "Add word and check for it", ->
         expect(trie.hasWord null).toBeFalsy()
         expect(trie.hasWord()).toBeFalsy()
         expect(trie.hasWord undefined).toBeFalsy()
-        expect(trie.add null).toBeNull()
+        expect(trie.add null).toBeUndefined()
         expect(trie.add()).toBeUndefined()
         expect(trie.add undefined).toBeUndefined()
         expect(trie.hasWord null).toBeFalsy()
@@ -108,3 +108,6 @@ describe "Find all words matching a prefix", ->
     it "should return the same array, plus the empty string, if it was added", ->
         trie.add ""
         expect(trie.wordsWithPrefix "").toEqual ["", "z", "he", "za", "zz", "hell", "bear", "beer", "hello"]
+    it "should include the word itself", ->
+        expect(trie.wordsWithPrefix "hell").toEqual ["hell", "hello"]
+

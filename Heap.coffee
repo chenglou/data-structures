@@ -1,6 +1,14 @@
-# Minimum heap, i.e. smallest node at root.
+###
+Minimum heap, i.e. smallest node at root.
+
+**Note:** does not accept null or undefined. This is by design. Those values
+cause comparison problems and might report false negative during extraction.
+###
 class Heap
     constructor: (dataToHeapify = []) ->
+        ###
+        Pass an optional array to be heapified.
+        ###
         @_data = dataToHeapify
         # Use 1-indexed array. Simpler for calculating parent, leftChild and
         # rightChild. Item 0 is null.
@@ -9,11 +17,20 @@ class Heap
         if @_data.length > 1 then @_upHeap i for i in [2...@_data.length]
 
     add: (value) ->
+        ###
+        **Remember:** rejects null and undefined for mentioned reasons.
+
+        _Returns:_ the value added.
+        ###
+        if not value? then return undefined
         @_data.push value
         @_upHeap @_data.length - 1
         return value
 
     removeMin: ->
+        ###
+        __Returns:_ the smallest item (the root).
+        ###
         return undefined if @_data.length is 1
         return @_data.pop() if @_data.length is 2
         min = @_data[1]
@@ -22,7 +39,13 @@ class Heap
         @_downHeap()
         return min
 
-    peekMin: -> @_data[1]
+    peekMin: ->
+        ###
+        Check the smallest item without removing it.
+
+        _Returns:_ the smallest item (the root).
+        ###
+        @_data[1]
 
     _upHeap: (index) ->
         valueHolder = @_data[index];

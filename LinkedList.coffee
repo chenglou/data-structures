@@ -1,23 +1,12 @@
 ###
-The initial idea was to use a `Node` class to store prev/next/node value.
-But this requires additional space and is kind of heavy.
-
-An array "node" consisting of `[prevReference, value, nextReference]` would be
-fast and light, but would degrade the readability. Wrapper methods like
-`next(arrayAsNode)` or `nextOf(arrayAsNode)` don't work well in chaining for the
-public api. Adding prototype methods to Array as to enable `arrayAsNode.next()`
-is dirty and comes back to the alternative of using objects.
-
-The best option is to use {prev, value, next} object.
-
-Then there's the question of whether using accesor methods or properties, i.e.
-`list.head().next().value()` vs. `list.head.next.value`. The former
-pyschologically prevents the direct modification of `next` which breaks the
-traversal and is implementaion-independent. The latter is lighter and feels more
-chainable. We'll use the latter for now.
+Doubly Linked.
 ###
 class LinkedList
     constructor: (valuesToAdd = []) ->
+        ###
+        Can pass an array of elements to link together during `new LinkedList()`
+        initiation.
+        ###
         @head =
             prev: undefined
             value: undefined
@@ -32,18 +21,21 @@ class LinkedList
         @_length = 0
         @add value for value in valuesToAdd
 
-    ###
-    There will be a point where we need to retrieve a node at a certain
-    position. It'll double as a helper method and a public one. Position allows
-    negative index for python style quick access to last items. Position smaller
-    than -length or bigger than length is discarded, as they're more likely done
-    by mistakes.
-    ###
-    _adjust: (position) ->
-        if position < 0 then @_length + position
-        else position
-
     get: (position) ->
+        ###
+        Get the item at `position`. Accepts negative index:
+        ```coffee
+        myList.get(-1) # Returns the last element.
+        ```
+        However, passing a negative index that surpasses the boundary will
+        return undefined:
+        ```coffee
+        myList = new LinkedList([2, 6, 8, 3])
+        myList.get(-5) # Undefined.
+        myList.get(-4) # 2.
+        ```
+        _Returns:_ item gotten, or undefined if not found.
+        ###
         if not (-@_length <= position < @_length) then return
 
         position = @_adjust position
@@ -62,10 +54,16 @@ class LinkedList
     # such as pop and shift. We choose the former. Wrapper methods are a
     # possibility.
     add: (value, position = @_length) ->
+        ###
+        Add a new item at `position`. Defaults to adding at the end. `position`,
+        just like in `get()`, can be negative (within the negative boundary).
+        Position specifies the place the value's going to be, and the old node
+        will be pushed higher. `add(-2)` on list of length 7 is the same as
+        `add(5)`.
+
+        _Returns:_ item added.
+        ###
         if not (-@_length <= position <= @_length) then return
-        # Position specifies the place the value's going to be, and the old node
-        # will be pushed higher. `add(-2)` on length of 7 is the same as
-        # `add(5)`.
         nodeToAdd = {value: value}
         position = @_adjust position
         if @_length is 0
@@ -89,8 +87,14 @@ class LinkedList
         @_length++
         return value
 
-    # Remove requires different position limits than add.
     remove: (position = @_length - 1) ->
+        ###
+        Remove an item at index `position`. Defaults to the last item. Index can
+        be negative (within the boundary).
+
+        _Returns:_ item removed.
+        ###
+        # Remove requires different position limits than add.
         if not (-@_length <= position < @_length) then return
         if @_length is 0 then return
 
@@ -114,11 +118,24 @@ class LinkedList
         @_length--
         return valueToReturn
 
-    # The indexOf method only traverse forwardly. We need to be careful about
-    # finding undefined and null values. The starting position accepts nagetive
-    # indexing. A negative index whose absolute value is smaller than the length
-    # is treated as 0.
+    # We need to be careful about finding undefined and null values. The
+    # starting position accepts negative indexing.
     indexOf: (value, startingPosition = 0) ->
+        ###
+        Find the index of an item, similarly to `array.indexOf()`. Defaults to
+        start searching from the beginning, by can start at another position by
+        passing `startingPosition`. This parameter can also be negative; but
+        unlike the other methods of this class, `startingPosition` can be as
+        small as desired; a value of -999 for a list of length 5 will start
+        searching normally, at the beginning.
+
+        **Note:** searches forwardly, **not** backwardly, i.e:
+        ```coffee
+        myList = new LinkedList([2, 3, 1, 4, 3, 5])
+        myList.indexOf(3, -3) # Returns 4, not 1
+        ```
+        _Returns:_ index of item found, or -1 if not found.
+        ###
         if (not @head.value? and not @head.next) or startingPosition >= @_length
             return -1
         startingPosition = Math.max(0, @_adjust startingPosition)
@@ -129,5 +146,12 @@ class LinkedList
             currentNode = currentNode.next
             position++
         return if position is @_length then -1 else position
+
+    # Position allows negative index for python style quick access to last
+    # items. Position smaller than -length or bigger than length is discarded,
+    # as they're more likely done by mistakes.
+    _adjust: (position) ->
+        if position < 0 then @_length + position
+        else position
 
 module.exports = LinkedList
