@@ -73,6 +73,3 @@ _traversalPostCleanUp = (vertex, operationOnVertex) ->
             _traversalPostCleanUp(outVertex, operationOnVertex)
 
 module.exports = Graph
-
-
-

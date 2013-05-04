@@ -23,14 +23,13 @@ class Map
         # Obscure hack to add a secret property to the object, used as key for
         # hash map. Reason for doing so on array: [obj1, obj2] would have the
         # same hash as [obj3, obj4].
-        if _isSpecialType(key)
+        if _isSpecialType key
             propertyForMap = SPECIAL_TYPE_KEY_PREFIX + @_id
             if makeHash and not key[propertyForMap]
                 key[propertyForMap] = @_itemId++
             # Format: '_hashMapId'
             return propertyForMap + '_' + key[propertyForMap]
-        else
-            return type + '_' + key
+        else return type + '_' + key
 
     set: (key, value) -> @_content[@hash key, yes] = value
     get: (key) -> @_content[@hash key]
@@ -44,8 +43,7 @@ class Map
             return true
         return false
 
-    forEach: (operation) ->
-        operation(key, value) for key, value of @_content
+    forEach: (operation) -> operation(key, value) for key, value of @_content
 
 _isSpecialType = (key) ->
     type = Object.prototype.toString.apply key
