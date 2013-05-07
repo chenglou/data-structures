@@ -20,14 +20,16 @@ npm install data-structures
 ```
 
 ## Usage
-```coffeescript
+```coffee
 Heap = require('data-structures').Heap
 heap = new Heap()
-heap.add 3
+heap.add(3)
 ```
 
-[Read this tip if you wish to modify the code.](https://www.github.com/chenglou/data-structures/wiki/Literate-CoffeeScript-setup-in-Sublime-Text)
-Running the code directly from .litcoffee files require CoffeeScript 1.5+. JavaScript version and browser support coming soon.
+JavaScript version and browser support coming soon.
+
+## Documentation
+Coming soon!
 
 ## License
 MIT.
