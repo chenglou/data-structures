@@ -8,13 +8,11 @@ SPECIAL_TYPE_KEY_PREFIX = '_mapId_'
 Kind of a stopgap measure for the upcoming [JavaScript
 Map](http://wiki.ecmascript.org/doku.php?id=harmony:simple_maps_and_sets)
 
-**Note:** some map behaviors cannot be reproduced due to JavaScript's
-limitations. For example, although it is possible to use anything as key (even
-Objects, Arrays, Dates, undefined, null, custom classes, etc.), a hack is
-involved to make it possible: a hidden unique ID is inserted into the key as a
-property, and is checked during the retrieval of the key's value. This implies
-that for these datatypes, `get()` and `set()` must be using the exact same key,
-and not just a seemingly identical copy (a deep clone works, though).
+**Note:** due to JavaScript's limitations, hashing something other than Boolean,
+Number, String, Undefined, Null, RegExp, Function requires a hack that inserts a
+hidden unique property into the object. This means `set`, `get`, `has` and
+`delete` must employ the same object, and not a mere identical copy as in the
+case of, say, a string.
 ###
 class Map
     # Class variable and method.
@@ -38,8 +36,8 @@ class Map
 
         _Returns:_ the hash.
         ###
-        # [object stringToKeep].
-        type = Object.prototype.toString.apply(key).match(/\[object (.+)\]/)[1]
+        # [object typeExtracted].
+        type = _extractDataType key
         # Obscure hack to add a secret property to the object, used as key for
         # hash map. Reason for doing so on array: [obj1, obj2] would have the
         # same hash as [obj3, obj4].
@@ -91,7 +89,13 @@ class Map
         operation(key, value) for key, value of @_content
 
 _isSpecialType = (key) ->
-    type = Object.prototype.toString.apply key
-    type is '[object Object]' or type is '[object Array]' or type is '[object Date]'
+    simpleHashableTypes = ["Boolean", "Number", "String", "Undefined", "Null", "RegExp", "Function"]
+    type = _extractDataType key
+    for simpleType in simpleHashableTypes
+        if type is simpleType then return no
+    return yes
+
+_extractDataType = (type) ->
+    Object.prototype.toString.apply(type).match(/\[object (.+)\]/)[1]
 
 module.exports = Map

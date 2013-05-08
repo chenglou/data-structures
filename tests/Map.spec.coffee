@@ -8,7 +8,7 @@ describe "Create hash map", ->
 # Usually, the hash function should be hidden. But we allow the possibility of user-defined hash function.
 describe "Hash function", ->
     map = new Map()
-    it "should generate a unique hash for non-object/arrays/dates", ->
+    it "should generate a unique hash for simple hashable types", ->
         expect(map.hash 5, yes).toBe 'Number_5'
         expect(map.hash "5", yes).toBe 'String_5'
         expect(map.hash undefined, yes).toBe 'Undefined_undefined'
