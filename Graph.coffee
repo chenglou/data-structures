@@ -1,30 +1,7 @@
-# class Node
-#     constructor: (@_id) ->
-#         ###
-
-#         The value of the node should be unique, as it'll be used for node
-#         retrieval.
-
-#         **Note:** value should not contain the string "|". It's used to hash
-#         edges.
-#         ###
-#         @outEdges = {}
-#         @inEdges = []
-
-# class Edge
-#     constructor: (@fromNode, @toNode, @weight = 1) ->
-#         ###
-#         Edge weight is optional and defaults to 1. Not using it doesn't cause
-#         side effects to the graph; it effectively becomes an unweighted graph.
-#         ###
 ###
-Currently unweighted and directed. Will have more options in the future.
+Graph implemented as a modified incidence list. O(1) for every typical
+operation, even `removeNode()` (O(1) amortized)!
 ###
-# Map is used rather than regular object, because the node id might use string
-# then number and we need to hash that to two different values.
-
-# Implemented as an indidence list.
-Map = require './Map'
 class Graph
     constructor: (isDirected = yes) ->
         ###
@@ -38,10 +15,8 @@ class Graph
         after it's added. It will be used for adding, retrieving and deleting
         related edges too.
 
-        The id can be of any type, as it will be hashed into a key using this
-        library's Map implementation. However, due to JavaScript's current
-        limitations, please use strings and ints, and avoid using different `id`
-        datatypes within the same graph (it works though).
+        Note that JavaScript's object hashes the id `"2"` and `2` to the same
+        key, so please stick with one single id data type for a same graph.
 
         _Returns:_ the node object. Feel free to attach additional custom
         properties on it for graph algorithms' needs. **Undefined if node id
