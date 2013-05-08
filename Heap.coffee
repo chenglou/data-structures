@@ -29,7 +29,7 @@ class Heap
 
     removeMin: ->
         ###
-        __Returns:_ the smallest item (the root).
+        _Returns:_ the smallest item (the root).
         ###
         return undefined if @_data.length is 1
         return @_data.pop() if @_data.length is 2
