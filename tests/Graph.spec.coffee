@@ -336,29 +336,26 @@ describe "Get all edges", ->
         expect(graph2.getAllEdgesOf "6").toContain graph2.getEdge "6", "6"
 
 
-# xdescribe "forEach traversal", ->
-#     graph = new Graph()
-#     it "should reach each node", ->
-#         addNodesTo graph
-#         i = 1
-#         graph.forEach (node) ->
-#             expect(node.value).toBe String(i++)
+describe "Traverse through each node", ->
+    graph = new Graph()
+    it "should reach each node once", ->
+        addNodesTo graph
+        i = 0
+        graph.forEachNode (node) ->
+            node.randomId = ++i
+        expect(i).toBe 6
+        i = 0
+        graph.forEachNode (node) ->
+            expect(node.randomId).toBe ++i
 
-# xdescribe "Depth first traversal", ->
-#     graph = new Graph()
-#     it "should read nothing from an empty graph", ->
-#         result = ''
-#         graph.depthFirstTraversal (node) ->
-#             result += node.value
-#         expect(result).toEqual ''
-#     it "should produce the good result", ->
-#         addNodesTo graph
-#         result = ''
-#         graph.depthFirstTraversal (node) ->
-#             result += node.value
-#         expect(result).toBe '6'
-#         generateEdges graph
-#         result = ''
-#         graph.depthFirstTraversal (node) ->
-#             result += node.value
-#         expect(result).toBe '63214'
+describe "Traverse through each edge", ->
+    graph = new Graph()
+    it "should reach each edge once", ->
+        addNodesTo graph, yes
+        i = 0
+        graph.forEachEdge (edge) ->
+            edge.randomId = ++i
+        expect(i).toBe 8
+        i = 0
+        graph.forEachEdge (edge) ->
+            expect(edge.randomId).toBe ++i

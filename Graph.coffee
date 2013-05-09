@@ -24,7 +24,7 @@ class Graph
         ###
         # Keep the question mark. Id might be empty string or 0 (bad practice
         # through).
-        if not @getNode id
+        if not @_nodes[id]
             @_nodes[id] =
                 _id: id
                 # outEdges is a collection of (toId, edge) pair, where the toId
@@ -75,8 +75,8 @@ class Graph
         # it checks for edge inconsistency left behind from removeNode() and
         # clean them up. After this point, we can safely add a new edge.
         if @getEdge(fromId, toId) then return
-        fromNode = @getNode fromId
-        toNode = @getNode toId
+        fromNode = @_nodes[fromId]
+        toNode = @_nodes[toId]
         if not fromNode or not toNode then return
         edgeToAdd =
             _fromId: fromId
@@ -90,8 +90,8 @@ class Graph
         _Returns:_ the edge object, or undefined if the nodes of id `fromId` or
         `toId` aren't found.
         ###
-        fromNode = @getNode fromId
-        toNode = @getNode toId
+        fromNode = @_nodes[fromId]
+        toNode = @_nodes[toId]
         # Amortization part. Clean the leftover from removeNode().
         if not fromNode and not toNode then return
         else if not fromNode
@@ -117,8 +117,8 @@ class Graph
         ###
         _Returns:_ the edge object removed, or undefined of edge wasn't found.
         ###
-        fromNode = @getNode fromId
-        toNode = @getNode toId
+        fromNode = @_nodes[fromId]
+        toNode = @_nodes[toId]
         edgeToDelete = @getEdge fromId, toId
         if not edgeToDelete then return
         delete fromNode._outEdges[toId]
@@ -130,7 +130,7 @@ class Graph
         _Returns:_ an array of edge objects that are directed toward the node,
         or empty array if none exists.
         ###
-        toNode = @getNode nodeId
+        toNode = @_nodes[nodeId]
         if not toNode then return []
         inEdges = []
         for fromId of toNode._inEdges
@@ -143,7 +143,7 @@ class Graph
         _Returns:_ an array of edge objects that go out of the node, or empty
         array if none exists.
         ###
-        fromNode = @getNode nodeId
+        fromNode = @_nodes[nodeId]
         if not fromNode then return []
         outEdges = []
         for toId of fromNode._outEdges
@@ -174,24 +174,21 @@ class Graph
                     break
         return inEdges.concat outEdges
 
-    # forEach: (operationOnNode) ->
-    #     for value, node of @_nodes
-    #         operationOnNode(node)
+    forEachNode: (operation) ->
+        ###
+        Traverse through the graph in an arbitrary manner, visiting each node
+        once. Pass a function of the form `fn(nodeObject)`.
+        ###
+        for nodeId, nodeObject of @_nodes
+            operation nodeObject
 
-    # depthFirstTraversal: (operationOnNode) ->
-    #     # Clean up first.
-    #     randomNode
-    #     for value, node of @_nodes
-    #         node.visited = no
-    #         randomNode = node
-    #     if randomNode then _traversalPostCleanUp(randomNode, operationOnNode)
-
-# _traversalPostCleanUp = (node, operationOnNode) ->
-#     node.visited = yes
-#     operationOnNode(node)
-#     for outValue, outNode of node._outEdges
-#         if not outNode.visited
-#             _traversalPostCleanUp(outNode, operationOnNode)
-
+    forEachEdge: (operation) ->
+        ###
+        Traverse through the graph in an arbitrary manner, visiting each edge
+        once. Pass a function of the form `fn(edgeObject)`.
+        ###
+        for nodeId, nodeObject of @_nodes
+            for toId, edgeObject of nodeObject._outEdges
+                operation edgeObject
 
 module.exports = Graph

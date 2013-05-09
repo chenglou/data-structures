@@ -84,7 +84,7 @@ class Map
 
     forEach: (operation) ->
         ###
-        Traverse through the map. Pass a function of the form fn(key, value).
+        Traverse through the map. Pass a function of the form `fn(key, value)`.
         ###
         operation(key, value) for key, value of @_content
 
