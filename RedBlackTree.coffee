@@ -63,7 +63,7 @@ class RedBlackTree
                             nodeToInsert.parent = node
                             node.rightChild = nodeToInsert
                             STOP_SEARCHING
-            if foundNode? then return undefined
+            if foundNode? then return
         # After adding the node, we need to operate on it to preserve the tree's
         # properties by filtering it through a series of cases. It'd be easier
         # if there's tail recursion in JavaScript, as some cases fix the node
@@ -336,7 +336,7 @@ _peekMaxNode = (startingNode) ->
 _grandParentOf = (node) -> node.parent?.parent
 
 _uncleOf = (node) ->
-    if not _grandParentOf node then return undefined
+    if not _grandParentOf node then return
     if _isLeftChild node.parent
         _grandParentOf(node).rightChild
     else

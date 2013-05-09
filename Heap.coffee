@@ -21,7 +21,7 @@ class Heap
 
         _Returns:_ the value added.
         ###
-        if not value? then return undefined
+        if not value? then return
         @_data.push value
         @_upHeap @_data.length - 1
         return value
@@ -30,8 +30,8 @@ class Heap
         ###
         _Returns:_ the smallest item (the root).
         ###
-        return undefined if @_data.length is 1
-        return @_data.pop() if @_data.length is 2
+        if @_data.length is 1 then return
+        if @_data.length is 2 then return @_data.pop()
         min = @_data[1]
         # Replace the removed root with the last item, then trickle it down.
         @_data[1] = @_data.pop()
