@@ -6,8 +6,19 @@ WORD_END = "end"
 class Trie
     constructor: (words = []) ->
         ###
-        Pass an optional array of strings to be made into the trie.
+        Pass an optional array of strings to be inserted initially.
         ###
+        # Example structure for "he", "hello", "za"
+        # h:
+        #     e:
+        #         end: true,
+        #         l:
+        #             l:
+        #                 o:
+        #                     end: true,
+        # z:
+        #     a:
+        #         end: true
         @_root = {}
         @add word for word in words
 
@@ -18,7 +29,7 @@ class Trie
         _Returns:_ the word added. Will return undefined (without adding the
         value) if the word passed is null or undefined.
         ###
-        if not word? then return undefined
+        if not word? then return
         currentNode = @_root
         for letter in word
             if not currentNode[letter]? then currentNode[letter] = {}
@@ -29,7 +40,7 @@ class Trie
         currentNode[WORD_END] = yes
         return word
 
-    hasWord: (word) ->
+    has: (word) ->
         ###
         __Returns:_ true or false.
         ###
@@ -104,5 +115,38 @@ class Trie
             for letter, subNode of node
                 queue.enqueue [subNode, accumulatedLetters + letter]
         return words
+
+    remove: (word) ->
+        ###
+        _Returns:_ the string removed, or undefined if the word in its whole
+        doesn't exist. **Note:** this means removing `beers` when only `beer`
+        exists will return undefined and conserve `beer`.
+        ###
+        if not word? then return
+        currentNode = @_root
+        prefix = []
+        for letter in word
+            if not currentNode[letter]? then return
+            currentNode = currentNode[letter]
+            prefix.push [letter, currentNode]
+        # Check for null terminator
+        if not currentNode[WORD_END] then return
+        # Traverse back upward to delete nodes. Last node in prefix is the
+        # before-last letter right now.
+        delete currentNode[WORD_END]
+        if _hasAtLeastNChildren currentNode, 1 then return word
+        for i in [prefix.length - 1..1]
+            if not _hasAtLeastNChildren prefix[i][1], 1
+                # previousNode[currentLetter]
+                delete prefix[i - 1][1][prefix[i][0]]
+            else break
+        return word
+
+_hasAtLeastNChildren = (node, n) ->
+    childCount = 0
+    for child of node
+        childCount++
+        return yes if childCount >= n
+    return no
 
 module.exports = Trie

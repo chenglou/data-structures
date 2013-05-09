@@ -6,6 +6,8 @@ l = (x) -> console.log require('util').inspect x, true, 10
 fill = (trie) ->
     trie.add "he"
     trie.add "hello"
+    trie.add "ello"
+    trie.add "bell"
     trie.add "hell"
     trie.add "bear"
     trie.add "beer"
@@ -18,58 +20,58 @@ fill = (trie) ->
 describe "Add word and check for it", ->
     trie = new Trie()
     it "should return nothing when the trie's empty", ->
-        expect(trie.hasWord "").toBeFalsy()
-        expect(trie.hasWord "beer").toBeFalsy()
-        expect(trie.hasWord()).toBeFalsy()
+        expect(trie.has "").toBeFalsy()
+        expect(trie.has "beer").toBeFalsy()
+        expect(trie.has()).toBeFalsy()
     it "should return the word added", ->
         expect(trie.add "he").toBe "he"
         expect(trie.add "hello").toBe "hello"
         expect(trie.add "hell").toBe "hell"
         expect(trie.add "beer").toBe "beer"
     it "should find the words just added, and nothing but", ->
-        expect(trie.hasWord "hello").toBeTruthy()
-        expect(trie.hasWord "hell").toBeTruthy()
-        expect(trie.hasWord "he").toBeTruthy()
-        expect(trie.hasWord "beer").toBeTruthy()
-        expect(trie.hasWord "bee").toBeFalsy()
+        expect(trie.has "hello").toBeTruthy()
+        expect(trie.has "hell").toBeTruthy()
+        expect(trie.has "he").toBeTruthy()
+        expect(trie.has "beer").toBeTruthy()
+        expect(trie.has "bee").toBeFalsy()
     it "should ignore adding null and undefined", ->
-        expect(trie.hasWord null).toBeFalsy()
-        expect(trie.hasWord()).toBeFalsy()
-        expect(trie.hasWord undefined).toBeFalsy()
+        expect(trie.has null).toBeFalsy()
+        expect(trie.has()).toBeFalsy()
+        expect(trie.has undefined).toBeFalsy()
         expect(trie.add null).toBeUndefined()
         expect(trie.add()).toBeUndefined()
         expect(trie.add undefined).toBeUndefined()
-        expect(trie.hasWord null).toBeFalsy()
-        expect(trie.hasWord()).toBeFalsy()
-        expect(trie.hasWord undefined).toBeFalsy()
+        expect(trie.has null).toBeFalsy()
+        expect(trie.has()).toBeFalsy()
+        expect(trie.has undefined).toBeFalsy()
     it "should add an empty string as a valid word", ->
-        expect(trie.hasWord "").toBeFalsy()
+        expect(trie.has "").toBeFalsy()
         expect(trie.add "").toBe ""
-        expect(trie.hasWord null).toBeFalsy()
-        expect(trie.hasWord()).toBeFalsy()
-        expect(trie.hasWord undefined).toBeFalsy()
-        expect(trie.hasWord "").toBeTruthy()
+        expect(trie.has null).toBeFalsy()
+        expect(trie.has()).toBeFalsy()
+        expect(trie.has undefined).toBeFalsy()
+        expect(trie.has "").toBeTruthy()
     it "should not add the same word more than once", ->
         # Not sure how to test this.
         fill trie
-        expect(trie.hasWord "").toBeTruthy()
-        expect(trie.hasWord "he").toBeTruthy()
-        expect(trie.hasWord "hello").toBeTruthy()
-        expect(trie.hasWord "hell").toBeTruthy()
-        expect(trie.hasWord "beer").toBeTruthy()
-        expect(trie.hasWord "bear").toBeTruthy()
-        expect(trie.hasWord "z").toBeTruthy()
-        expect(trie.hasWord "za").toBeTruthy()
-        expect(trie.hasWord "zz").toBeTruthy()
+        expect(trie.has "").toBeTruthy()
+        expect(trie.has "he").toBeTruthy()
+        expect(trie.has "hello").toBeTruthy()
+        expect(trie.has "hell").toBeTruthy()
+        expect(trie.has "beer").toBeTruthy()
+        expect(trie.has "bear").toBeTruthy()
+        expect(trie.has "z").toBeTruthy()
+        expect(trie.has "za").toBeTruthy()
+        expect(trie.has "zz").toBeTruthy()
 
 describe "Initialization with an array", ->
     trie = new Trie ["hello", "he", "hell", "beer", null, "apple", undefined]
     it "should have formed the trie correctly", ->
-        expect(trie.hasWord "hello").toBeTruthy()
-        expect(trie.hasWord "hell").toBeTruthy()
-        expect(trie.hasWord "he").toBeTruthy()
-        expect(trie.hasWord "beer").toBeTruthy()
-        expect(trie.hasWord "apple").toBeTruthy()
+        expect(trie.has "hello").toBeTruthy()
+        expect(trie.has "hell").toBeTruthy()
+        expect(trie.has "he").toBeTruthy()
+        expect(trie.has "beer").toBeTruthy()
+        expect(trie.has "apple").toBeTruthy()
 
 describe "Find the longest prefix of a word", ->
     trie = new Trie()
@@ -103,11 +105,57 @@ describe "Find all words matching a prefix", ->
         fill trie
         expect(trie.wordsWithPrefix undefined).toEqual []
         expect(trie.wordsWithPrefix null).toEqual []
-        expect(trie.wordsWithPrefix "").toEqual ["z", "he", "za", "zz", "hell", "bear", "beer", "hello"]
+        expect(trie.wordsWithPrefix "").toEqual ["z", "he", "za", "zz", "hell", "ello", "bell", "bear", "beer", "hello"]
         expect(trie.wordsWithPrefix()).toEqual []
     it "should return the same array, plus the empty string, if it was added", ->
         trie.add ""
-        expect(trie.wordsWithPrefix "").toEqual ["", "z", "he", "za", "zz", "hell", "bear", "beer", "hello"]
+        expect(trie.wordsWithPrefix "").toEqual ["", "z", "he", "za", "zz", "hell", "ello", "bell", "bear", "beer", "hello"]
     it "should include the word itself", ->
         expect(trie.wordsWithPrefix "hell").toEqual ["hell", "hello"]
 
+describe "Remove a word", ->
+    trie = new Trie()
+    it "should return undefined if trie's empty", ->
+        expect(trie.remove "hello").toBeUndefined()
+        expect(trie.remove null).toBeUndefined()
+        expect(trie.remove undefined).toBeUndefined()
+        expect(trie.remove "h").toBeUndefined()
+        expect(trie.remove "").toBeUndefined()
+    it "should return undefined if some of the letters of the word aren't there", ->
+        fill trie
+        expect(trie.remove "hel").toBeUndefined()
+        expect(trie.remove "b").toBeUndefined()
+        expect(trie.remove "zzz").toBeUndefined()
+        expect(trie.remove undefined).toBeUndefined()
+        expect(trie.remove null).toBeUndefined()
+    it "should return the word removed", ->
+        expect(trie.remove "he").toBe "he"
+        expect(trie.has "he").toBeFalsy()
+        expect(trie.remove "zz").toBe "zz"
+        expect(trie.has "zz").toBeFalsy()
+    it "should not have removed letters if other words are using them", ->
+        expect(trie.has "hello").toBeTruthy()
+        expect(trie.has "hell").toBeTruthy()
+        expect(trie.has "ello").toBeTruthy()
+        expect(trie.has "bell").toBeTruthy()
+        expect(trie.has "bear").toBeTruthy()
+        expect(trie.has "beer").toBeTruthy()
+        expect(trie.has "z").toBeTruthy()
+        expect(trie.has "za").toBeTruthy()
+    it "should remove the letters if no word is using them anymore", ->
+        trie.remove "hello"
+        expect(trie.has "hell").toBeTruthy()
+        trie.remove "hell"
+        expect(trie.wordsWithPrefix "h").toEqual []
+    it "should affect other branches", ->
+        expect(trie.has "ello").toBeTruthy()
+        expect(trie.has "bell").toBeTruthy()
+    it "should conserve empty string if it exists", ->
+        trie.add ""
+        trie.remove "z"
+        expect(trie.has "").toBeTruthy()
+        trie.remove "za"
+        expect(trie.has "").toBeTruthy()
+    it "should remove empty string if it was a word", ->
+        expect(trie.remove "").toBe ""
+        expect(trie.has "").toBeFalsy()
