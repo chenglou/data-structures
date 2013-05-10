@@ -2,26 +2,27 @@
 Doubly Linked.
 ###
 class LinkedList
+    ###
+    Properties
+    - head
+    - tail
+    - length
+    - item.value
+
+    Traverse through the nodes with `prev` and `next`. Get the value using
+    `value`.
+    ```coffee
+    list = new LinkedList()
+    list.add 1
+    list.add 4
+    list.add 7
+    list.head.next.value # 4.
+        ```
+    ###
     constructor: (valuesToAdd = []) ->
         ###
         Can pass an array of elements to link together during `new LinkedList()`
         initiation.
-
-        ##\# Properties
-        - head
-        - tail
-        - length
-        - item.value
-
-        Traverse through the nodes with `prev` and `next`. Get the value using
-        `value`.
-        ```coffee
-        list = new LinkedList()
-        list.add 1
-        list.add 4
-        list.add 7
-        list.head.next.value # 4.
-        ```
         ###
         @head =
             prev: undefined

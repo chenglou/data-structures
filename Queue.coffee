@@ -5,13 +5,14 @@
 # When half of array is garbage collectable, slice these items.
 
 class Queue
+    ###
+    Properties
+    - length
+    ###
     constructor: (initialArray = []) ->
         ###
         Pass an optional array to be transformed into a queue. The item at index
         0 is the first to be dequeued.
-
-        ##\# Properties
-        - length
         ###
         @_content = initialArray
         @_dequeueIndex = 0

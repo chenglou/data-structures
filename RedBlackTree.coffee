@@ -30,6 +30,10 @@ design.
 
 # In our implementation, leaves are simply undefined.
 class RedBlackTree
+    ###
+    Properties:
+    - length
+    ###
     constructor: (valuesToAdd = []) ->
         ###
         Pass an optional array to be turned into binary tree. **Note:** does not
