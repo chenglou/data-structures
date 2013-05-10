@@ -36,17 +36,20 @@ validate = (rbt, treeStructure) ->
 
 describe "Creation", ->
     rbt = new RedBlackTree()
-    it "should make an empty root", ->
-        expect(rbt._root).toBeUndefined()
+    it "should be empty at the beginning", ->
+        expect(rbt.isEmpty()).toBeTruthy()
     rbt2 = new RedBlackTree([8, 3, 10, 1, 6])
     it "should initialize a tree with the array passed", ->
         validate rbt2, [8, 3, 10, 1, 6]
 
 describe "Add", ->
     rbt = new RedBlackTree()
+    it "should reject undefined and null", ->
+        expect(rbt.add undefined).toBeUndefined()
+        expect(rbt.add null).toBeUndefined()
+        expect(rbt.isEmpty()).toBeTruthy()
     it "should return the node value", ->
         expect(rbt.add 1).toBe 1
-        expect(rbt.add undefined).toBeUndefined()
         expect(rbt.add "item").toBe "item"
     rbt2 = new RedBlackTree()
     it "should add the first node as the root", ->
@@ -58,19 +61,19 @@ describe "Add", ->
     it "should add a node as left child of root", ->
         rbt2.add 3
         expect(rbt2._root._left.value).toBe 3
-        expect(rbt2._root._left.parent.value).toBe 8
+        expect(rbt2._root._left._parent.value).toBe 8
     it "should add a node as right child of root", ->
         rbt2.add 10
         expect(rbt2._root._right.value).toBe 10
-        expect(rbt2._root._right.parent.value).toBe 8
+        expect(rbt2._root._right._parent.value).toBe 8
     it "should add 6 as 3's right child", ->
         rbt2.add 6
         expect(rbt2._root._left._right.value).toBe 6
-        expect(rbt2._root._left._right.parent.value).toBe 3
+        expect(rbt2._root._left._right._parent.value).toBe 3
     it "should add 14 as 10's right child", ->
         rbt2.add 14
         expect(rbt2._root._right._right.value).toBe 14
-        expect(rbt2._root._right._right.parent.value).toBe 10
+        expect(rbt2._root._right._right._parent.value).toBe 10
     it "should add 4 as 8's left child and rearrange 3 to be 4's left child and 6 to be 4's right child", ->
         rbt2.add 4
         expect(rbt2._root._left.value).toBe 4
@@ -84,11 +87,11 @@ describe "Add", ->
     it "should add 7 as 6's right child", ->
         rbt2.add 7
         expect(rbt2._root._left._right._right.value).toBe 7
-        expect(rbt2._root._left._right._right.parent.value).toBe 6
+        expect(rbt2._root._left._right._right._parent.value).toBe 6
     it "should add 1 as 3's left child", ->
         rbt2.add 1
         expect(rbt2._root._left._left._left.value).toBe 1
-        expect(rbt2._root._left._left._left.parent.value).toBe 3
+        expect(rbt2._root._left._left._left._parent.value).toBe 3
     it "shouldn't accept duplicates and return undefined", ->
         rbt2.add 1
         rbt2.add 7
@@ -126,9 +129,6 @@ describe "Find", ->
         expect(rbt.has 4).toBeTruthy()
         rbt.add 10
         expect(rbt.has 10).toBeTruthy()
-    it "should has undefined if it's a node", ->
-        rbt.add undefined
-        expect(rbt.has undefined).toBeTruthy()
 
 describe "Peek minimum", ->
     rbt = new RedBlackTree()
@@ -167,11 +167,6 @@ describe "Remove", ->
         expect(rbt.remove "hello").toBeUndefined()
         expect(rbt.remove undefined).toBeUndefined()
         expect(rbt.remove -1).toBeUndefined()
-    it "should remove undefined if it's found", ->
-        rbt.add undefined
-        # has() already checks that undefined is inserted correctly.
-        rbt.remove undefined
-        expect(rbt.has undefined).toBeFalsy()
     it "should return the removed value", ->
         expect(rbt.remove 8).toBe 8
         expect(rbt.remove 3).toBe 3
@@ -179,13 +174,13 @@ describe "Remove", ->
         expect(rbt.remove 1).toBe 1
     it "should have removed correctly", ->
         validate rbt, [13, 4, 14, 6, 7]
-    it "should have an undefined root after removing everything", ->
+    it "should be empty after removing everything", ->
         rbt.remove 14
         rbt.remove 6
         rbt.remove 4
         rbt.remove 7
         rbt.remove 13
-        expect(rbt._root).toBeUndefined()
+        expect(rbt.isEmpty()).toBeTruthy()
 
 describe "Remove minimum", ->
     rbt = new RedBlackTree()
@@ -234,6 +229,7 @@ describe "Randomized tests", ->
         for item in items
             expect(rbt.remove item).toBe item
             expect(rbt.has item).toBeFalsy()
+            # Might have some random undefined value internally.
             expect(rbt.has undefined).toBeFalsy()
         expect(rbt._root).toBeUndefined()
 

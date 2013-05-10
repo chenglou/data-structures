@@ -5,15 +5,18 @@ NODE_FOUND = 0
 NODE_TOO_BIG = 1
 NODE_TOO_SMALL = 2
 STOP_SEARCHING = 3
-RED = "RED"
-BLACK = "BLACK"
-
+# For debugging.
+# RED = "RED"
+# BLACK = "BLACK"
+RED = 1
+BLACK = 2
 
 ###
 Credit to Wikipedia's article on [Red-black
 tree](http://en.wikipedia.org/wiki/Red–black_tree)
 
-**Note:** doesn't handle duplicate entries. This is by design.
+**Note:** doesn't handle duplicate entries, undefined and null. This is by
+design.
 ###
 
 # Property of a red-black tree, taken from Wikipedia:
@@ -29,17 +32,20 @@ tree](http://en.wikipedia.org/wiki/Red–black_tree)
 class RedBlackTree
     constructor: (valuesToAdd = []) ->
         ###
-        Pass an optional array to be turned into binary tree.
+        Pass an optional array to be turned into binary tree. **Note:** does not
+        accept duplicate, undefined and null.
         ###
         @_root
-        @add value for value in valuesToAdd
+        @add value for value in valuesToAdd when value?
 
     add: (value) ->
         ###
-        Again, make sure to not pass a value already in the tree.
+        Again, make sure to not pass a value already in the tree, or undefined,
+        or null.
 
         _Returns:_ value added.
         ###
+        if not value? then return
         nodeToInsert =
             value: value
             _color: RED
@@ -52,7 +58,7 @@ class RedBlackTree
                     if value < node.value
                         if node._left then NODE_TOO_BIG
                         else
-                            nodeToInsert.parent = node
+                            nodeToInsert._parent = node
                             node._left = nodeToInsert
                             STOP_SEARCHING
                     # Inserting "undefined" will go to right child. Important to
@@ -60,7 +66,7 @@ class RedBlackTree
                     else
                         if node._right then NODE_TOO_SMALL
                         else
-                            nodeToInsert.parent = node
+                            nodeToInsert._parent = node
                             node._right = nodeToInsert
                             STOP_SEARCHING
             if foundNode? then return
@@ -77,7 +83,7 @@ class RedBlackTree
                 break
             # Case 2: parent black. No properties violated. After that, parent
             # is sure to be red.
-            if currentNode.parent._color is BLACK
+            if currentNode._parent._color is BLACK
                 break
             # Case 3: if node's parent and uncle are red, they are painted
             # black. Their parent (node's grandparent) should be painted red,
@@ -87,7 +93,7 @@ class RedBlackTree
 
             # After the painting, the grandparent might violate 2 or 4.
             if _uncleOf(currentNode)?._color is RED
-                currentNode.parent._color = BLACK
+                currentNode._parent._color = BLACK
                 _uncleOf(currentNode)._color = BLACK
                 _grandParentOf(currentNode)._color = RED
                 currentNode = _grandParentOf currentNode
@@ -97,15 +103,15 @@ class RedBlackTree
             # Case 4: parent red, uncle black, node is right child, parent is
             # left child. Do a left rotation. Then, former parent passes through
             # case 5.
-            if not _isLeftChild(currentNode) and _isLeftChild(currentNode.parent)
-                @_rotateLeft currentNode.parent
+            if not _isLeftChild(currentNode) and _isLeftChild(currentNode._parent)
+                @_rotateLeft currentNode._parent
                 currentNode = currentNode._left
-            else if _isLeftChild(currentNode) and not _isLeftChild(currentNode.parent)
-                @_rotateRight currentNode.parent
+            else if _isLeftChild(currentNode) and not _isLeftChild(currentNode._parent)
+                @_rotateRight currentNode._parent
                 currentNode = currentNode._right
             # Case 5: parent red, uncle black, node is left child, parent is
             # left child. Right rotation. Switch parent and grandparent's color.
-            currentNode.parent._color = BLACK
+            currentNode._parent._color = BLACK
             _grandParentOf(currentNode)._color = RED
             if _isLeftChild currentNode
                 @_rotateRight _grandParentOf currentNode
@@ -186,7 +192,7 @@ class RedBlackTree
         ###
         _Returns:_ true or false.
         ###
-        not @_root
+        not @_root?
 
     # To simplify removal cases, we can notice this:
 
@@ -215,49 +221,49 @@ class RedBlackTree
                 _left: undefined
                 isLeaf: yes
 
-        successor.parent = node.parent
-        node.parent?[_leftOrRightChild node] = successor
+        successor._parent = node._parent
+        node._parent?[_leftOrRightChild node] = successor
         # We're done if node's red. If it's black and its child that took its
         # place is red, change it to black. If both are black, we do cases
         # checking like in insert.
         if node._color is BLACK
             if successor._color is RED
                 successor._color = BLACK
-                if not successor.parent then @_root = successor
+                if not successor._parent then @_root = successor
             else
                 loop
                     # Case 1: node is root. Done.
-                    if not successor.parent
+                    if not successor._parent
                         if not successor.isLeaf then @_root = successor
                         else @_root = undefined
                         break
                     # Case 2: sibling red. Flip color of P and S. Left rotate P.
                     sibling = _siblingOf successor
                     if sibling?._color is RED
-                        successor.parent._color = RED
+                        successor._parent._color = RED
                         sibling._color = BLACK
                         if _isLeftChild successor
-                            @_rotateLeft successor.parent
-                        else @_rotateRight successor.parent
+                            @_rotateLeft successor._parent
+                        else @_rotateRight successor._parent
                     # Case 3: parent, sibling and sibling children all black.
                     # Paint sibling red. Rebalance parent.
                     sibling = _siblingOf successor
-                    if successor.parent._color is BLACK and
+                    if successor._parent._color is BLACK and
                         (not sibling or (sibling._color is BLACK and
                         (not sibling._left or sibling._left._color is BLACK) and
                         (not sibling._right or sibling._right._color is BLACK)))
                             sibling?._color = RED
-                            if successor.isLeaf then successor.parent[_leftOrRightChild successor] = undefined
-                            successor = successor.parent
+                            if successor.isLeaf then successor._parent[_leftOrRightChild successor] = undefined
+                            successor = successor._parent
                             continue
                     # Case 4: sibling and sibling children black. Node parent
                     # red. Swap color of sibling and node parent.
-                    if successor.parent._color is RED and
+                    if successor._parent._color is RED and
                     (not sibling or (sibling._color is BLACK and
                     (not sibling._left or sibling._left?._color is BLACK) and
                     (not sibling._right or sibling._right?._color is BLACK)))
                         sibling?._color = RED
-                        successor.parent._color = BLACK
+                        successor._parent._color = BLACK
                         break
                     # Case 5: sibling black, sibling left child red, right child
                     # black, node is left child. Rotate right sibling. Swap
@@ -280,36 +286,36 @@ class RedBlackTree
                     # left child. Rotate left node parent. Swap color of parent
                     # and sibling. Paint sibling right child black.
                     sibling = _siblingOf successor
-                    sibling._color = successor.parent._color
+                    sibling._color = successor._parent._color
                     if _isLeftChild successor
                         sibling._right._color = BLACK
-                        @_rotateRight successor.parent
+                        @_rotateRight successor._parent
                     else
                         sibling._left._color = BLACK
-                        @_rotateLeft successor.parent
+                        @_rotateLeft successor._parent
         # Don't forget to detatch the artificially created leaf.
         if successor.isLeaf
-            successor.parent?[_leftOrRightChild successor] = undefined
+            successor._parent?[_leftOrRightChild successor] = undefined
 
     _rotateLeft: (node) ->
-        node.parent?[_leftOrRightChild node] = node._right
-        node._right.parent = node.parent
-        node.parent = node._right
+        node._parent?[_leftOrRightChild node] = node._right
+        node._right._parent = node._parent
+        node._parent = node._right
         node._right = node._right._left
-        node.parent._left = node
-        node._right?.parent = node
-        if not node.parent.parent? then @_root = node.parent
+        node._parent._left = node
+        node._right?._parent = node
+        if not node._parent._parent? then @_root = node._parent
 
     _rotateRight: (node) ->
-        node.parent?[_leftOrRightChild node] = node._left
-        node._left.parent = node.parent
-        node.parent = node._left
+        node._parent?[_leftOrRightChild node] = node._left
+        node._left._parent = node._parent
+        node._parent = node._left
         node._left = node._left._right
-        node.parent._right = node
-        node._left?.parent = node
-        if not node.parent.parent? then @_root = node.parent
+        node._parent._right = node
+        node._left?._parent = node
+        if not node._parent._parent? then @_root = node._parent
 
-_isLeftChild = (node) -> node is node.parent._left
+_isLeftChild = (node) -> node is node._parent._left
 _leftOrRightChild = (node) ->
     # No need to check if parent exist. It's never used this way.
     if _isLeftChild node then "_left" else "_right"
@@ -338,18 +344,18 @@ _peekMaxNode = (startingNode) ->
     _findNode startingNode, (node) ->
         if node._right then NODE_TOO_SMALL else NODE_FOUND
 
-_grandParentOf = (node) -> node.parent?.parent
+_grandParentOf = (node) -> node._parent?._parent
 
 _uncleOf = (node) ->
     if not _grandParentOf node then return
-    if _isLeftChild node.parent
+    if _isLeftChild node._parent
         _grandParentOf(node)._right
     else
         _grandParentOf(node)._left
 
 _siblingOf = (node) ->
-    if _isLeftChild node then node.parent._right
-    else node.parent._left
+    if _isLeftChild node then node._parent._right
+    else node._parent._left
 
 module.exports = RedBlackTree
 
