@@ -40,7 +40,7 @@ class LinkedList
 
     get: (position) ->
         ###
-        Get the item at `position`. Accepts negative index:
+        Get the item at `position` (optional). Accepts negative index:
         ```coffee
         myList.get(-1) # Returns the last element.
         ```
@@ -72,11 +72,11 @@ class LinkedList
     # possibility.
     add: (value, position = @length) ->
         ###
-        Add a new item at `position`. Defaults to adding at the end. `position`,
-        just like in `get()`, can be negative (within the negative boundary).
-        Position specifies the place the value's going to be, and the old node
-        will be pushed higher. `add(-2)` on list of length 7 is the same as
-        `add(5)`.
+        Add a new item at `position` (optional). Defaults to adding at the end.
+        `position`, just like in `get()`, can be negative (within the negative
+        boundary). Position specifies the place the value's going to be, and the
+        old node will be pushed higher. `add(-2)` on list of length 7 is the
+        same as `add(5)`.
 
         _Returns:_ item added.
         ###
@@ -92,12 +92,8 @@ class LinkedList
                 # Get the node before the position we're inserting. Its next
                 # needs to be changed.
                 currentNode = @get(position - 1)
-                # Now the linking part. We cannot use CoffeeScript's quick
-                # assignment using `[]`. The references get mingled.
-                nodeToAdd.next = currentNode.next
-                currentNode.next?.prev = nodeToAdd
-                currentNode.next = nodeToAdd
-                nodeToAdd.prev = currentNode
+                [nodeToAdd.next, currentNode.next?.prev, currentNode.next, nodeToAdd.prev] =
+                [currentNode.next, nodeToAdd, nodeToAdd,currentNode]
         # Join the tail too. Modify tail when the node was inserted at the last
         # position.
         if position is @length then @tail = nodeToAdd
@@ -106,8 +102,8 @@ class LinkedList
 
     remove: (position = @length - 1) ->
         ###
-        Remove an item at index `position`. Defaults to the last item. Index can
-        be negative (within the boundary).
+        Remove an item at index `position` (optional). Defaults to the last
+        item. Index can be negative (within the boundary).
 
         _Returns:_ item removed.
         ###
@@ -142,9 +138,9 @@ class LinkedList
         Find the index of an item, similarly to `array.indexOf()`. Defaults to
         start searching from the beginning, by can start at another position by
         passing `startingPosition`. This parameter can also be negative; but
-        unlike the other methods of this class, `startingPosition` can be as
-        small as desired; a value of -999 for a list of length 5 will start
-        searching normally, at the beginning.
+        unlike the other methods of this class, `startingPosition` (optional)
+        can be as small as desired; a value of -999 for a list of length 5 will
+        start searching normally, at the beginning.
 
         **Note:** searches forwardly, **not** backwardly, i.e:
         ```coffee

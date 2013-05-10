@@ -31,7 +31,7 @@ class Map
         ###
         The hash function for hashing keys is public. Feel free to replace it
         with your own. The `makeHash` parameter is optional and accepts a
-        boolean (defaults to false) indicating whether or not to produce a new
+        boolean (defaults to `false`) indicating whether or not to produce a new
         hash (for the first use, naturally).
 
         _Returns:_ the hash.

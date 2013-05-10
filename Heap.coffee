@@ -7,7 +7,7 @@ cause comparison problems and might report false negative during extraction.
 class Heap
     constructor: (dataToHeapify = []) ->
         ###
-        Pass an optional array to be heapified. Takes O(n) time.
+        Pass an optional array to be heapified. Takes only O(n) time.
         ###
         # Use 1-indexed array. Simpler for calculating parent, leftChild and
         # rightChild. Item 0 is a placeholder.
