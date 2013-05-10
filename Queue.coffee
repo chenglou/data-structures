@@ -9,6 +9,9 @@ class Queue
         ###
         Pass an optional array to be transformed into a queue. The item at index
         0 is the first to be dequeued.
+
+        ##\# Properties
+        - length
         ###
         @_content = initialArray
         @_dequeueIndex = 0
@@ -24,7 +27,7 @@ class Queue
 
     dequeue: ->
         ###
-        _Return:_ the dequeued item.
+        _Returns:_ the dequeued item.
         ###
         if @length is 0 then return
         @length--
@@ -42,5 +45,12 @@ class Queue
         _Returns:_ the item.
         ###
         @_content[@_dequeueIndex]
+
+    isEmpty: ->
+        ###
+        _Returns:_ true or false.
+        ###
+        @length is 0
+
 
 module.exports = Queue

@@ -4,7 +4,7 @@ LinkedList = require '../LinkedList'
 l = (linkedList) ->
     output = ""
     currentNode = linkedList.head
-    for i in [0...linkedList._length]
+    for i in [0...linkedList.length]
         output += currentNode.value + " "
         currentNode = currentNode.next
     console.log output
@@ -17,6 +17,7 @@ fill = (linkedList) ->
     linkedList.add 12
 
 validate = (linkedList, nodeValues...) ->
+    expect(linkedList.length).toBe nodeValues.length
     expect(linkedList.head.prev).toBeUndefined()
     expect(linkedList.tail.next).toBeUndefined()
     expect(linkedList.head.value).toBe nodeValues[0]
@@ -50,13 +51,14 @@ describe "Create new linked list", ->
     it "should create a list prepopulated with items of the passed array", ->
         validate linkedList3, 1, 2, 3, 4
 
-describe "Add node", ->
+describe "Add node and check length", ->
     describe "at the end", ->
         linkedList = new LinkedList()
         it "should return the value added", ->
             expect(linkedList.add 1).toBe 1
             expect(linkedList.add null).toBeNull()
             expect(linkedList.add undefined).toBeUndefined()
+            expect(linkedList.length).toBe 3
         linkedList2 = new LinkedList()
         it "should add to the head when the list's empty. It's also the tail", ->
             linkedList2.add "item0"
@@ -230,3 +232,14 @@ describe "Find index of node", ->
             expect(linkedList2.indexOf 5, -5).toBe 0
             expect(linkedList2.indexOf 12, -1).toBe 4
             expect(linkedList2.indexOf 0, -3).toBe 3
+
+describe "Check for emptiness", ->
+    linkedList = new LinkedList()
+    it "returns true if list's empty", ->
+        expect(linkedList.isEmpty()).toBeTruthy()
+    it "returns false if list's not empty", ->
+        linkedList.add 5
+        expect(linkedList.isEmpty()).toBeFalsy()
+    it "returns true again after removing all the items", ->
+        linkedList.remove()
+        expect(linkedList.isEmpty()).toBeTruthy()

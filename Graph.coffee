@@ -3,10 +3,7 @@ Graph implemented as a modified incidence list. O(1) for every typical
 operation, even `removeNode()` (O(1) amortized)!
 ###
 class Graph
-    constructor: (isDirected = yes) ->
-        ###
-        isDirected defaults to true.
-        ###
+    constructor: () ->
         @_nodes = {}
 
     addNode: (id) ->
@@ -190,5 +187,13 @@ class Graph
         for nodeId, nodeObject of @_nodes
             for toId, edgeObject of nodeObject._outEdges
                 operation edgeObject
+
+    isEmpty: ->
+        ###
+        _Returns:_ true or false.
+        ###
+        for child of @_nodes
+            return no
+        return yes
 
 module.exports = Graph

@@ -46,6 +46,12 @@ class Heap
         ###
         @_data[1]
 
+    isEmpty: ->
+        ###
+        _Returns:_ true or false.
+        ###
+        @_data.length <= 1
+
     _upHeap: (index) ->
         valueHolder = @_data[index];
         while @_data[index] < @_data[_parent index] and index > 1
@@ -69,7 +75,9 @@ class Heap
                 break
 
 _parent = (index) -> index >> 1 # Fast divide by 2 then flooring.
+
 _leftChild = (index) -> index << 1 # Fast multiply by 2.
+
 _rightChild = (index) -> (index << 1) + 1
 
 module.exports = Heap

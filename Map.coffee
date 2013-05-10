@@ -30,9 +30,9 @@ class Map
     hash: (key, makeHash = no) ->
         ###
         The hash function for hashing keys is public. Feel free to replace it
-        with your own. The `makeHash` parameter accepts a boolean (defaults to
-        false) indicating whether or not to produce a new hash (for the first
-        use, naturally).
+        with your own. The `makeHash` parameter is optional and accepts a
+        boolean (defaults to false) indicating whether or not to produce a new
+        hash (for the first use, naturally).
 
         _Returns:_ the hash.
         ###
@@ -87,6 +87,14 @@ class Map
         Traverse through the map. Pass a function of the form `fn(key, value)`.
         ###
         operation(key, value) for key, value of @_content
+
+    isEmpty: ->
+        ###
+        _Returns:_ true or false.
+        ###
+        for child of @_content
+            return no
+        return yes
 
 _isSpecialType = (key) ->
     simpleHashableTypes = ["Boolean", "Number", "String", "Undefined", "Null", "RegExp", "Function"]

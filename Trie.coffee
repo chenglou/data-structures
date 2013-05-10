@@ -140,9 +140,19 @@ class Trie
                 # previousNode[currentLetter]
                 delete prefix[i - 1][1][prefix[i][0]]
             else break
+        # Clean the ndoe at the root itself.
+        if not _hasAtLeastNChildren @_root[prefix[0][0]], 1
+            delete @_root[prefix[0][0]]
         return word
 
+    isEmpty: ->
+        ###
+        _Returns:_ true or false.
+        ###
+        not _hasAtLeastNChildren @_root, 1
+
 _hasAtLeastNChildren = (node, n) ->
+    return yes if n is 0
     childCount = 0
     for child of node
         childCount++

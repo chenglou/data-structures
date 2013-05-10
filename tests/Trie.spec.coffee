@@ -15,6 +15,18 @@ fill = (trie) ->
     trie.add "za"
     trie.add "zz"
 
+empty = (trie) ->
+    trie.remove "he"
+    trie.remove "hello"
+    trie.remove "ello"
+    trie.remove "bell"
+    trie.remove "hell"
+    trie.remove "bear"
+    trie.remove "beer"
+    trie.remove "z"
+    trie.remove "za"
+    trie.remove "zz"
+
 # Testing extensively for undefined/null/empty string/no parameter value here,
 # because Trie uses null as word terminator.
 describe "Add word and check for it", ->
@@ -159,3 +171,17 @@ describe "Remove a word", ->
     it "should remove empty string if it was a word", ->
         expect(trie.remove "").toBe ""
         expect(trie.has "").toBeFalsy()
+    it "should leave an empty trie after removing everything", ->
+        empty trie
+        expect(trie.isEmpty()).toBeTruthy()
+
+describe "Check for emptiness", ->
+    trie = new Trie()
+    it "should return true for empty trie", ->
+        expect(trie.isEmpty()).toBeTruthy()
+    it "should return false if trie's not empty", ->
+        fill trie
+        expect(trie.isEmpty()).toBeFalsy()
+    it "should return true after emptying the trie", ->
+        empty trie
+        expect(trie.isEmpty()).toBeTruthy()

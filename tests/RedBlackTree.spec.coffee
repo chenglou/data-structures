@@ -23,21 +23,21 @@ fill = (rbt) ->
 Queue = require '../Queue'
 validate = (rbt, treeStructure) ->
     validNodeIndex = 0
-    treeQueue = new Queue([rbt.root])
+    treeQueue = new Queue([rbt._root])
     while treeQueue.length isnt 0
         currentNode = treeQueue.dequeue()
         expect(currentNode.value).toBe treeStructure[validNodeIndex]
-        if currentNode.leftChild?
-            treeQueue.enqueue currentNode.leftChild
-        if currentNode.rightChild?
-            treeQueue.enqueue currentNode.rightChild
+        if currentNode._left?
+            treeQueue.enqueue currentNode._left
+        if currentNode._right?
+            treeQueue.enqueue currentNode._right
         validNodeIndex++
     expect(validNodeIndex).toBe treeStructure.length
 
 describe "Creation", ->
     rbt = new RedBlackTree()
     it "should make an empty root", ->
-        expect(rbt.root).toBeUndefined()
+        expect(rbt._root).toBeUndefined()
     rbt2 = new RedBlackTree([8, 3, 10, 1, 6])
     it "should initialize a tree with the array passed", ->
         validate rbt2, [8, 3, 10, 1, 6]
@@ -57,38 +57,38 @@ describe "Add", ->
     # structure as parameter, but so far the models degrade readability.
     it "should add a node as left child of root", ->
         rbt2.add 3
-        expect(rbt2.root.leftChild.value).toBe 3
-        expect(rbt2.root.leftChild.parent.value).toBe 8
+        expect(rbt2._root._left.value).toBe 3
+        expect(rbt2._root._left.parent.value).toBe 8
     it "should add a node as right child of root", ->
         rbt2.add 10
-        expect(rbt2.root.rightChild.value).toBe 10
-        expect(rbt2.root.rightChild.parent.value).toBe 8
+        expect(rbt2._root._right.value).toBe 10
+        expect(rbt2._root._right.parent.value).toBe 8
     it "should add 6 as 3's right child", ->
         rbt2.add 6
-        expect(rbt2.root.leftChild.rightChild.value).toBe 6
-        expect(rbt2.root.leftChild.rightChild.parent.value).toBe 3
+        expect(rbt2._root._left._right.value).toBe 6
+        expect(rbt2._root._left._right.parent.value).toBe 3
     it "should add 14 as 10's right child", ->
         rbt2.add 14
-        expect(rbt2.root.rightChild.rightChild.value).toBe 14
-        expect(rbt2.root.rightChild.rightChild.parent.value).toBe 10
+        expect(rbt2._root._right._right.value).toBe 14
+        expect(rbt2._root._right._right.parent.value).toBe 10
     it "should add 4 as 8's left child and rearrange 3 to be 4's left child and 6 to be 4's right child", ->
         rbt2.add 4
-        expect(rbt2.root.leftChild.value).toBe 4
-        expect(rbt2.root.leftChild.leftChild.value).toBe 3
-        expect(rbt2.root.leftChild.rightChild.value).toBe 6
+        expect(rbt2._root._left.value).toBe 4
+        expect(rbt2._root._left._left.value).toBe 3
+        expect(rbt2._root._left._right.value).toBe 6
     it "should add 13 as 8's child child and rearrange 10 to be 13's left child and 14 to be 13's right child", ->
         rbt2.add 13
-        expect(rbt2.root.rightChild.value).toBe 13
-        expect(rbt2.root.rightChild.leftChild.value).toBe 10
-        expect(rbt2.root.rightChild.rightChild.value).toBe 14
+        expect(rbt2._root._right.value).toBe 13
+        expect(rbt2._root._right._left.value).toBe 10
+        expect(rbt2._root._right._right.value).toBe 14
     it "should add 7 as 6's right child", ->
         rbt2.add 7
-        expect(rbt2.root.leftChild.rightChild.rightChild.value).toBe 7
-        expect(rbt2.root.leftChild.rightChild.rightChild.parent.value).toBe 6
+        expect(rbt2._root._left._right._right.value).toBe 7
+        expect(rbt2._root._left._right._right.parent.value).toBe 6
     it "should add 1 as 3's left child", ->
         rbt2.add 1
-        expect(rbt2.root.leftChild.leftChild.leftChild.value).toBe 1
-        expect(rbt2.root.leftChild.leftChild.leftChild.parent.value).toBe 3
+        expect(rbt2._root._left._left._left.value).toBe 1
+        expect(rbt2._root._left._left._left.parent.value).toBe 3
     it "shouldn't accept duplicates and return undefined", ->
         rbt2.add 1
         rbt2.add 7
@@ -185,7 +185,7 @@ describe "Remove", ->
         rbt.remove 4
         rbt.remove 7
         rbt.remove 13
-        expect(rbt.root).toBeUndefined()
+        expect(rbt._root).toBeUndefined()
 
 describe "Remove minimum", ->
     rbt = new RedBlackTree()
@@ -227,7 +227,7 @@ describe "Randomized tests", ->
     for i in [0..10]
         rbt = new RedBlackTree()
         items = []
-        for i in [0...Math.random() * 99]
+        for i in [0...Math.random() * 30]
             item = Math.random() * 9999 - 5000
             items.push item
             rbt.add item
@@ -235,14 +235,15 @@ describe "Randomized tests", ->
             expect(rbt.remove item).toBe item
             expect(rbt.has item).toBeFalsy()
             expect(rbt.has undefined).toBeFalsy()
-        expect(rbt.root).toBeUndefined()
+        expect(rbt._root).toBeUndefined()
 
-
-
-
-
-
-
-
-
-
+describe "Check for emptiness", ->
+    rbt = new RedBlackTree()
+    it "returns true if tree's empty", ->
+        expect(rbt.isEmpty()).toBeTruthy()
+    it "returns false if tree's not empty", ->
+        rbt.add 5
+        expect(rbt.isEmpty()).toBeFalsy()
+    it "returns true again after removing all the items", ->
+        rbt.removeMax()
+        expect(rbt.isEmpty()).toBeTruthy()

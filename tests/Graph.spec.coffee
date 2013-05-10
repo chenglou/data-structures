@@ -359,3 +359,19 @@ describe "Traverse through each edge", ->
         i = 0
         graph.forEachEdge (edge) ->
             expect(edge.randomId).toBe ++i
+
+describe "Check for emptiness", ->
+    graph = new Graph()
+    it "should return true for empty graph", ->
+        expect(graph.isEmpty()).toBeTruthy()
+    it "should return false if graph's not empty", ->
+        addNodesTo graph, yes
+        expect(graph.isEmpty()).toBeFalsy()
+    it "should return true after emptying the graph", ->
+        graph.removeNode "1"
+        graph.removeNode "2"
+        graph.removeNode "3"
+        graph.removeNode "4"
+        graph.removeNode "5"
+        graph.removeNode "6"
+        expect(graph.isEmpty()).toBeTruthy()
