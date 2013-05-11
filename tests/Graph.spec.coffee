@@ -373,24 +373,24 @@ describe "Get all edges", ->
 
 describe "Traverse through each node", ->
     graph = new Graph()
+    it "shouldn't call the callback for an empty graph", ->
+        callback = jasmine.createSpy()
+        graph.forEachNode callback
+        expect(callback).not.toHaveBeenCalled()
     it "should reach each node once", ->
         addNodesTo graph
-        i = 0
-        graph.forEachNode (node) ->
-            node.randomId = ++i
-        expect(i).toBe 6
-        i = 0
-        graph.forEachNode (node) ->
-            expect(node.randomId).toBe ++i
+        callback = jasmine.createSpy()
+        graph.forEachNode callback
+        expect(callback.callCount).toBe 6
 
 describe "Traverse through each edge", ->
     graph = new Graph()
+    it "shouldn't call the callback for an empty graph", ->
+        callback = jasmine.createSpy()
+        graph.forEachEdge callback
+        expect(callback).not.toHaveBeenCalled()
     it "should reach each edge once", ->
         addNodesTo graph, yes
-        i = 0
-        graph.forEachEdge (edge) ->
-            edge.randomId = ++i
-        expect(i).toBe 8
-        i = 0
-        graph.forEachEdge (edge) ->
-            expect(edge.randomId).toBe ++i
+        callback = jasmine.createSpy()
+        graph.forEachEdge callback
+        expect(callback.callCount).toBe 8

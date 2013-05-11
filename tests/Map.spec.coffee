@@ -182,11 +182,11 @@ describe "Delete", ->
 
 describe "Iterate through items", ->
     map = new Map()
-    it "should return empty for an empty map", ->
-        map.forEach (key, value) ->
-            expect(key).toBe("this expect shouldn't even execute")
-            expect(value).toBe("this either")
-    it "returns every item", ->
+    it "shouldn't even call the callback when there's nothing to iterate through", ->
+        callback = jasmine.createSpy()
+        map.forEach callback
+        expect(callback).not.toHaveBeenCalled()
+    it "should have called the callback correctly", ->
         map.set 5, "number 6"
         map.set "5", "string 6"
         map.set undefined, [3, 2]
@@ -194,6 +194,12 @@ describe "Iterate through items", ->
         map.set true, "okay"
         map.set /asd/, true
         map.set (-> "hello"), 10
-        map.forEach (key, value) ->
-            expect(key).toEqual any String
-            expect(value).toBeDefined()
+        callback = jasmine.createSpy()
+        map.forEach callback
+        expect(callback).toHaveBeenCalledWith 'Number_5', 'number 6'
+        expect(callback).toHaveBeenCalledWith 'String_5', 'string 6'
+        expect(callback).toHaveBeenCalledWith 'Undefined_undefined', [ 3, 2 ]
+        expect(callback).toHaveBeenCalledWith 'Null_null', { b : 12 }
+        expect(callback).toHaveBeenCalledWith 'Boolean_true', 'okay'
+        expect(callback).toHaveBeenCalledWith 'RegExp_/asd/', true
+        expect(callback).toHaveBeenCalledWith any(String), 10
