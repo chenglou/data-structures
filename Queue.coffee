@@ -7,7 +7,7 @@
 class Queue
     ###
     Properties
-    - length
+    - size
     ###
     constructor: (initialArray = []) ->
         ###
@@ -16,13 +16,13 @@ class Queue
         ###
         @_content = initialArray
         @_dequeueIndex = 0
-        @length = @_content.length
+        @size = @_content.length
 
     enqueue: (item) ->
         ###
         _Returns:_ the item.
         ###
-        @length++
+        @size++
         @_content.push(item)
         return item
 
@@ -30,8 +30,8 @@ class Queue
         ###
         _Returns:_ the dequeued item.
         ###
-        if @length is 0 then return
-        @length--
+        if @size is 0 then return
+        @size--
         itemToDequeue = @_content[@_dequeueIndex]
         @_dequeueIndex++
         if @_dequeueIndex * 2 > @_content.length
@@ -51,7 +51,7 @@ class Queue
         ###
         _Returns:_ true or false.
         ###
-        @length is 0
+        @size is 0
 
 
 module.exports = Queue

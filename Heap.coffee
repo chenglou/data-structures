@@ -12,8 +12,9 @@ class Heap
         # Use 1-indexed array. Simpler for calculating parent, leftChild and
         # rightChild. Item 0 is a placeholder.
         @_data = [undefined]
-        @_data.push item for item in dataToHeapify when item? # Love CoffeScript.
+        @_data.push item for item in dataToHeapify when item? # <3 CoffeScript.
         if @_data.length > 1 then @_upHeap i for i in [2...@_data.length]
+        @size = @_data.length - 1
 
     add: (value) ->
         ###
@@ -24,6 +25,7 @@ class Heap
         if not value? then return
         @_data.push value
         @_upHeap @_data.length - 1
+        @size++
         return value
 
     removeMin: ->
@@ -31,6 +33,7 @@ class Heap
         _Returns:_ the smallest item (the root).
         ###
         if @_data.length is 1 then return
+        @size--
         if @_data.length is 2 then return @_data.pop()
         min = @_data[1]
         # Replace the removed root with the last item, then trickle it down.

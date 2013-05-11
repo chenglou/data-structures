@@ -4,7 +4,7 @@ LinkedList = require '../LinkedList'
 l = (linkedList) ->
     output = ""
     currentNode = linkedList.head
-    for i in [0...linkedList.length]
+    for i in [0...linkedList.size]
         output += currentNode.value + " "
         currentNode = currentNode.next
     console.log output
@@ -17,7 +17,7 @@ fill = (linkedList) ->
     linkedList.add 12
 
 validate = (linkedList, nodeValues...) ->
-    expect(linkedList.length).toBe nodeValues.length
+    expect(linkedList.size).toBe nodeValues.length
     expect(linkedList.head.prev).toBeUndefined()
     expect(linkedList.tail.next).toBeUndefined()
     expect(linkedList.head.value).toBe nodeValues[0]
@@ -51,14 +51,14 @@ describe "Create new linked list", ->
     it "should create a list prepopulated with items of the passed array", ->
         validate linkedList3, 1, 2, 3, 4
 
-describe "Add node and check length", ->
+describe "Add node and check size", ->
     describe "at the end", ->
         linkedList = new LinkedList()
         it "should return the value added", ->
             expect(linkedList.add 1).toBe 1
             expect(linkedList.add null).toBeNull()
             expect(linkedList.add undefined).toBeUndefined()
-            expect(linkedList.length).toBe 3
+            expect(linkedList.size).toBe 3
         linkedList2 = new LinkedList()
         it "should add to the head when the list's empty. It's also the tail", ->
             linkedList2.add "item0"
