@@ -149,12 +149,6 @@ class Trie
             delete @_root[prefix[0][0]]
         return word
 
-    isEmpty: ->
-        ###
-        _Returns:_ true or false.
-        ###
-        not _hasAtLeastNChildren @_root, 1
-
 _hasAtLeastNChildren = (node, n) ->
     return yes if n is 0
     childCount = 0

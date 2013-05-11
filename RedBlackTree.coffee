@@ -195,12 +195,6 @@ class RedBlackTree
         @_removeNode @_root, nodeToRemove
         return valueToReturn
 
-    isEmpty: ->
-        ###
-        _Returns:_ true or false.
-        ###
-        not @_root?
-
     # To simplify removal cases, we can notice this:
 
     # 1. Node has no child.

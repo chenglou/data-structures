@@ -91,14 +91,6 @@ class Map
         ###
         operation(key, value) for key, value of @_content
 
-    isEmpty: ->
-        ###
-        _Returns:_ true or false.
-        ###
-        for child of @_content
-            return no
-        return yes
-
 _isSpecialType = (key) ->
     simpleHashableTypes = ["Boolean", "Number", "String", "Undefined", "Null", "RegExp", "Function"]
     type = _extractDataType key

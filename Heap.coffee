@@ -49,12 +49,6 @@ class Heap
         ###
         @_data[1]
 
-    isEmpty: ->
-        ###
-        _Returns:_ true or false.
-        ###
-        @_data.length <= 1
-
     _upHeap: (index) ->
         valueHolder = @_data[index];
         while @_data[index] < @_data[_parent index] and index > 1

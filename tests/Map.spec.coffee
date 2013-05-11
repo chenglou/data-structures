@@ -197,16 +197,3 @@ describe "Iterate through items", ->
         map.forEach (key, value) ->
             expect(key).toEqual any String
             expect(value).toBeDefined()
-
-describe "Check for emptiness", ->
-    map = new Map()
-    it "should return true for empty map", ->
-        expect(map.isEmpty()).toBeTruthy()
-    it "should return false if map's not empty", ->
-        map.set 5, "hello"
-        map.set 5, "goodbye"
-        expect(map.isEmpty()).toBeFalsy()
-    it "should return true after emptying the map", ->
-        map.delete 5
-        expect(map.isEmpty()).toBeTruthy()
-

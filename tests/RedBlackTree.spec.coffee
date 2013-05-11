@@ -37,7 +37,6 @@ validate = (rbt, treeStructure) ->
 describe "Creation", ->
     rbt = new RedBlackTree()
     it "should be empty at the beginning", ->
-        expect(rbt.isEmpty()).toBeTruthy()
         expect(rbt.size).toBe 0
     rbt2 = new RedBlackTree([8, 3, 10, 1, 6])
     it "should initialize a tree with the array passed", ->
@@ -48,7 +47,6 @@ describe "Add", ->
     it "should reject undefined and null", ->
         expect(rbt.add undefined).toBeUndefined()
         expect(rbt.add null).toBeUndefined()
-        expect(rbt.isEmpty()).toBeTruthy()
         expect(rbt.size).toBe 0
     it "should return the node value", ->
         expect(rbt.add 1).toBe 1
@@ -182,7 +180,6 @@ describe "Remove", ->
         rbt.remove 4
         rbt.remove 7
         rbt.remove 13
-        expect(rbt.isEmpty()).toBeTruthy()
 
 describe "Remove minimum", ->
     rbt = new RedBlackTree()
@@ -234,14 +231,3 @@ describe "Randomized tests", ->
             # Might have some random undefined value internally.
             expect(rbt.has undefined).toBeFalsy()
         expect(rbt._root).toBeUndefined()
-
-describe "Check for emptiness", ->
-    rbt = new RedBlackTree()
-    it "returns true if tree's empty", ->
-        expect(rbt.isEmpty()).toBeTruthy()
-    it "returns false if tree's not empty", ->
-        rbt.add 5
-        expect(rbt.isEmpty()).toBeFalsy()
-    it "returns true again after removing all the items", ->
-        rbt.removeMax()
-        expect(rbt.isEmpty()).toBeTruthy()

@@ -66,15 +66,3 @@ describe "Initialize with an array, first element to dequeue being array[0]", ->
         expect(queue.dequeue()).toBeNull()
         expect(queue.dequeue()).toBe "hi"
         expect(queue.dequeue()).toBeUndefined()
-
-describe "Check for emptiness", ->
-    queue = new Queue()
-    it "returns true if queue's empty", ->
-        expect(queue.isEmpty()).toBeTruthy()
-    it "returns false if queue's not empty", ->
-        queue.enqueue 5
-        expect(queue.isEmpty()).toBeFalsy()
-    it "returns true again after removing all the items", ->
-        queue.dequeue()
-        expect(queue.isEmpty()).toBeTruthy()
-

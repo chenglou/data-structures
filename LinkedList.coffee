@@ -160,12 +160,6 @@ class LinkedList
             position++
         return if position is @size then -1 else position
 
-    isEmpty: ->
-        ###
-        _Returns:_ true or false.
-        ###
-        @size is 0
-
     # Position allows negative index for python style quick access to last
     # items. Position smaller than -size or bigger than size is discarded,
     # as they're more likely done by mistakes.

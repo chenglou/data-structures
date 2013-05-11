@@ -180,15 +180,3 @@ describe "Remove a word", ->
         expect(trie.has "").toBeFalsy()
     it "should leave an empty trie after removing everything", ->
         empty trie
-        expect(trie.isEmpty()).toBeTruthy()
-
-describe "Check for emptiness", ->
-    trie = new Trie()
-    it "should return true for empty trie", ->
-        expect(trie.isEmpty()).toBeTruthy()
-    it "should return false if trie's not empty", ->
-        fill trie
-        expect(trie.isEmpty()).toBeFalsy()
-    it "should return true after emptying the trie", ->
-        empty trie
-        expect(trie.isEmpty()).toBeTruthy()

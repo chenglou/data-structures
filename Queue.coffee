@@ -47,11 +47,4 @@ class Queue
         ###
         @_content[@_dequeueIndex]
 
-    isEmpty: ->
-        ###
-        _Returns:_ true or false.
-        ###
-        @size is 0
-
-
 module.exports = Queue

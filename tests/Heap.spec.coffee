@@ -72,17 +72,3 @@ describe "Initialization passing an array", ->
     heap = new Heap([-3, undefined, 4, 6, -8, null, 5, -3, 2, 5, 6, -7])
     it "should heapify the array", ->
         extractMinsAndValidate heap, [-8, -7, -3, -3, 2, 4, 5, 5, 6, 6]
-
-describe "Check for emptiness", ->
-    heap = new Heap()
-    it "should return false for an empty heap", ->
-        expect(heap.isEmpty()).toBeTruthy()
-    it "should return true if heap's not empty", ->
-        heap.add undefined
-        expect(heap.isEmpty()).toBeTruthy()
-        heap.add 1
-        expect(heap.isEmpty()).toBeFalsy()
-    it "should return true after the heap's emptied", ->
-        heap.removeMin()
-        expect(heap.isEmpty()).toBeTruthy()
-

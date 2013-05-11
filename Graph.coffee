@@ -202,12 +202,4 @@ class Graph
             for toId, edgeObject of nodeObject._outEdges
                 operation edgeObject
 
-    isEmpty: ->
-        ###
-        _Returns:_ true or false.
-        ###
-        for child of @_nodes
-            return no
-        return yes
-
 module.exports = Graph

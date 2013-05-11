@@ -232,14 +232,3 @@ describe "Find index of node", ->
             expect(linkedList2.indexOf 5, -5).toBe 0
             expect(linkedList2.indexOf 12, -1).toBe 4
             expect(linkedList2.indexOf 0, -3).toBe 3
-
-describe "Check for emptiness", ->
-    linkedList = new LinkedList()
-    it "returns true if list's empty", ->
-        expect(linkedList.isEmpty()).toBeTruthy()
-    it "returns false if list's not empty", ->
-        linkedList.add 5
-        expect(linkedList.isEmpty()).toBeFalsy()
-    it "returns true again after removing all the items", ->
-        linkedList.remove()
-        expect(linkedList.isEmpty()).toBeTruthy()
