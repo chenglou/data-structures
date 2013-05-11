@@ -25,6 +25,7 @@ class Map
         # Used to track objects and arrays.
         @_itemId = 0
         @_id = Map._newMapId()
+        @size = 0
 
     # Public. Allow user-defined hash function.
     hash: (key, makeHash = no) ->
@@ -53,6 +54,7 @@ class Map
         ###
         _Returns:_ value.
         ###
+        if not @has key then @size++
         @_content[@hash key, yes] = value
     get: (key) ->
         ###
@@ -79,6 +81,7 @@ class Map
         if hashedKey of @_content
             delete @_content[hashedKey]
             if _isSpecialType key then delete key[SPECIAL_TYPE_KEY_PREFIX + @_id]
+            @size--
             return true
         return false
 

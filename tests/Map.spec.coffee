@@ -30,6 +30,8 @@ describe "Hash function", ->
 
 describe "Set and get/has", ->
     map = new Map()
+    it "should have an empty size initially", ->
+        expect(map.size).toBe 0
     it "should have nothing when map's empty", ->
         expect(map.get 5).toBeUndefined()
         expect(map.get undefined).toBeUndefined()
@@ -38,7 +40,6 @@ describe "Set and get/has", ->
         expect(map.get []).toBeUndefined()
         expect(map.get -> "hello").toBeUndefined()
         expect(map.get "5").toBeUndefined()
-
         expect(map.has 5).toBeFalsy()
         expect(map.has undefined).toBeFalsy()
         expect(map.has null).toBeFalsy()
@@ -78,6 +79,8 @@ describe "Set and get/has", ->
         expect(map.has -> "hello").toBeTruthy()
         expect(map.has arr, "time").toBeTruthy()
         expect(map.has obj, "time").toBeTruthy()
+    it "should keep track of map size", ->
+        expect(map.size).toBe 9
     it "should override previous value", ->
         map.set 5, "number 6"
         map.set "5", "string 6"
@@ -94,6 +97,8 @@ describe "Set and get/has", ->
         expect(map.get true).toBe "okay"
         expect(map.get /asd/).toBe true
         expect(map.get -> "hello").toBe 10
+    it "shouldn't have changed the map's size", ->
+        expect(map.size).toBe 9
     it "should return undefined if the key's not found", ->
         expect(map.get 6).toBeUndefined()
         expect(map.get -> "bye").toBeUndefined()
@@ -128,6 +133,8 @@ describe "Delete", ->
         expect(map.delete []).toBeFalsy()
         expect(map.delete -> "hello").toBeFalsy()
         expect(map.delete "5").toBeFalsy()
+    it "shouldn't decrease the size count after fail deletes", ->
+        expect(map.size).toBe 0
     arr = [1, 2, {a: "hello"}, [3, 4, 5]]
     obj = {a: "hi", b: {}, c: [1, 2], d: arr}
     date1 = new Date()
@@ -147,6 +154,8 @@ describe "Delete", ->
         expect(map.delete true).toBeTruthy()
         expect(map.delete /asd/).toBeTruthy()
         expect(map.delete -> "hello").toBeTruthy()
+    it "should have updated the size", ->
+        expect(map.size).toBe 0
     it "shouldn't find anything after emptying a map", ->
         expect(map.delete 5).toBeFalsy()
         expect(map.delete "5").toBeFalsy()
@@ -168,6 +177,8 @@ describe "Delete", ->
         expect(obj._mapId_3).toBeUndefined()
         expect(date1._mapId_3).toBeUndefined()
         expect(date2._mapId_3).toBeUndefined()
+    it "should keep the count correct after removing special keys", ->
+        expect(map.size).toBe 0
 
 describe "Iterate through items", ->
     map = new Map()

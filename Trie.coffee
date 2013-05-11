@@ -20,6 +20,7 @@ class Trie
         #     a:
         #         end: true
         @_root = {}
+        @size = 0
         @add word for word in words
 
     add: (word) ->
@@ -30,6 +31,7 @@ class Trie
         value) if the word passed is null or undefined.
         ###
         if not word? then return
+        @size++
         currentNode = @_root
         for letter in word
             if not currentNode[letter]? then currentNode[letter] = {}
@@ -97,7 +99,8 @@ class Trie
         ```
         ###
         if not prefix? then return []
-        # Cannot put default value to parameter. It'll transform undefined and null into "".
+        # Cannot put default value to parameter. It'll turn undefined and null
+        # into "".
         prefix? or prefix = ""
         words = []
         currentNode = @_root
@@ -108,7 +111,7 @@ class Trie
         # Enqueue like this: [node, accumulatedLetters]
         queue = new Queue()
         queue.enqueue [currentNode, ""]
-        while queue.length isnt 0
+        while queue.size isnt 0
             [node, accumulatedLetters] = queue.dequeue()
             if node[WORD_END]
                 words.push prefix + accumulatedLetters
@@ -133,6 +136,7 @@ class Trie
         if not currentNode[WORD_END] then return
         # Traverse back upward to delete nodes. Last node in prefix is the
         # before-last letter right now.
+        @size--
         delete currentNode[WORD_END]
         if _hasAtLeastNChildren currentNode, 1 then return word
         for i in [prefix.length - 1..1]

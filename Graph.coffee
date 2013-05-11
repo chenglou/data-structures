@@ -1,10 +1,12 @@
 ###
 Graph implemented as a modified incidence list. O(1) for every typical
-operation, even `removeNode()` (O(1) amortized)!
+operation, even `removeNode()` (**O(1) amortized**))!
 ###
 class Graph
     constructor: () ->
         @_nodes = {}
+        @nodeSize = 0
+        @edgeSize = 0
 
     addNode: (id) ->
         ###
@@ -19,9 +21,8 @@ class Graph
         properties on it for graph algorithms' needs. **Undefined if node id
         already exists**, as to avoid accidental overrides.
         ###
-        # Keep the question mark. Id might be empty string or 0 (bad practice
-        # through).
         if not @_nodes[id]
+            @nodeSize++
             @_nodes[id] =
                 _id: id
                 # outEdges is a collection of (toId, edge) pair, where the toId
@@ -33,6 +34,9 @@ class Graph
                 # inEdges work the same way.
                 _outEdges: {}
                 _inEdges: {}
+                # This keeps track of the edge count, so that we can update
+                # edgeSize correctly on O(1) after `removeNode()`.
+                _edgeCount: 0
 
     getNode: (id) ->
         ###
@@ -49,7 +53,10 @@ class Graph
         nodeToRemove = @_nodes[id]
         if not nodeToRemove then return
         else
+            @edgeSize -= @_nodes[id]._edgeCount
+            @nodeSize--
             delete @_nodes[id]
+
             # Usually, we'd remove all edges related to node too. But we can
             # amortize this from O(n) to O(1) by checking it during edge
             # retrieval instead.
@@ -71,7 +78,7 @@ class Graph
         # getEdge() will return an edge if it already exists. As a side effect,
         # it checks for edge inconsistency left behind from removeNode() and
         # clean them up. After this point, we can safely add a new edge.
-        if @getEdge(fromId, toId) then return
+        if @getEdge fromId, toId then return
         fromNode = @_nodes[fromId]
         toNode = @_nodes[toId]
         if not fromNode or not toNode then return
@@ -81,6 +88,11 @@ class Graph
             weight: weight
         fromNode._outEdges[toId] = edgeToAdd
         toNode._inEdges[fromId] = edgeToAdd
+        fromNode._edgeCount++
+        @edgeSize++
+        # Self-directing edge counts once.
+        if fromNode isnt toNode then toNode._edgeCount++
+        return edgeToAdd
 
     getEdge: (fromId, toId) ->
         ###
@@ -89,7 +101,8 @@ class Graph
         ###
         fromNode = @_nodes[fromId]
         toNode = @_nodes[toId]
-        # Amortization part. Clean the leftover from removeNode().
+        # Amortization part. Clean the leftover from removeNode(). No need to
+        # decrease `edgeSize`, since it was done before.
         if not fromNode and not toNode then return
         else if not fromNode
             if toNode._inEdges[fromId]
@@ -120,6 +133,7 @@ class Graph
         if not edgeToDelete then return
         delete fromNode._outEdges[toId]
         delete toNode._inEdges[fromId]
+        @edgeSize--
         return edgeToDelete
 
     getInEdgesOf: (nodeId) ->

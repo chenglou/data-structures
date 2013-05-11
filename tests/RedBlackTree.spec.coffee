@@ -24,7 +24,7 @@ Queue = require '../Queue'
 validate = (rbt, treeStructure) ->
     validNodeIndex = 0
     treeQueue = new Queue([rbt._root])
-    while treeQueue.length isnt 0
+    while treeQueue.size isnt 0
         currentNode = treeQueue.dequeue()
         expect(currentNode.value).toBe treeStructure[validNodeIndex]
         if currentNode._left?
@@ -38,6 +38,7 @@ describe "Creation", ->
     rbt = new RedBlackTree()
     it "should be empty at the beginning", ->
         expect(rbt.isEmpty()).toBeTruthy()
+        expect(rbt.size).toBe 0
     rbt2 = new RedBlackTree([8, 3, 10, 1, 6])
     it "should initialize a tree with the array passed", ->
         validate rbt2, [8, 3, 10, 1, 6]
@@ -48,6 +49,7 @@ describe "Add", ->
         expect(rbt.add undefined).toBeUndefined()
         expect(rbt.add null).toBeUndefined()
         expect(rbt.isEmpty()).toBeTruthy()
+        expect(rbt.size).toBe 0
     it "should return the node value", ->
         expect(rbt.add 1).toBe 1
         expect(rbt.add "item").toBe "item"

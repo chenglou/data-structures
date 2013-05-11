@@ -4,6 +4,7 @@ Trie = require '../Trie'
 l = (x) -> console.log require('util').inspect x, true, 10
 
 fill = (trie) ->
+    initialWordCount = trie.size
     trie.add "he"
     trie.add "hello"
     trie.add "ello"
@@ -14,8 +15,10 @@ fill = (trie) ->
     trie.add "z"
     trie.add "za"
     trie.add "zz"
+    expect(trie.size).toBe initialWordCount + 10
 
 empty = (trie) ->
+    initialWordCount = trie.size
     trie.remove "he"
     trie.remove "hello"
     trie.remove "ello"
@@ -26,11 +29,12 @@ empty = (trie) ->
     trie.remove "z"
     trie.remove "za"
     trie.remove "zz"
+    expect(trie.size).toBe Math.max(initialWordCount - 10, 0)
 
-# Testing extensively for undefined/null/empty string/no parameter value here,
-# because Trie uses null as word terminator.
 describe "Add word and check for it", ->
     trie = new Trie()
+    it "should have an empty word  count at the beginning", ->
+        expect(trie.size).toBe 0
     it "should return nothing when the trie's empty", ->
         expect(trie.has "").toBeFalsy()
         expect(trie.has "beer").toBeFalsy()
@@ -40,6 +44,7 @@ describe "Add word and check for it", ->
         expect(trie.add "hello").toBe "hello"
         expect(trie.add "hell").toBe "hell"
         expect(trie.add "beer").toBe "beer"
+        expect(trie.size).toBe 4
     it "should find the words just added, and nothing but", ->
         expect(trie.has "hello").toBeTruthy()
         expect(trie.has "hell").toBeTruthy()
@@ -140,11 +145,13 @@ describe "Remove a word", ->
         expect(trie.remove "zzz").toBeUndefined()
         expect(trie.remove undefined).toBeUndefined()
         expect(trie.remove null).toBeUndefined()
+        expect(trie.size).toBe 10
     it "should return the word removed", ->
         expect(trie.remove "he").toBe "he"
         expect(trie.has "he").toBeFalsy()
         expect(trie.remove "zz").toBe "zz"
         expect(trie.has "zz").toBeFalsy()
+        expect(trie.size).toBe 8
     it "should not have removed letters if other words are using them", ->
         expect(trie.has "hello").toBeTruthy()
         expect(trie.has "hell").toBeTruthy()

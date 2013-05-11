@@ -53,9 +53,10 @@ describe "Enqueue, dequeue and peek", ->
         expect(queue.dequeue()).toBeUndefined()
         expect(queue.size).toBe 0
 
-describe "Initialize with an array, first element to deqeue being array[0]", ->
+describe "Initialize with an array, first element to dequeue being array[0]", ->
     queue = new Queue([1, 5, 4, 6, 7, undefined, null, "hi"])
     it "should fill the queue with the parameter", ->
+        expect(queue.size).toBe 8
         expect(queue.dequeue()).toBe 1
         expect(queue.dequeue()).toBe 5
         expect(queue.dequeue()).toBe 4
