@@ -1,4 +1,5 @@
 .DS_STORE
 *.js
 node_modules
+docs
 

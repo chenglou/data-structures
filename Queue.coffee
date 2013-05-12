@@ -4,12 +4,12 @@
 
 # When half of array is garbage collectable, slice these items.
 
-class Queue
-    ###
-    Properties:
+###
+Properties:
 
-    - size: The total number of items.
-    ###
+- size: The total number of items.
+###
+class Queue
     constructor: (initialArray = []) ->
         ###
         Pass an optional array to be transformed into a queue. The item at index

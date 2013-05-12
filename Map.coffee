@@ -4,6 +4,7 @@
 
 # For hashing special types, e.g. objects, arrays and dates.
 SPECIAL_TYPE_KEY_PREFIX = '_mapId_'
+
 ###
 Kind of a stopgap measure for the upcoming [JavaScript
 Map](http://wiki.ecmascript.org/doku.php?id=harmony:simple_maps_and_sets)
@@ -13,13 +14,12 @@ Number, String, Undefined, Null, RegExp, Function requires a hack that inserts a
 hidden unique property into the object. This means `set`, `get`, `has` and
 `delete` must employ the same object, and not a mere identical copy as in the
 case of, say, a string.
+
+Properties:
+
+- size: The total number of `(key, value)` pairs.
 ###
 class Map
-    ###
-    Properties:
-
-    - size: The total number of `(key, value)` pairs.
-    ###
 
     # Class variable and method.
     @_mapIdTracker: 0

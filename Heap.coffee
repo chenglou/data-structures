@@ -3,13 +3,12 @@ Minimum heap, i.e. smallest node at root.
 
 **Note:** does not accept null or undefined. This is by design. Those values
 cause comparison problems and might report false negative during extraction.
+
+Properties:
+
+- size: total number of items.
 ###
 class Heap
-    ###
-    Properties:
-
-    - size: total number of items.
-    ###
     constructor: (dataToHeapify = []) ->
         ###
         Pass an optional array to be heapified. Takes only O(n) time.

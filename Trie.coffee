@@ -3,12 +3,15 @@ Queue = require './Queue'
 # Special value for marking end of word. No conflict possible, since every
 # node's one letter.
 WORD_END = "end"
-class Trie
-    ###
-    Properties:
 
-    - size: The total number of words.
-    ###
+###
+Good for fast insertion/removal/lookup of strings.
+
+Properties:
+
+- size: The total number of words.
+###
+class Trie
     constructor: (words = []) ->
         ###
         Pass an optional array of strings to be inserted initially.

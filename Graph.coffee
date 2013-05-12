@@ -1,15 +1,14 @@
 ###
 Graph implemented as a modified incidence list. O(1) for every typical
-operation, even `removeNode()` (**O(1) amortized**))!
+operation, even `removeNode()` ( **O(1) amortized** ).
+
+Properties:
+
+- nodeSize: total number of nodes.
+
+- edgeSize: total number of edges.
 ###
 class Graph
-    ###
-    Properties (self-explanatory):
-
-    - nodeSize: total number of nodes.
-
-    - edgeSize: total number of edges.
-    ###
     constructor: () ->
         @_nodes = {}
         @nodeSize = 0

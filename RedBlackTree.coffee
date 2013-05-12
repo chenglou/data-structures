@@ -1,6 +1,3 @@
-# TODO: consider if remove and peek should return empty node instead of
-# undefined. Also check if undefined and null work well with rotations.
-
 NODE_FOUND = 0
 NODE_TOO_BIG = 1
 NODE_TOO_SMALL = 2
@@ -11,14 +8,6 @@ STOP_SEARCHING = 3
 RED = 1
 BLACK = 2
 
-###
-Credit to Wikipedia's article on [Red-black
-tree](http://en.wikipedia.org/wiki/Red–black_tree)
-
-**Note:** doesn't handle duplicate entries, undefined and null. This is by
-design.
-###
-
 # Property of a red-black tree, taken from Wikipedia:
 
 # 1. A node is either red or black.
@@ -28,13 +17,20 @@ design.
 # 5. Every path from a node to any of its descendent leaves contains the same
 # number of black nodes.
 
-# In our implementation, leaves are simply undefined.
-class RedBlackTree
-    ###
-    Properties:
+# **In our implementation, leaves are simply undefined.**
 
-    - size: The total number of items.
-    ###
+###
+Credit to Wikipedia's article on [Red-black
+tree](http://en.wikipedia.org/wiki/Red–black_tree)
+
+**Note:** doesn't handle duplicate entries, undefined and null. This is by
+design.
+
+Properties:
+
+- size: The total number of items.
+###
+class RedBlackTree
     constructor: (valuesToAdd = []) ->
         ###
         Pass an optional array to be turned into binary tree. **Note:** does not

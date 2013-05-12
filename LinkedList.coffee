@@ -1,24 +1,23 @@
 ###
 Doubly Linked.
+
+Properties:
+
+- head: first item.
+- tail: last item.
+- size: total number of items.
+- item.value: value passed to the item when calling `add()`.
+
+Traverse through the nodes with `prev` and `next`. Get the value using `value`.
+```coffee
+list = new LinkedList()
+list.add 1
+list.add 4
+list.add 7
+list.head.next.value # 4.
+```
 ###
 class LinkedList
-    ###
-    Properties
-    - head: first item.
-    - tail: last item.
-    - size: total number of items.
-    - item.value: value passed to the item when calling `add()`.
-
-    Traverse through the nodes with `prev` and `next`. Get the value using
-    `value`.
-    ```coffee
-    list = new LinkedList()
-    list.add 1
-    list.add 4
-    list.add 7
-    list.head.next.value # 4.
-        ```
-    ###
     constructor: (valuesToAdd = []) ->
         ###
         Can pass an array of elements to link together during `new LinkedList()`
