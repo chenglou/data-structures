@@ -1,4 +1,4 @@
-RedBlackTree = require '../RedBlackTree'
+RedBlackTree = require('../').RedBlackTree
 
 # Shorthand for logging tree
 l = (x) -> console.log require('util').inspect(x, true, 1024)
@@ -20,7 +20,7 @@ fill = (rbt) ->
     rbt.add 7
     rbt.add 13
 
-Queue = require '../Queue'
+Queue = require('../').Queue
 validate = (rbt, treeStructure) ->
     validNodeIndex = 0
     treeQueue = new Queue([rbt._root])

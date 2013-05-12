@@ -1,4 +1,4 @@
-Queue = require '../Queue'
+Queue = require('../').Queue
 
 describe "Create queue", ->
     queue = new Queue()

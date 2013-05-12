@@ -1,4 +1,4 @@
-Trie = require '../Trie'
+Trie = require('../').Trie
 
 # Shorthand for logging.
 l = (x) -> console.log require('util').inspect x, true, 10

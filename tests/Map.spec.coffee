@@ -1,4 +1,4 @@
-Map = require '../Map'
+Map = require('../').Map
 
 describe "Create hash map", ->
     map = new Map()
