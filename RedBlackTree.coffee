@@ -32,7 +32,8 @@ design.
 class RedBlackTree
     ###
     Properties:
-    - length
+
+    - size: The total number of items.
     ###
     constructor: (valuesToAdd = []) ->
         ###

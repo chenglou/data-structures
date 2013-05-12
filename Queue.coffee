@@ -6,8 +6,9 @@
 
 class Queue
     ###
-    Properties
-    - size
+    Properties:
+
+    - size: The total number of items.
     ###
     constructor: (initialArray = []) ->
         ###

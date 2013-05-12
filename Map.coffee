@@ -15,10 +15,15 @@ hidden unique property into the object. This means `set`, `get`, `has` and
 case of, say, a string.
 ###
 class Map
+    ###
+    Properties:
+
+    - size: The total number of `(key, value)` pairs.
+    ###
+
     # Class variable and method.
     @_mapIdTracker: 0
-    @_newMapId: ->
-        @_mapIdTracker++
+    @_newMapId: -> @_mapIdTracker++
 
     constructor: ->
         @_content = {}

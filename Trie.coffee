@@ -4,6 +4,11 @@ Queue = require './Queue'
 # node's one letter.
 WORD_END = "end"
 class Trie
+    ###
+    Properties:
+
+    - size: The total number of words.
+    ###
     constructor: (words = []) ->
         ###
         Pass an optional array of strings to be inserted initially.

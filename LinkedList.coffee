@@ -4,10 +4,10 @@ Doubly Linked.
 class LinkedList
     ###
     Properties
-    - head
-    - tail
-    - size
-    - item.value
+    - head: first item.
+    - tail: last item.
+    - size: total number of items.
+    - item.value: value passed to the item when calling `add()`.
 
     Traverse through the nodes with `prev` and `next`. Get the value using
     `value`.

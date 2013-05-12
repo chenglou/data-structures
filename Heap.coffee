@@ -5,6 +5,11 @@ Minimum heap, i.e. smallest node at root.
 cause comparison problems and might report false negative during extraction.
 ###
 class Heap
+    ###
+    Properties:
+
+    - size: total number of items.
+    ###
     constructor: (dataToHeapify = []) ->
         ###
         Pass an optional array to be heapified. Takes only O(n) time.
