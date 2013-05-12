@@ -1,6 +1,6 @@
 {
   "name": "data-structures",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "chenglou <chenglou92@gmail.com>",
   "description": "JavaScript data structures written in CoffeeScript.",
   "repository": {

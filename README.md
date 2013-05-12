@@ -9,9 +9,7 @@ Fast, light and hassle-free JavaScript data structures, written in CoffeeScript.
 - Self-Balancing Binary Search Tree (Red-Black Tree)
 - Trie
 
-## [Roadmap](https://github.com/chenglou/data-structures/wiki)
-
-Changelog coming soon.
+## [Roadmap](https://github.com/chenglou/data-structures/wiki/Roadmap)
 
 ## Installation
 Using [npm](http://www.npmjs.org):
