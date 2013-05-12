@@ -23,7 +23,7 @@
 		"edge",
 		"queue",
 		"map",
-		"hash"
+		"hash",
 		"heap",
 		"trie",
 	],
