@@ -97,7 +97,7 @@ class Map
         operation(key, value) for key, value of @_content
 
 _isSpecialType = (key) ->
-    simpleHashableTypes = ["Boolean", "Number", "String", "Undefined", "Null", "RegExp", "Function"]
+    simpleHashableTypes = ['Boolean', 'Number', 'String', 'Undefined', 'Null', 'RegExp', 'Function']
     type = _extractDataType key
     for simpleType in simpleHashableTypes
         if type is simpleType then return no

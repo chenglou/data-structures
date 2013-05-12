@@ -3,8 +3,8 @@ NODE_TOO_BIG = 1
 NODE_TOO_SMALL = 2
 STOP_SEARCHING = 3
 # For debugging.
-# RED = "RED"
-# BLACK = "BLACK"
+# RED = 'RED'
+# BLACK = 'BLACK'
 RED = 1
 BLACK = 2
 
@@ -64,7 +64,7 @@ class RedBlackTree
                             nodeToInsert._parent = node
                             node._left = nodeToInsert
                             STOP_SEARCHING
-                    # Inserting "undefined" will go to right child. Important to
+                    # Inserting 'undefined' will go to right child. Important to
                     # keep this conditional in sync with has().
                     else
                         if node._right then NODE_TOO_SMALL
@@ -130,7 +130,7 @@ class RedBlackTree
         foundNode = _findNode @_root, (node) ->
             if value is node.value then NODE_FOUND
             # Keep the conditional this way; node.value > value wouldn't work.
-            # The insertion uses the same comparison to add "undefined" (to the
+            # The insertion uses the same comparison to add 'undefined' (to the
             # right child).
             else if value < node.value then NODE_TOO_BIG
             else NODE_TOO_SMALL
@@ -159,7 +159,7 @@ class RedBlackTree
         foundNode = _findNode @_root, (node) ->
             if value is node.value then NODE_FOUND
             # Keep the conditional this way; node.value > value wouldn't work.
-            # The insertion uses the same comparison to add "undefined" (to the
+            # The insertion uses the same comparison to add 'undefined' (to the
             # right child).
             else if value < node.value then NODE_TOO_BIG
             else NODE_TOO_SMALL
@@ -316,7 +316,7 @@ class RedBlackTree
 _isLeft = (node) -> node is node._parent._left
 _leftOrRight = (node) ->
     # No need to check if parent exist. It's never used this way.
-    if _isLeft node then "_left" else "_right"
+    if _isLeft node then '_left' else '_right'
 
 _findNode = (startingNode, comparator) ->
     currentNode = startingNode

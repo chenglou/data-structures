@@ -9,7 +9,7 @@ Properties:
 - edgeSize: total number of edges.
 ###
 class Graph
-    constructor: () ->
+    constructor: ->
         @_nodes = {}
         @nodeSize = 0
         @edgeSize = 0
@@ -20,7 +20,7 @@ class Graph
         after it's added. It will be used for adding, retrieving and deleting
         related edges too.
 
-        Note that JavaScript's object hashes the id `"2"` and `2` to the same
+        Note that JavaScript's object hashes the id `'2'` and `2` to the same
         key, so please stick with one single id data type for a same graph.
 
         _Returns:_ the node object. Feel free to attach additional custom

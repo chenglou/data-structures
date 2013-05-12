@@ -1,6 +1,6 @@
 # Array under the hood. The slow operation is `array.shift()` at O(n). So
-# instead of simply removing the head, mark it as "garbage collectable" by
-# moving up the dequeue index up (i.e. "dequeue this element next time").
+# instead of simply removing the head, mark it as 'garbage collectable' by
+# moving up the dequeue index up (i.e. 'dequeue this element next time').
 
 # When half of array is garbage collectable, slice these items.
 
