@@ -1,7 +1,7 @@
 # Data Structures
 Fast, light and hassle-free JavaScript data structures, written in CoffeeScript.
 
-- Hash Map
+- (Hash) Map
 - Heap
 - Graph
 - (Doubly) Linked List
@@ -9,7 +9,7 @@ Fast, light and hassle-free JavaScript data structures, written in CoffeeScript.
 - Self-Balancing Binary Search Tree (Red-Black Tree)
 - Trie
 
-# [Roadmap](https://github.com/chenglou/data-structures/wiki)
+## [Roadmap](https://github.com/chenglou/data-structures/wiki)
 
 Changelog coming soon.
 
