@@ -106,70 +106,99 @@ describe "Add node and check size", ->
             linkedList3.add -4, -2
             validate linkedList3, 15, 5, 88, 2, "apple", 12, 9, -4, 0, 12
 
-describe "Remove node", ->
+describe "Remove node using position", ->
     describe "from the end", ->
         linkedList = new LinkedList()
         it "should not error when removing empty linked list", ->
-            expect(linkedList.remove()).toBeUndefined()
+            expect(linkedList.removeAt()).toBeUndefined()
         linkedList2 = new LinkedList()
         it "should return the value of the removed node", ->
             fill linkedList2
-            expect(linkedList2.remove()).toBe 12
-            expect(linkedList2.remove()).toBe 0
-            expect(linkedList2.remove()).toBe 9
-            expect(linkedList2.remove()).toBe 2
-            expect(linkedList2.remove()).toBe 5
+            expect(linkedList2.removeAt()).toBe 12
+            expect(linkedList2.removeAt()).toBe 0
+            expect(linkedList2.removeAt()).toBe 9
+            expect(linkedList2.removeAt()).toBe 2
+            expect(linkedList2.removeAt()).toBe 5
         linkedList3 = new LinkedList()
         it "should remove node and join its sides correctly", ->
             fill linkedList3
-            linkedList3.remove()
+            linkedList3.removeAt()
             validate linkedList3, 5, 2, 9, 0
-            linkedList3.remove()
+            linkedList3.removeAt()
             validate linkedList3, 5, 2, 9
-            linkedList3.remove()
+            linkedList3.removeAt()
             validate linkedList3, 5, 2
-            linkedList3.remove()
+            linkedList3.removeAt()
             validate linkedList3, 5
-            linkedList3.remove()
+            linkedList3.removeAt()
             validate linkedList3
 
     describe "using offset", ->
         linkedList = new LinkedList()
         it "should remove the right item", ->
             fill linkedList
-            expect(linkedList.remove 0).toBe 5
-            expect(linkedList.remove -1).toBe 12
-            expect(linkedList.remove -3).toBe 2
-            expect(linkedList.remove 1).toBe 0
-            expect(linkedList.remove 0).toBe 9
-            expect(linkedList.remove()).toBeUndefined()
+            expect(linkedList.removeAt 0).toBe 5
+            expect(linkedList.removeAt -1).toBe 12
+            expect(linkedList.removeAt -3).toBe 2
+            expect(linkedList.removeAt 1).toBe 0
+            expect(linkedList.removeAt 0).toBe 9
+            expect(linkedList.removeAt()).toBeUndefined()
         linkedList2 = new LinkedList()
         it "should return undefined when the remove is invalid", ->
             fill linkedList2
-            expect(linkedList2.remove 9).toBeUndefined()
-            expect(linkedList2.remove -100).toBeUndefined()
+            expect(linkedList2.removeAt 9).toBeUndefined()
+            expect(linkedList2.removeAt -100).toBeUndefined()
         it "should not modify linked list after invalid removes", ->
             validate linkedList2, 5, 2, 9, 0, 12
+
+describe "Remove node using value", ->
+    linkedList = new LinkedList()
+    it "should return undefined if list's empty", ->
+        expect(linkedList.remove 999).toBeUndefined()
+        expect(linkedList.remove undefined).toBeUndefined()
+        expect(linkedList.remove null).toBeUndefined()
+    it "should return undefined if value's not found", ->
+        fill linkedList
+        expect(linkedList.remove 999).toBeUndefined()
+        expect(linkedList.remove undefined).toBeUndefined()
+        expect(linkedList.remove null).toBeUndefined()
+        validate linkedList, 5, 2, 9, 0, 12
+    it "should return the value removed", ->
+        expect(linkedList.remove 2).toBe 2
+        expect(linkedList.remove 5).toBe 5
+        expect(linkedList.remove 12).toBe 12
+    linkedList2 = new LinkedList()
+    it "should have kept the list chained", ->
+        fill linkedList2
+        linkedList2.remove 5
+        linkedList2.remove 12
+        linkedList2.remove undefined
+        linkedList2.remove 9
+        validate linkedList2, 2, 0
+        linkedList2.remove 0
+        linkedList2.remove 2
+        validate linkedList2
+
 
 describe "Get node", ->
     linkedList = new LinkedList()
     it "should return undefined for invalid node", ->
-        expect(linkedList.get()).toBeUndefined()
-        expect(linkedList.get 0).toBeUndefined()
+        expect(linkedList.at()).toBeUndefined()
+        expect(linkedList.at 0).toBeUndefined()
         fill linkedList
-        expect(linkedList.get 5).toBeUndefined()
-        expect(linkedList.get -6).toBeUndefined()
+        expect(linkedList.at 5).toBeUndefined()
+        expect(linkedList.at -6).toBeUndefined()
     it "should return the value for a valid node", ->
-        expect(linkedList.get(0).value).toBe 5
-        expect(linkedList.get(-5).value).toBe 5
-        expect(linkedList.get(1).value).toBe 2
-        expect(linkedList.get(-4).value).toBe 2
-        expect(linkedList.get(2).value).toBe 9
-        expect(linkedList.get(-3).value).toBe 9
-        expect(linkedList.get(3).value).toBe 0
-        expect(linkedList.get(-2).value).toBe 0
-        expect(linkedList.get(4).value).toBe 12
-        expect(linkedList.get(-1).value).toBe 12
+        expect(linkedList.at(0).value).toBe 5
+        expect(linkedList.at(-5).value).toBe 5
+        expect(linkedList.at(1).value).toBe 2
+        expect(linkedList.at(-4).value).toBe 2
+        expect(linkedList.at(2).value).toBe 9
+        expect(linkedList.at(-3).value).toBe 9
+        expect(linkedList.at(3).value).toBe 0
+        expect(linkedList.at(-2).value).toBe 0
+        expect(linkedList.at(4).value).toBe 12
+        expect(linkedList.at(-1).value).toBe 12
 
 describe "Find index of node", ->
     describe "starting at the beginning", ->

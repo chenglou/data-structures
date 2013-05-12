@@ -1,6 +1,6 @@
 {
 	"name": "data-structures",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"author": "chenglou <chenglou92@gmail.com>",
 	"description": "JavaScript data structures written in CoffeeScript.",
 	"repository": {
@@ -14,16 +14,18 @@
 	"keywords": [
 		"data structure",
 		"linked list",
+		"list",
 		"bst",
 		"binary search tree",
 		"red black tree",
 		"tree",
 		"graph",
+		"edge",
 		"queue",
 		"map",
+		"hash"
 		"heap",
 		"trie",
-		"hash"
 	],
 	"dependencies": {
 		"coffee-script": ">=1.6.0"

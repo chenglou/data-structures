@@ -37,18 +37,18 @@ class LinkedList
         @size = 0
         @add value for value in valuesToAdd
 
-    get: (position) ->
+    at: (position) ->
         ###
         Get the item at `position` (optional). Accepts negative index:
         ```coffee
-        myList.get(-1) # Returns the last element.
+        myList.at(-1) # Returns the last element.
         ```
         However, passing a negative index that surpasses the boundary will
         return undefined:
         ```coffee
         myList = new LinkedList([2, 6, 8, 3])
-        myList.get(-5) # Undefined.
-        myList.get(-4) # 2.
+        myList.at(-5) # Undefined.
+        myList.at(-4) # 2.
         ```
         _Returns:_ item gotten, or undefined if not found.
         ###
@@ -72,7 +72,7 @@ class LinkedList
     add: (value, position = @size) ->
         ###
         Add a new item at `position` (optional). Defaults to adding at the end.
-        `position`, just like in `get()`, can be negative (within the negative
+        `position`, just like in `at()`, can be negative (within the negative
         boundary). Position specifies the place the value's going to be, and the
         old node will be pushed higher. `add(-2)` on list of size 7 is the
         same as `add(5)`.
@@ -90,7 +90,7 @@ class LinkedList
             else
                 # Get the node before the position we're inserting. Its next
                 # needs to be changed.
-                currentNode = @get(position - 1)
+                currentNode = @at(position - 1)
                 [nodeToAdd.next, currentNode.next?.prev, currentNode.next, nodeToAdd.prev] =
                 [currentNode.next, nodeToAdd, nodeToAdd,currentNode]
         # Join the tail too. Modify tail when the node was inserted at the last
@@ -99,7 +99,7 @@ class LinkedList
         @size++
         return value
 
-    remove: (position = @size - 1) ->
+    removeAt: (position = @size - 1) ->
         ###
         Remove an item at index `position` (optional). Defaults to the last
         item. Index can be negative (within the boundary).
@@ -120,7 +120,7 @@ class LinkedList
                 @head = @head.next
                 @head.prev = undefined
             else
-                currentNode = @get(position)
+                currentNode = @at position
                 valueToReturn = currentNode.value
                 currentNode.prev.next = currentNode.next
                 currentNode.next?.prev = currentNode.prev
@@ -129,6 +129,31 @@ class LinkedList
                 if position is @size - 1 then @tail = currentNode.prev
         @size--
         return valueToReturn
+
+    remove: (value) ->
+        ###
+        Remove the item using its value instead of position. **Will remove the
+        fist occurrence of `value`.**
+
+        _Returns:_ the value, or undefined if value's not found.
+        ###
+        if not value? then return
+        currentNode = @head
+        while currentNode and currentNode.value isnt value
+            currentNode = currentNode.next
+        if not currentNode then return
+        if @size is 1 then @head.value = @tail.value = undefined
+        else if currentNode is @head
+            @head = @head.next
+            @head.prev = undefined
+        else if currentNode is @tail
+            @tail = @tail.prev
+            @tail.next = undefined
+        else
+            currentNode.prev.next = currentNode.next
+            currentNode.next.prev = currentNode.prev
+        @size--
+        return value
 
     # We need to be careful about finding undefined and null values. The
     # starting position accepts negative indexing.
@@ -151,7 +176,7 @@ class LinkedList
         if (not @head.value? and not @head.next) or startingPosition >= @size
             return -1
         startingPosition = Math.max(0, @_adjust startingPosition)
-        currentNode = @get startingPosition
+        currentNode = @at startingPosition
         position = startingPosition
         while currentNode
             if currentNode.value is value then break
