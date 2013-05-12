@@ -1,41 +1,40 @@
 {
-	"name": "data-structures",
-	"version": "1.1.0",
-	"author": "chenglou <chenglou92@gmail.com>",
-	"description": "JavaScript data structures written in CoffeeScript.",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/chenglou/data-structures.git"
-	},
-	"main": "./index.coffee",
-	"scripts": {
-		"test": "jasmine-node --coffee --noStack tests/"
-	},
-	"keywords": [
-		"data structure",
-		"linked list",
-		"list",
-		"bst",
-		"binary search tree",
-		"red black tree",
-		"tree",
-		"graph",
-		"edge",
-		"queue",
-		"map",
-		"hash",
-		"heap",
-		"trie"
-	],
-	"dependencies": {
-		"coffee-script": ">=1.6.0"
-	},
-	"devDependencies": {
-		"jasmine-node": ">=1.4.0"
-	},
-	"engines": {
-		"node": "*"
-	},
-	"license": "MIT"
+  "name": "data-structures",
+  "version": "1.1.1",
+  "author": "chenglou <chenglou92@gmail.com>",
+  "description": "JavaScript data structures written in CoffeeScript.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chenglou/data-structures.git"
+  },
+  "main": "./index.coffee",
+  "scripts": {
+    "test": "jasmine-node --coffee --noStack tests/"
+  },
+  "keywords": [
+    "data structure",
+    "linked list",
+    "list",
+    "bst",
+    "binary search tree",
+    "red black tree",
+    "tree",
+    "graph",
+    "edge",
+    "queue",
+    "map",
+    "hash",
+    "heap",
+    "trie"
+  ],
+  "dependencies": {
+    "coffee-script": ">=1.6.0"
+  },
+  "devDependencies": {
+    "jasmine-node": ">=1.4.0"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "license": "MIT"
 }
-
