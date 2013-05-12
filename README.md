@@ -1,4 +1,4 @@
-# Data Structures
+# Data Structures [![Build Status](https://travis-ci.org/chenglou/data-structures.png?branch=master)](https://travis-ci.org/chenglou/data-structures)
 Fast, light and hassle-free JavaScript data structures, written in CoffeeScript.
 
 - (Hash) Map
