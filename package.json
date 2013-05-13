@@ -1,6 +1,6 @@
 {
   "name": "data-structures",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "author": "chenglou <chenglou92@gmail.com>",
   "description": "JavaScript data structures written in CoffeeScript.",
   "repository": {
@@ -9,7 +9,8 @@
   },
   "main": "./index.coffee",
   "scripts": {
-    "test": "jasmine-node --coffee --noStack tests/"
+    "test": "jasmine-node --coffee --noStack tests/",
+    "browserExport": "coffee -o distribution/ -c source/*.coffee && cd distribution && browserify -r ./Graph -r ./Heap -r ./LinkedList -r ./Map -r ./Queue -r ./RedBlackTree -r ./Trie -o data-structures.js && uglifyjs data-structures.js -o data-structures.min.js -m"
   },
   "keywords": [
     "data structure",
@@ -31,7 +32,9 @@
     "coffee-script": ">=1.6.0"
   },
   "devDependencies": {
-    "jasmine-node": ">=1.4.0"
+    "jasmine-node": ">=1.4.0",
+    "browserify": ">=2.13.3",
+    "uglify-js": ">=2.3.2"
   },
   "engines": {
     "node": "*"
