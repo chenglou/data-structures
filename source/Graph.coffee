@@ -195,17 +195,26 @@ class Graph
         ###
         Traverse through the graph in an arbitrary manner, visiting each node
         once. Pass a function of the form `fn(nodeObject)`.
+
+        _Returns:_ undefined.
         ###
         for nodeId, nodeObject of @_nodes
             operation nodeObject
+        # Manually return. This is to avoid CoffeeScript's nature of returning
+        # an expression, unneeded and wastful (array) in this case.
+        return
 
     forEachEdge: (operation) ->
         ###
         Traverse through the graph in an arbitrary manner, visiting each edge
         once. Pass a function of the form `fn(edgeObject)`.
+
+        _Returns:_ undefined.
         ###
         for nodeId, nodeObject of @_nodes
             for toId, edgeObject of nodeObject._outEdges
                 operation edgeObject
+        # Manual return, check forEachNode for reason.
+        return
 
 module.exports = Graph

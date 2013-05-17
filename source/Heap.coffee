@@ -59,6 +59,9 @@ class Heap
             [@_data[index], @_data[_parent index]] =
             [@_data[_parent index], @_data[index]]
             index = _parent index
+        # Avoid generated `_results` array created by CoffeeScript accumulated
+        # for the sake of returning an expression. Return manually.
+        return
 
     _downHeap: ->
         currentIndex = 1
@@ -74,6 +77,8 @@ class Heap
                 currentIndex = smallerChildIndex
             else
                 break
+        # Return manually, same reason as `_upHeap`.
+        return
 
 _parent = (index) -> index >> 1 # Fast divide by 2 then flooring.
 

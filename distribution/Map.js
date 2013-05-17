@@ -113,17 +113,17 @@
     Map.prototype.forEach = function(operation) {
       /*
       Traverse through the map. Pass a function of the form `fn(key, value)`.
+      
+      _Returns:_ undefined.
       */
 
-      var key, value, _ref, _results;
+      var key, value, _ref;
 
       _ref = this._content;
-      _results = [];
       for (key in _ref) {
         value = _ref[key];
-        _results.push(operation(key, value));
+        operation(key, value);
       }
-      return _results;
     };
 
     return Map;

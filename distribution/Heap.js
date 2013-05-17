@@ -85,22 +85,19 @@ Properties:
     };
 
     Heap.prototype._upHeap = function(index) {
-      var valueHolder, _ref, _results;
+      var valueHolder, _ref;
 
       valueHolder = this._data[index];
-      _results = [];
       while (this._data[index] < this._data[_parent(index)] && index > 1) {
         _ref = [this._data[_parent(index)], this._data[index]], this._data[index] = _ref[0], this._data[_parent(index)] = _ref[1];
-        _results.push(index = _parent(index));
+        index = _parent(index);
       }
-      return _results;
     };
 
     Heap.prototype._downHeap = function() {
-      var currentIndex, smallerChildIndex, _ref, _results;
+      var currentIndex, smallerChildIndex, _ref;
 
       currentIndex = 1;
-      _results = [];
       while (_leftChild(currentIndex < this._data.length)) {
         smallerChildIndex = _leftChild(currentIndex);
         if (smallerChildIndex < this._data.length - 1) {
@@ -110,12 +107,11 @@ Properties:
         }
         if (this._data[smallerChildIndex] < this._data[currentIndex]) {
           _ref = [this._data[currentIndex], this._data[smallerChildIndex]], this._data[smallerChildIndex] = _ref[0], this._data[currentIndex] = _ref[1];
-          _results.push(currentIndex = smallerChildIndex);
+          currentIndex = smallerChildIndex;
         } else {
           break;
         }
       }
-      return _results;
     };
 
     return Heap;

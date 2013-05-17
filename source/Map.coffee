@@ -93,8 +93,12 @@ class Map
     forEach: (operation) ->
         ###
         Traverse through the map. Pass a function of the form `fn(key, value)`.
+
+        _Returns:_ undefined.
         ###
         operation(key, value) for key, value of @_content
+        # Manual return to avoid CoffeeScript accumulating an array for return.
+        return
 
 _isSpecialType = (key) ->
     simpleHashableTypes = ['Boolean', 'Number', 'String', 'Undefined', 'Null', 'RegExp', 'Function']

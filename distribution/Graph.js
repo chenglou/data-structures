@@ -242,44 +242,38 @@ Properties:
       /*
       Traverse through the graph in an arbitrary manner, visiting each node
       once. Pass a function of the form `fn(nodeObject)`.
+      
+      _Returns:_ undefined.
       */
 
-      var nodeId, nodeObject, _ref, _results;
+      var nodeId, nodeObject, _ref;
 
       _ref = this._nodes;
-      _results = [];
       for (nodeId in _ref) {
         nodeObject = _ref[nodeId];
-        _results.push(operation(nodeObject));
+        operation(nodeObject);
       }
-      return _results;
     };
 
     Graph.prototype.forEachEdge = function(operation) {
       /*
       Traverse through the graph in an arbitrary manner, visiting each edge
       once. Pass a function of the form `fn(edgeObject)`.
+      
+      _Returns:_ undefined.
       */
 
-      var edgeObject, nodeId, nodeObject, toId, _ref, _results;
+      var edgeObject, nodeId, nodeObject, toId, _ref, _ref1;
 
       _ref = this._nodes;
-      _results = [];
       for (nodeId in _ref) {
         nodeObject = _ref[nodeId];
-        _results.push((function() {
-          var _ref1, _results1;
-
-          _ref1 = nodeObject._outEdges;
-          _results1 = [];
-          for (toId in _ref1) {
-            edgeObject = _ref1[toId];
-            _results1.push(operation(edgeObject));
-          }
-          return _results1;
-        })());
+        _ref1 = nodeObject._outEdges;
+        for (toId in _ref1) {
+          edgeObject = _ref1[toId];
+          operation(edgeObject);
+        }
       }
-      return _results;
     };
 
     return Graph;

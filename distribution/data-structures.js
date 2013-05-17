@@ -245,44 +245,38 @@ Properties:
       /*
       Traverse through the graph in an arbitrary manner, visiting each node
       once. Pass a function of the form `fn(nodeObject)`.
+      
+      _Returns:_ undefined.
       */
 
-      var nodeId, nodeObject, _ref, _results;
+      var nodeId, nodeObject, _ref;
 
       _ref = this._nodes;
-      _results = [];
       for (nodeId in _ref) {
         nodeObject = _ref[nodeId];
-        _results.push(operation(nodeObject));
+        operation(nodeObject);
       }
-      return _results;
     };
 
     Graph.prototype.forEachEdge = function(operation) {
       /*
       Traverse through the graph in an arbitrary manner, visiting each edge
       once. Pass a function of the form `fn(edgeObject)`.
+      
+      _Returns:_ undefined.
       */
 
-      var edgeObject, nodeId, nodeObject, toId, _ref, _results;
+      var edgeObject, nodeId, nodeObject, toId, _ref, _ref1;
 
       _ref = this._nodes;
-      _results = [];
       for (nodeId in _ref) {
         nodeObject = _ref[nodeId];
-        _results.push((function() {
-          var _ref1, _results1;
-
-          _ref1 = nodeObject._outEdges;
-          _results1 = [];
-          for (toId in _ref1) {
-            edgeObject = _ref1[toId];
-            _results1.push(operation(edgeObject));
-          }
-          return _results1;
-        })());
+        _ref1 = nodeObject._outEdges;
+        for (toId in _ref1) {
+          edgeObject = _ref1[toId];
+          operation(edgeObject);
+        }
       }
-      return _results;
     };
 
     return Graph;
@@ -383,22 +377,19 @@ Properties:
     };
 
     Heap.prototype._upHeap = function(index) {
-      var valueHolder, _ref, _results;
+      var valueHolder, _ref;
 
       valueHolder = this._data[index];
-      _results = [];
       while (this._data[index] < this._data[_parent(index)] && index > 1) {
         _ref = [this._data[_parent(index)], this._data[index]], this._data[index] = _ref[0], this._data[_parent(index)] = _ref[1];
-        _results.push(index = _parent(index));
+        index = _parent(index);
       }
-      return _results;
     };
 
     Heap.prototype._downHeap = function() {
-      var currentIndex, smallerChildIndex, _ref, _results;
+      var currentIndex, smallerChildIndex, _ref;
 
       currentIndex = 1;
-      _results = [];
       while (_leftChild(currentIndex < this._data.length)) {
         smallerChildIndex = _leftChild(currentIndex);
         if (smallerChildIndex < this._data.length - 1) {
@@ -408,12 +399,11 @@ Properties:
         }
         if (this._data[smallerChildIndex] < this._data[currentIndex]) {
           _ref = [this._data[currentIndex], this._data[smallerChildIndex]], this._data[smallerChildIndex] = _ref[0], this._data[currentIndex] = _ref[1];
-          _results.push(currentIndex = smallerChildIndex);
+          currentIndex = smallerChildIndex;
         } else {
           break;
         }
       }
-      return _results;
     };
 
     return Heap;
@@ -825,17 +815,17 @@ module.exports=require('ipzURT');
     Map.prototype.forEach = function(operation) {
       /*
       Traverse through the map. Pass a function of the form `fn(key, value)`.
+      
+      _Returns:_ undefined.
       */
 
-      var key, value, _ref, _results;
+      var key, value, _ref;
 
       _ref = this._content;
-      _results = [];
       for (key in _ref) {
         value = _ref[key];
-        _results.push(operation(key, value));
+        operation(key, value);
       }
-      return _results;
     };
 
     return Map;
