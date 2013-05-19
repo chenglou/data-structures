@@ -23,6 +23,7 @@ var heap = new Heap();
 heap.add(3);
 heap.removeMin();
 ```
+Alternatively, you can directly use the compiled JavaScript version in the "distribution" folder. It's always in sync with the CoffeeScript one.
 
 ### Client-side:
 Get the whole file here: [data-structures.js](https://raw.github.com/chenglou/data-structures/master/distribution/data-structures.js) or minified: [data-structures.min.js](https://raw.github.com/chenglou/data-structures/master/distribution/data-structures.min.js)
