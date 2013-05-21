@@ -26,13 +26,14 @@ heap.removeMin();
 Alternatively, you can directly use the compiled JavaScript version in the "distribution" folder. It's always in sync with the CoffeeScript one.
 
 ### Client-side:
-Get the whole file here: [data-structures.js](https://raw.github.com/chenglou/data-structures/master/distribution/data-structures.js) or minified: [data-structures.min.js](https://raw.github.com/chenglou/data-structures/master/distribution/data-structures.min.js)
+[Get the whole file here.](https://github.com/chenglou/data-structures/tree/master/distribution)
+Either use the development version or the minified production version.
 
-Then put the file in your HTML page, **note that the code is `require`d differently:**
+Then put the file in your HTML page,
 ```html
-<script src="./data-structures.min.js"></script>
+<script src="./data-structures-versionHere.min.js"></script>
 <script>
-    var heap = require("./Heap");
+    var Heap = require("data-structures").Heap;
     var heap = new Heap();
     heap.add(3);
     heap.removeMin();
@@ -48,11 +49,15 @@ The wiki page is a formatted version of the documentation in the code.
 ## [Roadmap](https://github.com/chenglou/data-structures/wiki/Roadmap)
 
 ## For Contributors
+First, install the npm development dependencies:
+```bash
+npm install
+```
 
 ### Testing
 Tests are done using [jasmine-node](https://github.com/mhevery/jasmine-node).
 
-E.g.:
+Testing individual file, e.g.:
 ```bash
 jasmine-node --coffee tests/LinkedList.spec.coffee
 ```
@@ -63,10 +68,14 @@ npm test
 ```
 
 ### Export for browser
+You'll need the [grunt-cli tool](http://gruntjs.com/getting-started):
 ```bash
-npm run-script browserExport
+npm install -g grunt-cli
 ```
-(Compiles CoffeeScript to JavaScript, [browserifies](https://github.com/substack/node-browserify) them into a bundle, then minifies using [uglify-js](https://github.com/mishoo/UglifyJS2)).
+Then run:
+```bash
+grunt
+```
 
 ## License
 MIT.
