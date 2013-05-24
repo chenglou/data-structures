@@ -6,25 +6,22 @@ module.exports = (grunt) ->
 
         clean:
             before: ['distribution/*']
-            after: ['distribution/source', 'distribution/index.js']
+            after: ['distribution/temp']
 
         coffee:
-            index:
-                files:
-                    'distribution/index.js': ['index.coffee']
-            modules:
+            all:
                 expand: yes
                 cwd: 'source/'
                 src: ['*.coffee']
-                dest: 'distribution/source'
+                dest: 'distribution/temp'
                 ext: '.js'
 
         browserify2:
             compile:
                 options:
                     expose:
-                        'data-structures': './distribution/index.js'
-                entry: './distribution/index.js'
+                        'data-structures': './distribution/temp/index.js'
+                entry: './distribution/temp/index.js'
                 compile: 'distribution/<%= outputFileName %>.js'
 
         uglify:

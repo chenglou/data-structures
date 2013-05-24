@@ -1,20 +1,20 @@
 require=(function(e,t,n){function i(n,s){if(!t[n]){if(!e[n]){var o=typeof require=="function"&&require;if(!s&&o)return o(n,!0);if(r)return r(n,!0);throw new Error("Cannot find module '"+n+"'")}var u=t[n]={exports:{}};e[n][0](function(t){var r=e[n][1][t];return i(r?r:t)},u,u.exports)}return t[n].exports}var r=typeof require=="function"&&require;for(var s=0;s<n.length;s++)i(n[s]);return i})({"data-structures":[function(require,module,exports){
-module.exports=require('EerzU6');
-},{}],"EerzU6":[function(require,module,exports){
+module.exports=require('C+UDyU');
+},{}],"C+UDyU":[function(require,module,exports){
 (function() {
   module.exports = {
-    Graph: require('./source/Graph'),
-    Heap: require('./source/Heap'),
-    LinkedList: require('./source/LinkedList'),
-    Map: require('./source/Map'),
-    Queue: require('./source/Queue'),
-    RedBlackTree: require('./source/RedBlackTree'),
-    Trie: require('./source/Trie')
+    Graph: require('./Graph'),
+    Heap: require('./Heap'),
+    LinkedList: require('./LinkedList'),
+    Map: require('./Map'),
+    Queue: require('./Queue'),
+    RedBlackTree: require('./RedBlackTree'),
+    Trie: require('./Trie')
   };
 
 }).call(this);
 
-},{"./source/Graph":1,"./source/Heap":2,"./source/LinkedList":3,"./source/Map":4,"./source/Queue":5,"./source/RedBlackTree":6,"./source/Trie":7}],1:[function(require,module,exports){
+},{"./Graph":1,"./Heap":2,"./LinkedList":3,"./Map":4,"./Queue":5,"./RedBlackTree":6,"./Trie":7}],1:[function(require,module,exports){
 /*
 Graph implemented as a modified incidence list. O(1) for every typical
 operation, even `removeNode()` ( **O(1) amortized** ).
@@ -1626,5 +1626,5 @@ Properties:
 
 }).call(this);
 
-},{"./Queue":5}]},{},["EerzU6"])
+},{"./Queue":5}]},{},["C+UDyU"])
 ;

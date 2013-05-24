@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/chenglou/data-structures.git"
   },
-  "main": "./index.coffee",
+  "main": "./source/index.coffee",
   "scripts": {
     "test": "jasmine-node --coffee --noStack tests/",
     "browserExport": "coffee -o distribution/ -c source/*.coffee && cd distribution && browserify -r ./Graph -r ./Heap -r ./LinkedList -r ./Map -r ./Queue -r ./RedBlackTree -r ./Trie -o data-structures.js && uglifyjs data-structures.js -o data-structures.min.js -m"
