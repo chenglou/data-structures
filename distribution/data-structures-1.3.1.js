@@ -43,12 +43,12 @@ Properties:
       after it's added. It will be used for adding, retrieving and deleting
       related edges too.
       
-      Note that JavaScript's object hashes the id `'2'` and `2` to the same
-      key, so please stick with one single id data type for a same graph.
+      Note that JavaScript's object hashes the id `'2'` and `2` to the same key,
+      so please stick with one single id data type for a same graph.
       
-      _Returns:_ the node object. Feel free to attach additional custom
-      properties on it for graph algorithms' needs. **Undefined if node id
-      already exists**, as to avoid accidental overrides.
+      _Returns:_ the node object. Feel free to attach additional custom properties
+      on it for graph algorithms' needs. **Undefined if node id already exists**,
+      as to avoid accidental overrides.
       */
       if (!this._nodes[id]) {
         this.nodeSize++;
@@ -63,16 +63,16 @@ Properties:
 
     Graph.prototype.getNode = function(id) {
       /*
-      _Returns:_ the node object. Feel free to attach additional custom
-      properties on it for graph algorithms' needs.
+      _Returns:_ the node object. Feel free to attach additional custom properties
+      on it for graph algorithms' needs.
       */
       return this._nodes[id];
     };
 
     Graph.prototype.removeNode = function(id) {
       /*
-      _Returns:_ the node object removed, or undefined if it didn't exist in
-      the first place.
+      _Returns:_ the node object removed, or undefined if it didn't exist in the
+      first place.
       */
 
       var nodeToRemove;
@@ -96,14 +96,14 @@ Properties:
       }
       /*
       `fromId` and `toId` are the node id specified when it was created using
-      `addNode()`. `weight` is optional and defaults to 1. Ignoring it
-      effectively makes this an unweighted graph. Under the hood, `weight` is
-      just a normal property of the edge object.
+      `addNode()`. `weight` is optional and defaults to 1. Ignoring it effectively
+      makes this an unweighted graph. Under the hood, `weight` is just a normal
+      property of the edge object.
       
-      _Returns:_ the edge object created. Feel free to attach additional
-      custom properties on it for graph algorithms' needs. **Or undefined** if
-      the nodes of id `fromId` or `toId` aren't found, or if an edge already
-      exists between the two nodes.
+      _Returns:_ the edge object created. Feel free to attach additional custom
+      properties on it for graph algorithms' needs. **Or undefined** if the nodes
+      of id `fromId` or `toId` aren't found, or if an edge already exists between
+      the two nodes.
       */
 
       if (this.getEdge(fromId, toId)) {
@@ -181,8 +181,8 @@ Properties:
 
     Graph.prototype.getInEdgesOf = function(nodeId) {
       /*
-      _Returns:_ an array of edge objects that are directed toward the node,
-      or empty array if none exists.
+      _Returns:_ an array of edge objects that are directed toward the node, or
+      empty array if none exists.
       */
 
       var edge, fromId, inEdges, toNode;
@@ -203,8 +203,8 @@ Properties:
 
     Graph.prototype.getOutEdgesOf = function(nodeId) {
       /*
-      _Returns:_ an array of edge objects that go out of the node, or empty
-      array if none exists.
+      _Returns:_ an array of edge objects that go out of the node, or empty array
+      if none exists.
       */
 
       var edge, fromNode, outEdges, toId;
@@ -229,9 +229,9 @@ Properties:
       `getOutEdgesOf()`. Some nodes might have an edge pointing toward itself.
       This method solves that duplication.
       
-      _Returns:_ an array of edge objects linked to the node, no matter if
-      they're outgoing or coming. Duplicate edge created by self-pointing
-      nodes are removed. Only one copy stays. Empty array if node has no edge.
+      _Returns:_ an array of edge objects linked to the node, no matter if they're
+      outgoing or coming. Duplicate edge created by self-pointing nodes are
+      removed. Only one copy stays. Empty array if node has no edge.
       */
 
       var i, inEdges, outEdges, selfEdge, _i, _ref, _ref1;
@@ -256,8 +256,8 @@ Properties:
 
     Graph.prototype.forEachNode = function(operation) {
       /*
-      Traverse through the graph in an arbitrary manner, visiting each node
-      once. Pass a function of the form `fn(nodeObject)`.
+      Traverse through the graph in an arbitrary manner, visiting each node once.
+      Pass a function of the form `fn(nodeObject)`.
       
       _Returns:_ undefined.
       */
@@ -273,8 +273,8 @@ Properties:
 
     Graph.prototype.forEachEdge = function(operation) {
       /*
-      Traverse through the graph in an arbitrary manner, visiting each edge
-      once. Pass a function of the form `fn(edgeObject)`.
+      Traverse through the graph in an arbitrary manner, visiting each edge once.
+      Pass a function of the form `fn(edgeObject)`.
       
       _Returns:_ undefined.
       */
@@ -496,8 +496,8 @@ list.head.next.value # 4.
       ```coffee
       myList.at(-1) # Returns the last element.
       ```
-      However, passing a negative index that surpasses the boundary will
-      return undefined:
+      However, passing a negative index that surpasses the boundary will return
+      undefined:
       ```coffee
       myList = new LinkedList([2, 6, 8, 3])
       myList.at(-5) # Undefined.
@@ -535,9 +535,9 @@ list.head.next.value # 4.
       /*
       Add a new item at `position` (optional). Defaults to adding at the end.
       `position`, just like in `at()`, can be negative (within the negative
-      boundary). Position specifies the place the value's going to be, and the
-      old node will be pushed higher. `add(-2)` on list of size 7 is the
-      same as `add(5)`.
+      boundary). Position specifies the place the value's going to be, and the old
+      node will be pushed higher. `add(-2)` on list of size 7 is the same as
+      `add(5)`.
       
       _Returns:_ item added.
       */
@@ -573,8 +573,8 @@ list.head.next.value # 4.
         position = this.size - 1;
       }
       /*
-      Remove an item at index `position` (optional). Defaults to the last
-      item. Index can be negative (within the boundary).
+      Remove an item at index `position` (optional). Defaults to the last item.
+      Index can be negative (within the boundary).
       
       _Returns:_ item removed.
       */
@@ -612,8 +612,8 @@ list.head.next.value # 4.
 
     LinkedList.prototype.remove = function(value) {
       /*
-      Remove the item using its value instead of position. **Will remove the
-      fist occurrence of `value`.**
+      Remove the item using its value instead of position. **Will remove the fist
+      occurrence of `value`.**
       
       _Returns:_ the value, or undefined if value's not found.
       */
@@ -653,12 +653,12 @@ list.head.next.value # 4.
         startingPosition = 0;
       }
       /*
-      Find the index of an item, similarly to `array.indexOf()`. Defaults to
-      start searching from the beginning, by can start at another position by
-      passing `startingPosition`. This parameter can also be negative; but
-      unlike the other methods of this class, `startingPosition` (optional)
-      can be as small as desired; a value of -999 for a list of size 5 will
-      start searching normally, at the beginning.
+      Find the index of an item, similarly to `array.indexOf()`. Defaults to start
+      searching from the beginning, by can start at another position by passing
+      `startingPosition`. This parameter can also be negative; but unlike the
+      other methods of this class, `startingPosition` (optional) can be as small
+      as desired; a value of -999 for a list of size 5 will start searching
+      normally, at the beginning.
       
       **Note:** searches forwardly, **not** backwardly, i.e:
       ```coffee
@@ -747,10 +747,10 @@ list.head.next.value # 4.
         makeHash = false;
       }
       /*
-      The hash function for hashing keys is public. Feel free to replace it
-      with your own. The `makeHash` parameter is optional and accepts a
-      boolean (defaults to `false`) indicating whether or not to produce a new
-      hash (for the first use, naturally).
+      The hash function for hashing keys is public. Feel free to replace it with
+      your own. The `makeHash` parameter is optional and accepts a boolean
+      (defaults to `false`) indicating whether or not to produce a new hash (for
+      the first use, naturally).
       
       _Returns:_ the hash.
       */
@@ -798,8 +798,8 @@ list.head.next.value # 4.
       Remove the (key, value) pair.
       
       _Returns:_ **true or false**. Unlike most of this library, this method
-      doesn't return the deleted value. This is so that it conforms to the
-      future JavaScript `map.delete()`'s behavior.
+      doesn't return the deleted value. This is so that it conforms to the future
+      JavaScript `map.delete()`'s behavior.
       */
 
       var hashedKey;
@@ -875,8 +875,8 @@ Properties:
         initialArray = [];
       }
       /*
-      Pass an optional array to be transformed into a queue. The item at index
-      0 is the first to be dequeued.
+      Pass an optional array to be transformed into a queue. The item at index 0
+      is the first to be dequeued.
       */
 
       this._content = initialArray;
@@ -983,8 +983,8 @@ Properties:
 
     RedBlackTree.prototype.add = function(value) {
       /*
-      Again, make sure to not pass a value already in the tree, or undefined,
-      or null.
+      Again, make sure to not pass a value already in the tree, or undefined, or
+      null.
       
       _Returns:_ value added.
       */
@@ -1428,8 +1428,8 @@ Properties:
       /*
       Add a whole string to the trie.
       
-      _Returns:_ the word added. Will return undefined (without adding the
-      value) if the word passed is null or undefined.
+      _Returns:_ the word added. Will return undefined (without adding the value)
+      if the word passed is null or undefined.
       */
 
       var currentNode, letter, _i, _len;
@@ -1477,8 +1477,7 @@ Properties:
 
     Trie.prototype.longestPrefixOf = function(word) {
       /*
-      Find all words containing the prefix. The word itself counts as a
-      prefix.
+      Find all words containing the prefix. The word itself counts as a prefix.
       ```coffee
       trie = new Trie()
       trie.add('hello')
@@ -1510,8 +1509,8 @@ Properties:
 
     Trie.prototype.wordsWithPrefix = function(prefix) {
       /*
-      Find all words containing the prefix. The word itself counts as a
-      prefix. **Watch out for edge cases.**
+      Find all words containing the prefix. The word itself counts as a prefix.
+      **Watch out for edge cases.**
       ```coffee
       trie = new Trie()
       trie.wordsWithPrefix('') # []. Check later case below.
@@ -1561,9 +1560,9 @@ Properties:
 
     Trie.prototype.remove = function(word) {
       /*
-      _Returns:_ the string removed, or undefined if the word in its whole
-      doesn't exist. **Note:** this means removing `beers` when only `beer`
-      exists will return undefined and conserve `beer`.
+      _Returns:_ the string removed, or undefined if the word in its whole doesn't
+      exist. **Note:** this means removing `beers` when only `beer` exists will
+      return undefined and conserve `beer`.
       */
 
       var currentNode, i, letter, prefix, _i, _j, _len, _ref;

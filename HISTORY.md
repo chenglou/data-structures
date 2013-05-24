@@ -1,3 +1,7 @@
+### 1.3.1 (May 24th 2013)
+- CoffeScript lint task.
+- Changed indentation from 4 spaces to 2.
+
 ## 1.3.0 (May 21th 2013)
 - New way to include script in browser. Please check README.
 - For contributors: cleaner build process using [Grunt](http://gruntjs.com).
