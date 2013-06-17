@@ -9,29 +9,28 @@ module.exports = (grunt) ->
         src: ['source/*.coffee', 'tests/*.coffee']
 
     clean:
-      before: ['distribution/*']
-      after: ['distribution/temp']
+      all: ['distribution/*']
 
     coffee:
       all:
         expand: yes
         cwd: 'source/'
         src: ['*.coffee']
-        dest: 'distribution/temp'
+        dest: 'distribution/'
         ext: '.js'
 
     browserify2:
       compile:
         options:
           expose:
-            'data-structures': './distribution/temp/index.js'
-        entry: './distribution/temp/index.js'
-        compile: 'distribution/<%= outputFileName %>.js'
+            'data-structures': './distribution/index.js'
+        entry: './distribution/index.js'
+        compile: 'distribution/browser/<%= outputFileName %>.js'
 
     uglify:
       all:
-        src: ['distribution/<%= outputFileName %>.js']
-        dest: 'distribution/<%= outputFileName %>.min.js'
+        src: ['distribution/browser/<%= outputFileName %>.js']
+        dest: 'distribution/browser/<%= outputFileName %>.min.js'
 
   grunt.loadNpmTasks 'grunt-coffeelint'
   grunt.loadNpmTasks 'grunt-contrib-clean'
@@ -39,5 +38,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-browserify2'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
 
-  grunt.registerTask 'default', ['coffeelint', 'clean:before', 'coffee',
-                                 'browserify2', 'uglify', 'clean:after']
+  grunt.registerTask 'default', ['coffeelint', 'clean', 'coffee',
+                                 'browserify2', 'uglify']

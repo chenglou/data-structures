@@ -26,12 +26,12 @@ heap.removeMin();
 Alternatively, you can directly use the compiled JavaScript version in the "distribution" folder. It's always in sync with the CoffeeScript one.
 
 ### Client-side:
-[Get the whole file here.](https://github.com/chenglou/data-structures/tree/master/distribution)
+[Get the whole file here.](https://github.com/chenglou/data-structures/tree/master/distribution/browser)
 Either use the development version or the minified production version.
 
 Then put the file in your HTML page,
 ```html
-<script src="./data-structures-versionHere.min.js"></script>
+<script src="path/to/dataStructure/file"></script>
 <script>
     var Heap = require("data-structures").Heap;
     var heap = new Heap();
@@ -49,7 +49,7 @@ The wiki page is a formatted version of the documentation in the code.
 ## [Roadmap](https://github.com/chenglou/data-structures/wiki/Roadmap)
 
 ## For Contributors
-First, install the npm development dependencies:
+Install the npm development dependencies:
 ```bash
 npm install
 ```
@@ -67,7 +67,11 @@ Lazy method:
 npm test
 ```
 
-### Export for browser
+### Build JavsScript for server-side and browser
+_Note that if it's a pull request you'd like to submit, ignore this section. The code will be rebuilt after the pull anyways._
+
+Feel free to modify the source code and rebuild it for your own needs:
+
 You'll need the [grunt-cli tool](http://gruntjs.com/getting-started):
 ```bash
 npm install -g grunt-cli
@@ -76,6 +80,7 @@ Then run:
 ```bash
 grunt
 ```
+This will take care of compiling CoffeeScript into JavaScript and, if needed, bundle them for the browser.
 
 ## License
 MIT.

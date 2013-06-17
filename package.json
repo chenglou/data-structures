@@ -1,13 +1,13 @@
 {
   "name": "data-structures",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "author": "chenglou <chenglou92@gmail.com>",
   "description": "JavaScript data structures written in CoffeeScript.",
   "repository": {
     "type": "git",
     "url": "https://github.com/chenglou/data-structures.git"
   },
-  "main": "./source/index.coffee",
+  "main": "./distribution/index.js",
   "scripts": {
     "test": "jasmine-node --coffee --noStack tests/"
   },
@@ -28,9 +28,9 @@
     "trie"
   ],
   "dependencies": {
-    "coffee-script": ">=1.6.0"
   },
   "devDependencies": {
+    "coffee-script": ">=1.6.0",
     "jasmine-node": ">=1.4.0",
     "grunt": "~0.4.1",
     "grunt-contrib-clean": "~0.4.1",
