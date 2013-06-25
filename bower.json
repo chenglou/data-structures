@@ -11,7 +11,7 @@
     "tests",
     "source",
     "Gruntfile.coffee",
-    "distribution/*.js"
+    "distribution/*.js",
     "distribution/browser/*.min.js"
   ],
   "keywords": [
