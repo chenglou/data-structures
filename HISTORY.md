@@ -1,4 +1,4 @@
-### 1.3.3 (June 25th 2013)
+### 1.3.4 (June 25th 2013)
 - Bower support.
 
 ### 1.3.2 (June 16th 2013)
