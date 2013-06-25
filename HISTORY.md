@@ -1,3 +1,9 @@
+### 1.3.3 (June 25th 2013)
+- Bower support.
+
+### 1.3.2 (June 16th 2013)
+- Moved CoffeeScript dependency into development dependency. Compiled js now available.
+
 ### 1.3.1 (May 24th 2013)
 - CoffeScript lint task.
 - Changed indentation from 4 spaces to 2.
