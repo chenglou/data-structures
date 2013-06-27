@@ -1,3 +1,29 @@
+###
+Credit to Wikipedia's article on [Red-black
+tree](http://en.wikipedia.org/wiki/Red–black_tree)
+
+**Note:** doesn't handle duplicate entries, undefined and null. This is by
+design.
+
+## Overview example:
+
+```js
+var rbt = new RedBlackTree([7, 5, 1, 8]);
+rbt.add(2); // => 2
+rbt.add(10); // => 10
+rbt.has(5); // => true
+rbt.peekMin(); // => 1
+rbt.peekMax(); // => 10
+rbt.removeMin(); // => 1
+rbt.removeMax(); // => 10
+rbt.remove(8); // => 8
+```
+
+## Properties:
+
+- size: The total number of items.
+###
+
 NODE_FOUND = 0
 NODE_TOO_BIG = 1
 NODE_TOO_SMALL = 2
@@ -19,17 +45,6 @@ BLACK = 2
 
 # **In our implementation, leaves are simply undefined.**
 
-###
-Credit to Wikipedia's article on [Red-black
-tree](http://en.wikipedia.org/wiki/Red–black_tree)
-
-**Note:** doesn't handle duplicate entries, undefined and null. This is by
-design.
-
-Properties:
-
-- size: The total number of items.
-###
 class RedBlackTree
   constructor: (valuesToAdd = []) ->
     ###

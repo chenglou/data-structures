@@ -1,9 +1,17 @@
-Map = require('../').Map
+Map = require('../source').Map
 
 describe "Create hash map", ->
   map = new Map()
   it "should give an empty hash map", ->
     expect(map).toBeDefined()
+  map2 = new Map({'20': 'ok', 'alice': 'wonderland'})
+  it "should add passed object's (key, value) pairs to the map", ->
+    # console.log map2
+    callback = jasmine.createSpy()
+    map2.forEach callback
+    expect(callback).toHaveBeenCalledWith '20', 'ok'
+    expect(callback).toHaveBeenCalledWith 'alice', 'wonderland'
+    expect(callback).not.toHaveBeenCalledWith undefined, undefined
 
 # Usually, the hash function should be hidden. But we allow the possibility of
 # user-defined hash function.
@@ -25,9 +33,9 @@ describe "Hash function", ->
     expect(map.hash obj, yes).toMatch /_mapId_\d+_\d+/
     expect(map.hash date, yes).toMatch /_mapId_\d+_\d+/
   it "should have used obscure hacks by putting an id in arr and obj", ->
-    expect(arr._mapId_1).toEqual any Number
-    expect(obj._mapId_1).toEqual any Number
-    expect(date._mapId_1).toEqual any Number
+    expect(arr._mapId_2).toEqual any Number
+    expect(obj._mapId_2).toEqual any Number
+    expect(date._mapId_2).toEqual any Number
 
 describe "Set and get/has", ->
   map = new Map()
@@ -188,8 +196,8 @@ describe "Iterate through items", ->
     map.forEach callback
     expect(callback).not.toHaveBeenCalled()
   it "should have called the callback correctly", ->
-    map.set 5, "number 6"
-    map.set "5", "string 6"
+    map.set 5, "number 5"
+    map.set "5", "string 5"
     map.set undefined, [3, 2]
     map.set null, {b: 12}
     map.set true, "okay"
@@ -197,10 +205,10 @@ describe "Iterate through items", ->
     map.set (-> "hello"), 10
     callback = jasmine.createSpy()
     map.forEach callback
-    expect(callback).toHaveBeenCalledWith 'Number_5', 'number 6'
-    expect(callback).toHaveBeenCalledWith 'String_5', 'string 6'
-    expect(callback).toHaveBeenCalledWith 'Undefined_undefined', [ 3, 2 ]
-    expect(callback).toHaveBeenCalledWith 'Null_null', { b : 12 }
-    expect(callback).toHaveBeenCalledWith 'Boolean_true', 'okay'
-    expect(callback).toHaveBeenCalledWith 'RegExp_/asd/', true
-    expect(callback).toHaveBeenCalledWith any(String), 10
+    expect(callback).toHaveBeenCalledWith 5, 'number 5'
+    expect(callback).toHaveBeenCalledWith '5', 'string 5'
+    expect(callback).toHaveBeenCalledWith undefined, [ 3, 2 ]
+    expect(callback).toHaveBeenCalledWith null, { b : 12 }
+    expect(callback).toHaveBeenCalledWith true, 'okay'
+    expect(callback).toHaveBeenCalledWith /asd/, true
+    expect(callback).toHaveBeenCalledWith any(Function), 10

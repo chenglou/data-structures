@@ -1,4 +1,4 @@
-RedBlackTree = require('../').RedBlackTree
+RedBlackTree = require('../source').RedBlackTree
 
 # Shorthand for logging tree
 l = (x) -> console.log require('util').inspect(x, true, 1024)

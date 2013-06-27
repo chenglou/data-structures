@@ -1,3 +1,8 @@
+### 1.3.5 (June 26th 2013)
+- Reverted tests back to test Coffee source files instead of compiled js.
+- Every file now has a methods/properties overview. Wiki updated.
+- All the documentation is now based on js.
+
 ### 1.3.4 (June 25th 2013)
 - Bower support.
 

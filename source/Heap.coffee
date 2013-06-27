@@ -4,7 +4,16 @@ Minimum heap, i.e. smallest node at root.
 **Note:** does not accept null or undefined. This is by design. Those values
 cause comparison problems and might report false negative during extraction.
 
-Properties:
+## Overview example:
+
+```js
+var heap = new Heap([5, 6, 3, 4]);
+heap.add(10); // => 10
+heap.removeMin(); // => 3
+heap.peekMin(); // => 4
+```
+
+## Properties:
 
 - size: total number of items.
 ###

@@ -19,10 +19,36 @@ module.exports=require('EerzU6');
 Graph implemented as a modified incidence list. O(1) for every typical
 operation, even `removeNode()` ( **O(1) amortized** ).
 
-Properties:
+## Overview example:
+
+```js
+var graph = new Graph;
+graph.addNode('A'); // => a node object. For more info, log the output or check
+                    // the documentation for addNode
+graph.addNode('B');
+graph.addNode('C');
+graph.addEdge('A', 'C'); // => an edge object
+graph.addEdge('A', 'B');
+graph.getEdge('B', 'A'); // => undefined. Directed edge!
+graph.getEdge('A', 'B'); // => the edge object previously added
+graph.getInEdgesOf('B'); // => array of edge objects, in this case only one;
+                         // connecting A to B
+graph.getOutEdgesOf('A'); // => array of edge objects, one to B and one to C
+graph.getAllEdgesOf('A'); // => all the in and out edges. Edge directed toward
+                          // the node itself are only counted once
+forEachNode(function(nodeObject) {
+  console.log(node);
+});
+forEachEdge(function(edgeObject) {
+  console.log(edgeObject);
+});
+graph.removeNode('C'); // => 'C'. The edge between A and C also removed
+graph.removeEdge('A', 'B'); // => the edge object removed
+```
+
+## Properties:
 
 - nodeSize: total number of nodes.
-
 - edgeSize: total number of edges.
 */
 
@@ -307,7 +333,16 @@ Minimum heap, i.e. smallest node at root.
 **Note:** does not accept null or undefined. This is by design. Those values
 cause comparison problems and might report false negative during extraction.
 
-Properties:
+## Overview example:
+
+```js
+var heap = new Heap([5, 6, 3, 4]);
+heap.add(10); // => 10
+heap.removeMin(); // => 3
+heap.peekMin(); // => 4
+```
+
+## Properties:
 
 - size: total number of items.
 */
@@ -440,21 +475,29 @@ Properties:
 /*
 Doubly Linked.
 
-Properties:
+## Overview example:
+
+```js
+var list = new LinkedList([5, 4, 9]);
+list.add(12); // => 12
+list.head.next.value; // => 4
+list.tail.value; // => 12
+list.at(-1); // => 12
+list.removeAt(2); // => 9
+list.remove(4); // => 4
+list.indexOf(5); // => 0
+list.add(5, 1); // => 5. Second 5 at position 1.
+list.indexOf(5, 1); // => 1
+```
+
+## Properties:
 
 - head: first item.
 - tail: last item.
 - size: total number of items.
 - item.value: value passed to the item when calling `add()`.
-
-Traverse through the nodes with `prev` and `next`. Get the value using `value`.
-```coffee
-list = new LinkedList()
-list.add 1
-list.add 4
-list.add 7
-list.head.next.value # 4.
-```
+- item.prev: previous item.
+- item.next: next item.
 */
 
 
@@ -493,15 +536,17 @@ list.head.next.value # 4.
     LinkedList.prototype.at = function(position) {
       /*
       Get the item at `position` (optional). Accepts negative index:
-      ```coffee
-      myList.at(-1) # Returns the last element.
+      
+      ```js
+      myList.at(-1); // Returns the last element.
       ```
       However, passing a negative index that surpasses the boundary will return
       undefined:
-      ```coffee
+      
+      ```js
       myList = new LinkedList([2, 6, 8, 3])
-      myList.at(-5) # Undefined.
-      myList.at(-4) # 2.
+      myList.at(-5); // Undefined.
+      myList.at(-4); // 2.
       ```
       _Returns:_ item gotten, or undefined if not found.
       */
@@ -661,9 +706,10 @@ list.head.next.value # 4.
       normally, at the beginning.
       
       **Note:** searches forwardly, **not** backwardly, i.e:
-      ```coffee
-      myList = new LinkedList([2, 3, 1, 4, 3, 5])
-      myList.indexOf(3, -3) # Returns 4, not 1
+      
+      ```js
+      var myList = new LinkedList([2, 3, 1, 4, 3, 5])
+      myList.indexOf(3, -3); // Returns 4, not 1
       ```
       _Returns:_ index of item found, or -1 if not found.
       */
@@ -705,26 +751,44 @@ list.head.next.value # 4.
 }).call(this);
 
 },{}],4:[function(require,module,exports){
+/*
+Kind of a stopgap measure for the upcoming [JavaScript
+Map](http://wiki.ecmascript.org/doku.php?id=harmony:simple_maps_and_sets)
+
+**Note:** due to JavaScript's limitations, hashing something other than Boolean,
+Number, String, Undefined, Null, RegExp, Function requires a hack that inserts a
+hidden unique property into the object. This means `set`, `get`, `has` and
+`delete` must employ the same object, and not a mere identical copy as in the
+case of, say, a string.
+
+## Overview example:
+
+```js
+var map = new Map({'alice': 'wonderland', 20: 'ok'});
+map.set('20', 5); // => 5
+map.get('20'); // => 5
+map.has('alice'); // => true
+map.delete(20) // => true
+var arr = [1, 2];
+map.add(arr, 'goody'); // => 'goody'
+map.has(arr); // => true
+map.has([1, 2]); // => false. Needs to compare by reference
+map.forEach(function(key, value) {
+  console.log(key, value);
+});
+```
+
+## Properties:
+
+- size: The total number of `(key, value)` pairs.
+*/
+
+
 (function() {
-  var Map, SPECIAL_TYPE_KEY_PREFIX, _extractDataType, _isSpecialType;
+  var Map, SPECIAL_TYPE_KEY_PREFIX, _extractDataType, _isSpecialType,
+    __hasProp = {}.hasOwnProperty;
 
   SPECIAL_TYPE_KEY_PREFIX = '_mapId_';
-
-  /*
-  Kind of a stopgap measure for the upcoming [JavaScript
-  Map](http://wiki.ecmascript.org/doku.php?id=harmony:simple_maps_and_sets)
-  
-  **Note:** due to JavaScript's limitations, hashing something other than Boolean,
-  Number, String, Undefined, Null, RegExp, Function requires a hack that inserts a
-  hidden unique property into the object. This means `set`, `get`, `has` and
-  `delete` must employ the same object, and not a mere identical copy as in the
-  case of, say, a string.
-  
-  Properties:
-  
-  - size: The total number of `(key, value)` pairs.
-  */
-
 
   Map = (function() {
     Map._mapIdTracker = 0;
@@ -733,11 +797,25 @@ list.head.next.value # 4.
       return this._mapIdTracker++;
     };
 
-    function Map() {
+    function Map(objectToMap) {
+      /*
+      Pass an optional object whose (key, value) pair will be hashed. **Careful**
+      not to pass something like {5: 'hi', '5': 'hello'}, since JavaScript's
+      native object behavior will crush the first 5 property before it gets to
+      constructor.
+      */
+
+      var key, value;
+
       this._content = {};
       this._itemId = 0;
       this._id = Map._newMapId();
       this.size = 0;
+      for (key in objectToMap) {
+        if (!__hasProp.call(objectToMap, key)) continue;
+        value = objectToMap[key];
+        this.set(key, value);
+      }
     }
 
     Map.prototype.hash = function(key, makeHash) {
@@ -774,14 +852,18 @@ list.head.next.value # 4.
       if (!this.has(key)) {
         this.size++;
       }
-      return this._content[this.hash(key, true)] = value;
+      this._content[this.hash(key, true)] = [value, key];
+      return value;
     };
 
     Map.prototype.get = function(key) {
       /*
       _Returns:_ value corresponding to the key, or undefined if not found.
       */
-      return this._content[this.hash(key)];
+
+      var _ref;
+
+      return (_ref = this._content[this.hash(key)]) != null ? _ref[0] : void 0;
     };
 
     Map.prototype.has = function(key) {
@@ -828,7 +910,7 @@ list.head.next.value # 4.
       _ref = this._content;
       for (key in _ref) {
         value = _ref[key];
-        operation(key, value);
+        operation(value[1], value[0]);
       }
     };
 
@@ -860,7 +942,22 @@ list.head.next.value # 4.
 
 },{}],5:[function(require,module,exports){
 /*
-Properties:
+Amortized O(1) dequeue!
+
+## Overview example:
+
+```js
+var queue = new Queue([1, 6, 4]);
+queue.enqueue(10); // => 10
+queue.dequeue(); // => 1
+queue.dequeue(); // => 6
+queue.dequeue(); // => 4
+queue.peek(); // => 10
+queue.dequeue(); // => 10
+queue.peek(); // => undefined
+```
+
+## Properties:
 
 - size: The total number of items.
 */
@@ -931,6 +1028,33 @@ Properties:
 }).call(this);
 
 },{}],6:[function(require,module,exports){
+/*
+Credit to Wikipedia's article on [Red-black
+tree](http://en.wikipedia.org/wiki/Red–black_tree)
+
+**Note:** doesn't handle duplicate entries, undefined and null. This is by
+design.
+
+## Overview example:
+
+```js
+var rbt = new RedBlackTree([7, 5, 1, 8]);
+rbt.add(2); // => 2
+rbt.add(10); // => 10
+rbt.has(5); // => true
+rbt.peekMin(); // => 1
+rbt.peekMax(); // => 10
+rbt.removeMin(); // => 1
+rbt.removeMax(); // => 10
+rbt.remove(8); // => 8
+```
+
+## Properties:
+
+- size: The total number of items.
+*/
+
+
 (function() {
   var BLACK, NODE_FOUND, NODE_TOO_BIG, NODE_TOO_SMALL, RED, RedBlackTree, STOP_SEARCHING, _findNode, _grandParentOf, _isLeft, _leftOrRight, _peekMaxNode, _peekMinNode, _siblingOf, _uncleOf;
 
@@ -945,19 +1069,6 @@ Properties:
   RED = 1;
 
   BLACK = 2;
-
-  /*
-  Credit to Wikipedia's article on [Red-black
-  tree](http://en.wikipedia.org/wiki/Red–black_tree)
-  
-  **Note:** doesn't handle duplicate entries, undefined and null. This is by
-  design.
-  
-  Properties:
-  
-  - size: The total number of items.
-  */
-
 
   RedBlackTree = (function() {
     function RedBlackTree(valuesToAdd) {
@@ -1389,21 +1500,35 @@ Properties:
 }).call(this);
 
 },{}],7:[function(require,module,exports){
+/*
+Good for fast insertion/removal/lookup of strings.
+
+## Overview example:
+
+```js
+var trie = new Trie(['bear', 'beer']);
+trie.add('hello'); // => 'hello'
+trie.add('helloha!'); // => 'helloha!'
+trie.has('bears'); // => false
+trie.longestPrefixOf('beatrice'); // => 'bea'
+trie.wordsWithPrefix('hel'); // => ['hello', 'helloha!']
+trie.remove('beers'); // => undefined. 'beer' still exists
+trie.remove('Beer') // => undefined. Case-sensitive
+trie.remove('beer') // => 'beer'. Removed
+```
+
+## Properties:
+
+- size: The total number of words.
+*/
+
+
 (function() {
   var Queue, Trie, WORD_END, _hasAtLeastNChildren;
 
   Queue = require('./Queue');
 
   WORD_END = 'end';
-
-  /*
-  Good for fast insertion/removal/lookup of strings.
-  
-  Properties:
-  
-  - size: The total number of words.
-  */
-
 
   Trie = (function() {
     function Trie(words) {
@@ -1478,12 +1603,13 @@ Properties:
     Trie.prototype.longestPrefixOf = function(word) {
       /*
       Find all words containing the prefix. The word itself counts as a prefix.
-      ```coffee
-      trie = new Trie()
-      trie.add('hello')
-      trie.longestPrefixOf('he') # 'he'
-      trie.longestPrefixOf('hello') # 'hello'
-      trie.longestPrefixOf('helloha!') # 'hello'
+      
+      ```js
+      var trie = new Trie;
+      trie.add('hello');
+      trie.longestPrefixOf('he'); // 'he'
+      trie.longestPrefixOf('hello'); // 'hello'
+      trie.longestPrefixOf('helloha!'); // 'hello'
       ```
       
       _Returns:_ the prefix string, or empty string if no prefix found.
@@ -1511,18 +1637,19 @@ Properties:
       /*
       Find all words containing the prefix. The word itself counts as a prefix.
       **Watch out for edge cases.**
-      ```coffee
-      trie = new Trie()
-      trie.wordsWithPrefix('') # []. Check later case below.
-      trie.add('')
-      trie.wordsWithPrefix('') # ['']
-      trie.add 'he'
-      trie.add 'hello'
-      trie.add 'hell'
-      trie.add 'bear'
-      trie.add 'z'
-      trie.add 'zebra'
-      trie.wordsWithPrefix('hel') # ['hell', 'hello']
+      
+      ```js
+      var trie = new Trie;
+      trie.wordsWithPrefix(''); // []. Check later case below.
+      trie.add('');
+      trie.wordsWithPrefix(''); // ['']
+      trie.add('he');
+      trie.add('hello');
+      trie.add('hell');
+      trie.add('bear');
+      trie.add('z');
+      trie.add('zebra');
+      trie.wordsWithPrefix('hel'); // ['hell', 'hello']
       ```
       
       _Returns:_ an array of strings, or empty array if no word found.

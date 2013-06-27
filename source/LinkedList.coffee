@@ -1,21 +1,29 @@
 ###
 Doubly Linked.
 
-Properties:
+## Overview example:
+
+```js
+var list = new LinkedList([5, 4, 9]);
+list.add(12); // => 12
+list.head.next.value; // => 4
+list.tail.value; // => 12
+list.at(-1); // => 12
+list.removeAt(2); // => 9
+list.remove(4); // => 4
+list.indexOf(5); // => 0
+list.add(5, 1); // => 5. Second 5 at position 1.
+list.indexOf(5, 1); // => 1
+```
+
+## Properties:
 
 - head: first item.
 - tail: last item.
 - size: total number of items.
 - item.value: value passed to the item when calling `add()`.
-
-Traverse through the nodes with `prev` and `next`. Get the value using `value`.
-```coffee
-list = new LinkedList()
-list.add 1
-list.add 4
-list.add 7
-list.head.next.value # 4.
-```
+- item.prev: previous item.
+- item.next: next item.
 ###
 class LinkedList
   constructor: (valuesToAdd = []) ->
@@ -40,15 +48,17 @@ class LinkedList
   at: (position) ->
     ###
     Get the item at `position` (optional). Accepts negative index:
-    ```coffee
-    myList.at(-1) # Returns the last element.
+
+    ```js
+    myList.at(-1); // Returns the last element.
     ```
     However, passing a negative index that surpasses the boundary will return
     undefined:
-    ```coffee
+
+    ```js
     myList = new LinkedList([2, 6, 8, 3])
-    myList.at(-5) # Undefined.
-    myList.at(-4) # 2.
+    myList.at(-5); // Undefined.
+    myList.at(-4); // 2.
     ```
     _Returns:_ item gotten, or undefined if not found.
     ###
@@ -169,9 +179,10 @@ class LinkedList
     normally, at the beginning.
 
     **Note:** searches forwardly, **not** backwardly, i.e:
-    ```coffee
-    myList = new LinkedList([2, 3, 1, 4, 3, 5])
-    myList.indexOf(3, -3) # Returns 4, not 1
+
+    ```js
+    var myList = new LinkedList([2, 3, 1, 4, 3, 5])
+    myList.indexOf(3, -3); // Returns 4, not 1
     ```
     _Returns:_ index of item found, or -1 if not found.
     ###

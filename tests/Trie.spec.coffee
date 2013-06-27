@@ -1,4 +1,4 @@
-Trie = require('../').Trie
+Trie = require('../source').Trie
 
 # Shorthand for logging.
 l = (x) -> console.log require('util').inspect x, true, 10
@@ -101,7 +101,8 @@ describe "Find the longest prefix of a word", ->
   it "should return the correct prefix otherwise", ->
     fill trie
     expect(trie.longestPrefixOf "hel").toBe "hel"
-    expect(trie.longestPrefixOf "helloha").toBe "hello"
+    expect(trie.longestPrefixOf "hellha").toBe "hell"
+    expect(trie.longestPrefixOf "beer cup").toBe "beer"
     expect(trie.longestPrefixOf "h").toBe "h"
     expect(trie.longestPrefixOf "beers").toBe "beer"
     expect(trie.longestPrefixOf "").toBe ""
@@ -150,6 +151,8 @@ describe "Remove a word", ->
     expect(trie.remove undefined).toBeUndefined()
     expect(trie.remove null).toBeUndefined()
     expect(trie.size).toBe 10
+  it "should be case-sensitive", ->
+    expect(trie.remove "He").toBeUndefined()
   it "should return the word removed", ->
     expect(trie.remove "he").toBe "he"
     expect(trie.has "he").toBeFalsy()

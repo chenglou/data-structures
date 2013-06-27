@@ -2,10 +2,36 @@
 Graph implemented as a modified incidence list. O(1) for every typical
 operation, even `removeNode()` ( **O(1) amortized** ).
 
-Properties:
+## Overview example:
+
+```js
+var graph = new Graph;
+graph.addNode('A'); // => a node object. For more info, log the output or check
+                    // the documentation for addNode
+graph.addNode('B');
+graph.addNode('C');
+graph.addEdge('A', 'C'); // => an edge object
+graph.addEdge('A', 'B');
+graph.getEdge('B', 'A'); // => undefined. Directed edge!
+graph.getEdge('A', 'B'); // => the edge object previously added
+graph.getInEdgesOf('B'); // => array of edge objects, in this case only one;
+                         // connecting A to B
+graph.getOutEdgesOf('A'); // => array of edge objects, one to B and one to C
+graph.getAllEdgesOf('A'); // => all the in and out edges. Edge directed toward
+                          // the node itself are only counted once
+forEachNode(function(nodeObject) {
+  console.log(node);
+});
+forEachEdge(function(edgeObject) {
+  console.log(edgeObject);
+});
+graph.removeNode('C'); // => 'C'. The edge between A and C also removed
+graph.removeEdge('A', 'B'); // => the edge object removed
+```
+
+## Properties:
 
 - nodeSize: total number of nodes.
-
 - edgeSize: total number of edges.
 ###
 class Graph

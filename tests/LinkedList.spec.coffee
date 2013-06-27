@@ -1,4 +1,4 @@
-LinkedList = require('../').LinkedList
+LinkedList = require('../source').LinkedList
 
 # Shorthand for logging
 l = (linkedList) ->

@@ -1,16 +1,31 @@
+###
+Good for fast insertion/removal/lookup of strings.
+
+## Overview example:
+
+```js
+var trie = new Trie(['bear', 'beer']);
+trie.add('hello'); // => 'hello'
+trie.add('helloha!'); // => 'helloha!'
+trie.has('bears'); // => false
+trie.longestPrefixOf('beatrice'); // => 'bea'
+trie.wordsWithPrefix('hel'); // => ['hello', 'helloha!']
+trie.remove('beers'); // => undefined. 'beer' still exists
+trie.remove('Beer') // => undefined. Case-sensitive
+trie.remove('beer') // => 'beer'. Removed
+```
+
+## Properties:
+
+- size: The total number of words.
+###
+
 # Needed for breath-first traversal for finding all words with a certain prefix.
 Queue = require './Queue'
 # Special value for marking end of word. No conflict possible, since every
 # node's one letter.
 WORD_END = 'end'
 
-###
-Good for fast insertion/removal/lookup of strings.
-
-Properties:
-
-- size: The total number of words.
-###
 class Trie
   constructor: (words = []) ->
     ###
@@ -66,12 +81,13 @@ class Trie
   longestPrefixOf: (word) ->
     ###
     Find all words containing the prefix. The word itself counts as a prefix.
-    ```coffee
-    trie = new Trie()
-    trie.add('hello')
-    trie.longestPrefixOf('he') # 'he'
-    trie.longestPrefixOf('hello') # 'hello'
-    trie.longestPrefixOf('helloha!') # 'hello'
+
+    ```js
+    var trie = new Trie;
+    trie.add('hello');
+    trie.longestPrefixOf('he'); // 'he'
+    trie.longestPrefixOf('hello'); // 'hello'
+    trie.longestPrefixOf('helloha!'); // 'hello'
     ```
 
     _Returns:_ the prefix string, or empty string if no prefix found.
@@ -89,18 +105,19 @@ class Trie
     ###
     Find all words containing the prefix. The word itself counts as a prefix.
     **Watch out for edge cases.**
-    ```coffee
-    trie = new Trie()
-    trie.wordsWithPrefix('') # []. Check later case below.
-    trie.add('')
-    trie.wordsWithPrefix('') # ['']
-    trie.add 'he'
-    trie.add 'hello'
-    trie.add 'hell'
-    trie.add 'bear'
-    trie.add 'z'
-    trie.add 'zebra'
-    trie.wordsWithPrefix('hel') # ['hell', 'hello']
+
+    ```js
+    var trie = new Trie;
+    trie.wordsWithPrefix(''); // []. Check later case below.
+    trie.add('');
+    trie.wordsWithPrefix(''); // ['']
+    trie.add('he');
+    trie.add('hello');
+    trie.add('hell');
+    trie.add('bear');
+    trie.add('z');
+    trie.add('zebra');
+    trie.wordsWithPrefix('hel'); // ['hell', 'hello']
     ```
 
     _Returns:_ an array of strings, or empty array if no word found.

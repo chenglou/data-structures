@@ -1,10 +1,3 @@
-# TODO: maybe change the hashing method for arrays and objects to something less
-# hacky. We can recursively dig out their properties' value and join them, but
-# that'd make it O(n).
-
-# For hashing special types, e.g. objects, arrays and dates.
-SPECIAL_TYPE_KEY_PREFIX = '_mapId_'
-
 ###
 Kind of a stopgap measure for the upcoming [JavaScript
 Map](http://wiki.ecmascript.org/doku.php?id=harmony:simple_maps_and_sets)
@@ -15,22 +8,57 @@ hidden unique property into the object. This means `set`, `get`, `has` and
 `delete` must employ the same object, and not a mere identical copy as in the
 case of, say, a string.
 
-Properties:
+## Overview example:
+
+```js
+var map = new Map({'alice': 'wonderland', 20: 'ok'});
+map.set('20', 5); // => 5
+map.get('20'); // => 5
+map.has('alice'); // => true
+map.delete(20) // => true
+var arr = [1, 2];
+map.add(arr, 'goody'); // => 'goody'
+map.has(arr); // => true
+map.has([1, 2]); // => false. Needs to compare by reference
+map.forEach(function(key, value) {
+  console.log(key, value);
+});
+```
+
+## Properties:
 
 - size: The total number of `(key, value)` pairs.
 ###
+
+# TODO: maybe change the hashing method for arrays and objects to something less
+# hacky. We can recursively dig out their properties' value and join them, but
+# that'd make it O(n).
+
+# For hashing special types, e.g. objects, arrays and dates.
+SPECIAL_TYPE_KEY_PREFIX = '_mapId_'
+
 class Map
 
   # Class variable and method.
   @_mapIdTracker: 0
   @_newMapId: -> @_mapIdTracker++
 
-  constructor: ->
+  constructor: (objectToMap)->
+    ###
+    Pass an optional object whose (key, value) pair will be hashed. **Careful**
+    not to pass something like {5: 'hi', '5': 'hello'}, since JavaScript's
+    native object behavior will crush the first 5 property before it gets to
+    constructor.
+    ###
+    # _content is composed of (key, value) pairs where `value` itself is an
+    # array of two elements: first being the actual value to store, second being
+    # the original key, displayed for iteration.
     @_content = {}
     # Used to track objects and arrays.
     @_itemId = 0
     @_id = Map._newMapId()
     @size = 0
+    @set key, value for own key, value of objectToMap
 
   # Public. Allow user-defined hash function.
   hash: (key, makeHash = no) ->
@@ -60,12 +88,13 @@ class Map
     _Returns:_ value.
     ###
     if not @has key then @size++
-    @_content[@hash key, yes] = value
+    @_content[@hash(key, yes)] = [value, key]
+    return value
   get: (key) ->
     ###
     _Returns:_ value corresponding to the key, or undefined if not found.
     ###
-    @_content[@hash key]
+    @_content[@hash key]?[0]
   has: (key) ->
     ###
     Check whether a value exists for the key.
@@ -96,7 +125,7 @@ class Map
 
     _Returns:_ undefined.
     ###
-    operation(key, value) for key, value of @_content
+    operation(value[1], value[0]) for key, value of @_content
     # Manual return to avoid CoffeeScript accumulating an array for return.
     return
 

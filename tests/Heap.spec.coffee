@@ -1,4 +1,4 @@
-Heap = require('../').Heap
+Heap = require('../source').Heap
 
 # Shorthand for logging.
 l = (x) -> console.log require('util').inspect x, true, 10

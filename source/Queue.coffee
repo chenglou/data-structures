@@ -5,7 +5,22 @@
 # When half of array is garbage collectable, slice these items.
 
 ###
-Properties:
+Amortized O(1) dequeue!
+
+## Overview example:
+
+```js
+var queue = new Queue([1, 6, 4]);
+queue.enqueue(10); // => 10
+queue.dequeue(); // => 1
+queue.dequeue(); // => 6
+queue.dequeue(); // => 4
+queue.peek(); // => 10
+queue.dequeue(); // => 10
+queue.peek(); // => undefined
+```
+
+## Properties:
 
 - size: The total number of items.
 ###
