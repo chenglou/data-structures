@@ -17,7 +17,7 @@ module.exports=require('EerzU6');
 },{"./Graph":1,"./Heap":2,"./LinkedList":3,"./Map":4,"./Queue":5,"./RedBlackTree":6,"./Trie":7}],1:[function(require,module,exports){
 /*
 Graph implemented as a modified incidence list. O(1) for every typical
-operation, even `removeNode()` ( **O(1) amortized** ).
+operation except `removeNode()` at O(E) where E is the number of edges.
 
 ## Overview example:
 
@@ -31,6 +31,9 @@ graph.addEdge('A', 'C'); // => an edge object
 graph.addEdge('A', 'B');
 graph.getEdge('B', 'A'); // => undefined. Directed edge!
 graph.getEdge('A', 'B'); // => the edge object previously added
+graph.getEdge('A', 'B').weight = 2 // weight is the only built-in handy property
+                                   // of an edge object. Feel free to attach
+                                   // other properties
 graph.getInEdgesOf('B'); // => array of edge objects, in this case only one;
                          // connecting A to B
 graph.getOutEdgesOf('A'); // => array of edge objects, one to B and one to C
@@ -69,8 +72,9 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       after it's added. It will be used for adding, retrieving and deleting
       related edges too.
       
-      Note that JavaScript's object hashes the id `'2'` and `2` to the same key,
-      so please stick with one single id data type for a same graph.
+      **Note** that, internally, the ids are kept in an object. JavaScript's
+      object hashes the id `'2'` and `2` to the same key, so please stick to a
+      simple id data type such as number or string.
       
       _Returns:_ the node object. Feel free to attach additional custom properties
       on it for graph algorithms' needs. **Undefined if node id already exists**,
@@ -79,10 +83,8 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       if (!this._nodes[id]) {
         this.nodeSize++;
         return this._nodes[id] = {
-          _id: id,
           _outEdges: {},
-          _inEdges: {},
-          _edgeCount: 0
+          _inEdges: {}
         };
       }
     };
@@ -101,17 +103,22 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       first place.
       */
 
-      var nodeToRemove;
+      var inEdgeId, nodeToRemove, outEdgeId;
 
       nodeToRemove = this._nodes[id];
       if (!nodeToRemove) {
-
+        return;
       } else {
-        this.edgeSize -= this._nodes[id]._edgeCount;
+        for (outEdgeId in nodeToRemove._outEdges) {
+          this.removeEdge(id, outEdgeId);
+        }
+        for (inEdgeId in nodeToRemove._inEdges) {
+          this.removeEdge(inEdgeId, id);
+        }
         this.nodeSize--;
         delete this._nodes[id];
-        return nodeToRemove;
       }
+      return nodeToRemove;
     };
 
     Graph.prototype.addEdge = function(fromId, toId, weight) {
@@ -141,17 +148,11 @@ graph.removeEdge('A', 'B'); // => the edge object removed
         return;
       }
       edgeToAdd = {
-        _fromId: fromId,
-        _toId: toId,
         weight: weight
       };
       fromNode._outEdges[toId] = edgeToAdd;
       toNode._inEdges[fromId] = edgeToAdd;
-      fromNode._edgeCount++;
       this.edgeSize++;
-      if (fromNode !== toNode) {
-        toNode._edgeCount++;
-      }
       return edgeToAdd;
     };
 
@@ -165,24 +166,10 @@ graph.removeEdge('A', 'B'); // => the edge object removed
 
       fromNode = this._nodes[fromId];
       toNode = this._nodes[toId];
-      if (!fromNode && !toNode) {
+      if (!fromNode || !toNode) {
 
-      } else if (!fromNode) {
-        if (toNode._inEdges[fromId]) {
-          delete toNode._inEdges[fromId];
-        }
-      } else if (!toNode) {
-        if (fromNode._outEdges[toId]) {
-          delete fromNode._outEdges[toId];
-        }
       } else {
-        if (!fromNode._outEdges[toId] && toNode._inEdges[fromId]) {
-          delete toNode._inEdges[fromId];
-        } else if (!toNode._inEdges[fromId] && fromNode._outEdges[toId]) {
-          delete fromNode._outEdges[toId];
-        } else {
-          return fromNode._outEdges[toId];
-        }
+        return fromNode._outEdges[toId];
       }
     };
 
@@ -208,21 +195,15 @@ graph.removeEdge('A', 'B'); // => the edge object removed
     Graph.prototype.getInEdgesOf = function(nodeId) {
       /*
       _Returns:_ an array of edge objects that are directed toward the node, or
-      empty array if none exists.
+      empty array if no such edge or node exists.
       */
 
-      var edge, fromId, inEdges, toNode;
+      var fromId, inEdges, toNode;
 
       toNode = this._nodes[nodeId];
-      if (!toNode) {
-        return [];
-      }
       inEdges = [];
-      for (fromId in toNode._inEdges) {
-        edge = this.getEdge(fromId, nodeId);
-        if (edge) {
-          inEdges.push(edge);
-        }
+      for (fromId in toNode != null ? toNode._inEdges : void 0) {
+        inEdges.push(this.getEdge(fromId, nodeId));
       }
       return inEdges;
     };
@@ -230,21 +211,15 @@ graph.removeEdge('A', 'B'); // => the edge object removed
     Graph.prototype.getOutEdgesOf = function(nodeId) {
       /*
       _Returns:_ an array of edge objects that go out of the node, or empty array
-      if none exists.
+      if no such edge or node exists.
       */
 
-      var edge, fromNode, outEdges, toId;
+      var fromNode, outEdges, toId;
 
       fromNode = this._nodes[nodeId];
-      if (!fromNode) {
-        return [];
-      }
       outEdges = [];
-      for (toId in fromNode._outEdges) {
-        edge = this.getEdge(nodeId, toId);
-        if (edge) {
-          outEdges.push(edge);
-        }
+      for (toId in fromNode != null ? fromNode._outEdges : void 0) {
+        outEdges.push(this.getEdge(nodeId, toId));
       }
       return outEdges;
     };
@@ -268,13 +243,11 @@ graph.removeEdge('A', 'B'); // => the edge object removed
         return outEdges;
       }
       selfEdge = this.getEdge(nodeId, nodeId);
-      if (selfEdge) {
-        for (i = _i = 0, _ref = inEdges.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-          if (inEdges[i] === selfEdge) {
-            _ref1 = [inEdges[inEdges.length - 1], inEdges[i]], inEdges[i] = _ref1[0], inEdges[inEdges.length - 1] = _ref1[1];
-            inEdges.pop();
-            break;
-          }
+      for (i = _i = 0, _ref = inEdges.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+        if (inEdges[i] === selfEdge) {
+          _ref1 = [inEdges[inEdges.length - 1], inEdges[i]], inEdges[i] = _ref1[0], inEdges[inEdges.length - 1] = _ref1[1];
+          inEdges.pop();
+          break;
         }
       }
       return inEdges.concat(outEdges);

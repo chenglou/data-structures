@@ -1,6 +1,6 @@
 ###
 Graph implemented as a modified incidence list. O(1) for every typical
-operation, even `removeNode()` ( **O(1) amortized** ).
+operation except `removeNode()` at O(E) where E is the number of edges.
 
 ## Overview example:
 
@@ -14,6 +14,9 @@ graph.addEdge('A', 'C'); // => an edge object
 graph.addEdge('A', 'B');
 graph.getEdge('B', 'A'); // => undefined. Directed edge!
 graph.getEdge('A', 'B'); // => the edge object previously added
+graph.getEdge('A', 'B').weight = 2 // weight is the only built-in handy property
+                                   // of an edge object. Feel free to attach
+                                   // other properties
 graph.getInEdgesOf('B'); // => array of edge objects, in this case only one;
                          // connecting A to B
 graph.getOutEdgesOf('A'); // => array of edge objects, one to B and one to C
@@ -46,8 +49,9 @@ class Graph
     after it's added. It will be used for adding, retrieving and deleting
     related edges too.
 
-    Note that JavaScript's object hashes the id `'2'` and `2` to the same key,
-    so please stick with one single id data type for a same graph.
+    **Note** that, internally, the ids are kept in an object. JavaScript's
+    object hashes the id `'2'` and `2` to the same key, so please stick to a
+    simple id data type such as number or string.
 
     _Returns:_ the node object. Feel free to attach additional custom properties
     on it for graph algorithms' needs. **Undefined if node id already exists**,
@@ -56,18 +60,13 @@ class Graph
     if not @_nodes[id]
       @nodeSize++
       @_nodes[id] =
-        _id: id
         # outEdges is a collection of (toId, edge) pair, where the toId key is
         # the node id toward which the edge's directed. The value edge is itself
-        # an object of the format {fromId, toId, weight}. Using objects to
-        # represent nodes and edges allow additional attributes to be attached.
-
-        # inEdges work the same way.
+        # an object which, by default, only contains a weight property defaulted
+        # to 1. Using objects to represent nodes and edges allow additional
+        # attributes to be attached. Same applies to inEdges.
         _outEdges: {}
         _inEdges: {}
-        # This keeps track of the edge count, so that we can update edgeSize
-        # correctly on O(1) after `removeNode()`.
-        _edgeCount: 0
 
   getNode: (id) ->
     ###
@@ -84,13 +83,13 @@ class Graph
     nodeToRemove = @_nodes[id]
     if not nodeToRemove then return
     else
-      @edgeSize -= @_nodes[id]._edgeCount
+      for outEdgeId of nodeToRemove._outEdges
+        @removeEdge id, outEdgeId
+      for inEdgeId of nodeToRemove._inEdges
+        @removeEdge inEdgeId, id
       @nodeSize--
       delete @_nodes[id]
-
-      # Usually, we'd remove all edges related to node too. But we can amortize
-      # this from O(n) to O(1) by checking it during edge retrieval instead.
-      return nodeToRemove
+    return nodeToRemove
 
   addEdge: (fromId, toId, weight = 1) ->
     ###
@@ -104,24 +103,15 @@ class Graph
     of id `fromId` or `toId` aren't found, or if an edge already exists between
     the two nodes.
     ###
-
-    # getEdge() will return an edge if it already exists. As a side effect, it
-    # checks for edge inconsistency left behind from removeNode() and clean them
-    # up. After this point, we can safely add a new edge.
     if @getEdge fromId, toId then return
     fromNode = @_nodes[fromId]
     toNode = @_nodes[toId]
     if not fromNode or not toNode then return
     edgeToAdd =
-      _fromId: fromId
-      _toId: toId
       weight: weight
     fromNode._outEdges[toId] = edgeToAdd
     toNode._inEdges[fromId] = edgeToAdd
-    fromNode._edgeCount++
     @edgeSize++
-    # Self-directing edge counts once.
-    if fromNode isnt toNode then toNode._edgeCount++
     return edgeToAdd
 
   getEdge: (fromId, toId) ->
@@ -131,27 +121,8 @@ class Graph
     ###
     fromNode = @_nodes[fromId]
     toNode = @_nodes[toId]
-    # Amortization part. Clean the leftover from removeNode(). No need to
-    # decrease `edgeSize`, since it was done before.
-    if not fromNode and not toNode then return
-    else if not fromNode
-      if toNode._inEdges[fromId]
-        delete toNode._inEdges[fromId]
-        return
-    else if not toNode
-      if fromNode._outEdges[toId]
-        delete fromNode._outEdges[toId]
-        return
-    else
-      # Even if both nodes exist, the edge might not be valid. Ex: node A
-      # removed, then a new node A inserted back.
-      if not fromNode._outEdges[toId] and toNode._inEdges[fromId]
-        delete toNode._inEdges[fromId]
-        return
-      else if not toNode._inEdges[fromId] and fromNode._outEdges[toId]
-        delete fromNode._outEdges[toId]
-        return
-      else return fromNode._outEdges[toId]
+    if not fromNode or not toNode then return
+    else fromNode._outEdges[toId]
 
   removeEdge: (fromId, toId) ->
     ###
@@ -169,27 +140,23 @@ class Graph
   getInEdgesOf: (nodeId) ->
     ###
     _Returns:_ an array of edge objects that are directed toward the node, or
-    empty array if none exists.
+    empty array if no such edge or node exists.
     ###
     toNode = @_nodes[nodeId]
-    if not toNode then return []
     inEdges = []
-    for fromId of toNode._inEdges
-      edge = @getEdge fromId, nodeId
-      if edge then inEdges.push edge
+    for fromId of toNode?._inEdges
+      inEdges.push(@getEdge fromId, nodeId)
     return inEdges
 
   getOutEdgesOf: (nodeId) ->
     ###
     _Returns:_ an array of edge objects that go out of the node, or empty array
-    if none exists.
+    if no such edge or node exists.
     ###
     fromNode = @_nodes[nodeId]
-    if not fromNode then return []
     outEdges = []
-    for toId of fromNode._outEdges
-      edge = @getEdge nodeId, toId
-      if edge then outEdges.push edge
+    for toId of fromNode?._outEdges
+      outEdges.push(@getEdge nodeId, toId)
     return outEdges
 
   getAllEdgesOf: (nodeId) ->
@@ -206,13 +173,13 @@ class Graph
     outEdges = @getOutEdgesOf nodeId
     if inEdges.length is 0 then return outEdges
     selfEdge = @getEdge nodeId, nodeId
-    if selfEdge
-      for i in [0...inEdges.length]
-        if inEdges[i] is selfEdge
-          [inEdges[i], inEdges[inEdges.length - 1]] =
-          [inEdges[inEdges.length - 1], inEdges[i]]
-          inEdges.pop()
-          break
+    for i in [0...inEdges.length]
+      if inEdges[i] is selfEdge
+        # Place that repleated in edge at the end and pop it.
+        [inEdges[i], inEdges[inEdges.length - 1]] =
+        [inEdges[inEdges.length - 1], inEdges[i]]
+        inEdges.pop()
+        break
     return inEdges.concat outEdges
 
   forEachNode: (operation) ->

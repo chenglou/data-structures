@@ -63,8 +63,6 @@ describe "Get node", ->
     graph.addNode undefined
     expect((graph.getNode null) instanceof Object).toBeTruthy()
     expect((graph.getNode undefined) instanceof Object).toBeTruthy()
-  xit "should distinguish between id of '2' and 2", ->
-    expect(graph.getNode 2).toBeUndefined()
 
 describe "Remove node", ->
   graph = new Graph()
@@ -132,87 +130,6 @@ describe "Get edge", ->
     expect((graph.getEdge "5", "2") instanceof Object).toBeTruthy()
     expect((graph.getEdge "6", "3") instanceof Object).toBeTruthy()
     expect((graph.getEdge "6", "6") instanceof Object).toBeTruthy()
-
-describe "Tricky remove node and get node behavior", ->
-  # Internally, removing a node doesn't immediately remove all the edges
-  # concerned. This is to amortize the removal to O(1).
-  graph = undefined
-  beforeEach ->
-    graph = new Graph()
-    graph.addNode 1
-    graph.addNode 2
-  describe "Get edge from 1 to 2 after removal of node 2", ->
-    beforeEach ->
-      graph.addEdge 1, 2
-    it "should return undefined", ->
-      graph.removeNode 2
-      expect(graph.getEdge 1, 2).toBeUndefined()
-      expect(graph.edgeSize).toBe 0
-    it "should return undefined even if a new node 2 is added", ->
-      graph.removeNode 2
-      graph.addNode 2
-      expect(graph.getEdge 1, 2).toBeUndefined()
-      expect(graph.edgeSize).toBe 0
-
-    it "should add a new edge correctly if a new node 2 is added and the edge is
-        'reestablished'", ->
-      graph.removeNode 2
-      graph.addNode 2
-      graph.addEdge 1, 2, 5
-      expect(graph.getEdge(1, 2).weight).toBe 5
-      expect(graph.edgeSize).toBe 1
-    it "should return undefined after addition of an opposite edge", ->
-      graph.removeNode 2
-      graph.addNode 2
-      graph.addEdge 2, 1, 5
-      expect(graph.getEdge 1, 2).toBeUndefined()
-      expect(graph.getEdge(2, 1).weight).toBe 5
-      expect(graph.edgeSize).toBe 1
-  describe "Add edge from 2 to 1", ->
-    beforeEach ->
-      graph.addEdge 2, 1
-    it "should return undefined", ->
-      graph.removeNode 2
-      expect(graph.getEdge 2, 1).toBeUndefined()
-      expect(graph.edgeSize).toBe 0
-    it "should return undefined after remove of node 2", ->
-      graph.removeNode 2
-      graph.addNode 2
-      expect(graph.getEdge 2, 1).toBeUndefined()
-      expect(graph.edgeSize).toBe 0
-    it "should add a new edge correctly if a new node 2 is added and the edge is
-        'reestablished'", ->
-      graph.removeNode 2
-      graph.addNode 2
-      graph.addEdge 2, 1, 5
-      expect(graph.getEdge(2, 1).weight).toBe 5
-      expect(graph.edgeSize).toBe 1
-    it "should return undefined after addition of an opposite edge", ->
-      graph.removeNode 2
-      graph.addNode 2
-      graph.addEdge 1, 2, 5
-      expect(graph.getEdge 2, 1).toBeUndefined()
-      expect(graph.getEdge(1, 2).weight).toBe 5
-      expect(graph.edgeSize).toBe 1
-  graph2 = undefined
-  describe "Remove all edges except one, and check for its edges", ->
-    beforeEach ->
-      graph2 = new Graph()
-      addNodesTo graph2, yes
-      graph2.removeNode "2"
-      graph2.removeNode "3"
-      graph2.removeNode "4"
-      graph2.removeNode "5"
-      graph2.removeNode "6"
-    it "should return undefined", ->
-      expect(graph2.getEdge "2", "1").toBeUndefined()
-      expect(graph.edgeSize).toBe 0
-    it "should return undefined", ->
-      expect(graph2.getEdge "1", "4").toBeUndefined()
-      expect(graph.edgeSize).toBe 0
-    it "should return undefined", ->
-      expect(graph2.getEdge "5", "1").toBeUndefined()
-      expect(graph.edgeSize).toBe 0
 
 describe "Remove edge", ->
   graph = new Graph()
@@ -373,7 +290,6 @@ describe "Get all edges", ->
     expect(graph2.getAllEdgesOf "6").toContain graph2.getEdge "6", "3"
     expect(graph2.getAllEdgesOf "6").toContain graph2.getEdge "6", "6"
 
-
 describe "Traverse through each node", ->
   graph = new Graph()
   it "shouldn't call the callback for an empty graph", ->
@@ -397,3 +313,9 @@ describe "Traverse through each edge", ->
     callback = jasmine.createSpy()
     graph.forEachEdge callback
     expect(callback.callCount).toBe 8
+  it "should reach the isolated node with an edge toward itself", ->
+    graph.addNode "99"
+    graph.addEdge "99", "99", 999
+    callback = jasmine.createSpy()
+    graph.forEachEdge callback
+    expect(callback.callCount).toBe 9
