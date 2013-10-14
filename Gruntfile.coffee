@@ -19,6 +19,11 @@ module.exports = (grunt) ->
         dest: 'distribution/'
         ext: '.js'
 
+    exec:
+      test:
+        cmd:
+          './node_modules/.bin/jasmine-node --coffee --test-dir tests --verbose'
+
     browserify2:
       compile:
         options:
@@ -37,6 +42,9 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-browserify2'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.loadNpmTasks 'grunt-exec'
+
+  grunt.registerTask 'test', [ 'exec:test' ]
 
   grunt.registerTask 'default', ['coffeelint', 'clean', 'coffee',
-                                 'browserify2', 'uglify']
+                                 'test', 'browserify2', 'uglify']

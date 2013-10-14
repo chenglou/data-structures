@@ -138,7 +138,7 @@ class Trie
       [node, accumulatedLetters] = queue.dequeue()
       if node[WORD_END]
         words.push prefix + accumulatedLetters
-      for letter, subNode of node
+      for own letter, subNode of node
         queue.enqueue [subNode, accumulatedLetters + letter]
     return words
 
@@ -175,7 +175,7 @@ class Trie
 _hasAtLeastNChildren = (node, n) ->
   return yes if n is 0
   childCount = 0
-  for child of node
+  for own child of node
     childCount++
     return yes if childCount >= n
   return no
