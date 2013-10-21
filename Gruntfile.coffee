@@ -19,10 +19,19 @@ module.exports = (grunt) ->
         dest: 'distribution/'
         ext: '.js'
 
-    exec:
-      test:
-        cmd:
-          './node_modules/.bin/jasmine-node --coffee --test-dir tests --verbose'
+    jasmine_node:
+        projectRoot: '.'
+        source: './source'
+        specFolders: [ './tests' ]
+        specNameMatcher: 'spec'
+        extensions: 'coffee'
+        useCoffee: true
+        forceExit: false
+        jUnit:
+            report: false
+            savePath: './reports/jasmine/'
+            useDotNotation: true
+            consolidate: true
 
     browserify2:
       compile:
@@ -42,9 +51,9 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-browserify2'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
-  grunt.loadNpmTasks 'grunt-exec'
+  grunt.loadNpmTasks 'grunt-jasmine-node'
 
-  grunt.registerTask 'test', [ 'exec:test' ]
+  grunt.registerTask 'test', [ 'jasmine_node' ]
 
   grunt.registerTask 'default', ['coffeelint', 'clean', 'coffee',
                                  'test', 'browserify2', 'uglify']
