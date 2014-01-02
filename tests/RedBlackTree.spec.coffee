@@ -20,7 +20,7 @@ fill = (rbt) ->
   rbt.add 7
   rbt.add 13
 
-Queue = require('../').Queue
+Queue = require('../source').Queue
 validate = (rbt, treeStructure) ->
   validNodeIndex = 0
   treeQueue = new Queue([rbt._root])
