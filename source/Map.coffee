@@ -125,7 +125,7 @@ class Map
 
     _Returns:_ undefined.
     ###
-    operation(value[1], value[0]) for key, value of @_content
+    operation(value[1], value[0]) for own key, value of @_content
     # Manual return to avoid CoffeeScript accumulating an array for return.
     return
 

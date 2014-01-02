@@ -83,9 +83,9 @@ class Graph
     nodeToRemove = @_nodes[id]
     if not nodeToRemove then return
     else
-      for outEdgeId of nodeToRemove._outEdges
+      for own outEdgeId of nodeToRemove._outEdges
         @removeEdge id, outEdgeId
-      for inEdgeId of nodeToRemove._inEdges
+      for own inEdgeId of nodeToRemove._inEdges
         @removeEdge inEdgeId, id
       @nodeSize--
       delete @_nodes[id]
@@ -144,7 +144,7 @@ class Graph
     ###
     toNode = @_nodes[nodeId]
     inEdges = []
-    for fromId of toNode?._inEdges
+    for own fromId of toNode?._inEdges
       inEdges.push(@getEdge fromId, nodeId)
     return inEdges
 
@@ -155,7 +155,7 @@ class Graph
     ###
     fromNode = @_nodes[nodeId]
     outEdges = []
-    for toId of fromNode?._outEdges
+    for own toId of fromNode?._outEdges
       outEdges.push(@getEdge nodeId, toId)
     return outEdges
 
@@ -189,7 +189,7 @@ class Graph
 
     _Returns:_ undefined.
     ###
-    for nodeId, nodeObject of @_nodes
+    for own nodeId, nodeObject of @_nodes
       operation nodeObject
     # Manually return. This is to avoid CoffeeScript's nature of returning an
     # expression, unneeded and wastful (array) in this case.
@@ -202,8 +202,8 @@ class Graph
 
     _Returns:_ undefined.
     ###
-    for nodeId, nodeObject of @_nodes
-      for toId, edgeObject of nodeObject._outEdges
+    for own nodeId, nodeObject of @_nodes
+      for own toId, edgeObject of nodeObject._outEdges
         operation edgeObject
     # Manual return, check forEachNode for reason.
     return
