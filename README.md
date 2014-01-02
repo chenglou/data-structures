@@ -63,36 +63,21 @@ Install the npm development dependencies:
 npm install
 ```
 
-### Testing
-Tests are done using [jasmine-node](https://github.com/mhevery/jasmine-node).
-
-Testing individual file, e.g.:
+Then, with [Grunt](http://gruntjs.com):
 
 ```bash
-jasmine-node --coffee tests/LinkedList.spec.coffee
+grunt test
 ```
 
-Lazy method:
-
-```bash
-npm test
-```
-
-### Build JavsScript for server-side and browser
+### Build JavaScript for server-side and browser
 _Note that if it's a pull request you'd like to submit, ignore this section. The code will be rebuilt after the pull anyways._
 
 Feel free to modify the source code and rebuild it for your own needs:
 
-You'll need the [grunt-cli tool](http://gruntjs.com/getting-started):
-
-```bash
-npm install -g grunt-cli
-```
-Then run:
-
 ```bash
 grunt
 ```
+
 This will take care of compiling CoffeeScript into JavaScript and, if needed, bundle them for the browser.
 
 ## License

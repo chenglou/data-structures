@@ -9,7 +9,7 @@
   },
   "main": "./distribution/index.js",
   "scripts": {
-    "test": "jasmine-node --coffee --noStack tests/"
+    "test": "grunt test"
   },
   "keywords": [
     "data structure",
@@ -27,8 +27,6 @@
     "heap",
     "trie"
   ],
-  "dependencies": {
-  },
   "devDependencies": {
     "coffee-script": ">=1.6.0",
     "jasmine-node": ">=1.4.0",
@@ -38,7 +36,7 @@
     "grunt-browserify2": "~0.1.7",
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-coffeelint": "0.0.6",
-    "grunt-jasmine-node": "~0.1.0"
+    "grunt-exec": "~0.4.2"
   },
   "engines": {
     "node": "*"

@@ -33,9 +33,9 @@ describe "Hash function", ->
     expect(map.hash obj, yes).toMatch /_mapId_\d+_\d+/
     expect(map.hash date, yes).toMatch /_mapId_\d+_\d+/
   it "should have used obscure hacks by putting an id in arr and obj", ->
-    expect(arr._mapId_2).toEqual jasmine.any Number
-    expect(obj._mapId_2).toEqual jasmine.any Number
-    expect(date._mapId_2).toEqual jasmine.any Number
+    expect(arr._mapId_2).toEqual any Number
+    expect(obj._mapId_2).toEqual any Number
+    expect(date._mapId_2).toEqual any Number
 
 describe "Set and get/has", ->
   map = new Map()
@@ -211,4 +211,4 @@ describe "Iterate through items", ->
     expect(callback).toHaveBeenCalledWith null, { b : 12 }
     expect(callback).toHaveBeenCalledWith true, 'okay'
     expect(callback).toHaveBeenCalledWith /asd/, true
-    expect(callback).toHaveBeenCalledWith jasmine.any(Function), 10
+    expect(callback).toHaveBeenCalledWith any(Function), 10
