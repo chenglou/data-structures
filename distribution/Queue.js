@@ -42,6 +42,7 @@ queue.peek(); // => undefined
       /*
       _Returns:_ the item.
       */
+
       this.size++;
       this._content.push(item);
       return item;
@@ -53,7 +54,6 @@ queue.peek(); // => undefined
       */
 
       var itemToDequeue;
-
       if (this.size === 0) {
         return;
       }
@@ -73,6 +73,7 @@ queue.peek(); // => undefined
       
       _Returns:_ the item.
       */
+
       return this._content[this._dequeueIndex];
     };
 

@@ -1,4 +1,7 @@
-### 1.4.0 (June 28th 2013)
+### 1.4.1 (January 2nd 2014)
+- All traversals now protect against looping through properties on `Object.prototype`.
+
+## 1.4.0 (June 28th 2013)
 - Switched graph's removeNode back to O(E). [Issue 4](https://github.com/chenglou/data-structures/issues/4). Internal clean-up.
 
 ### 1.3.5 (June 26th 2013)

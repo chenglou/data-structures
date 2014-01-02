@@ -33,7 +33,6 @@ list.indexOf(5, 1); // => 1
   LinkedList = (function() {
     function LinkedList(valuesToAdd) {
       var value, _i, _len;
-
       if (valuesToAdd == null) {
         valuesToAdd = [];
       }
@@ -78,7 +77,6 @@ list.indexOf(5, 1); // => 1
       */
 
       var currentNode, i, _i, _j, _ref;
-
       if (!((-this.size <= position && position < this.size))) {
         return;
       }
@@ -99,7 +97,6 @@ list.indexOf(5, 1); // => 1
 
     LinkedList.prototype.add = function(value, position) {
       var currentNode, nodeToAdd, _ref, _ref1, _ref2;
-
       if (position == null) {
         position = this.size;
       }
@@ -139,7 +136,6 @@ list.indexOf(5, 1); // => 1
 
     LinkedList.prototype.removeAt = function(position) {
       var currentNode, valueToReturn, _ref;
-
       if (position == null) {
         position = this.size - 1;
       }
@@ -190,7 +186,6 @@ list.indexOf(5, 1); // => 1
       */
 
       var currentNode;
-
       if (value == null) {
         return;
       }
@@ -219,7 +214,6 @@ list.indexOf(5, 1); // => 1
 
     LinkedList.prototype.indexOf = function(value, startingPosition) {
       var currentNode, position;
-
       if (startingPosition == null) {
         startingPosition = 0;
       }

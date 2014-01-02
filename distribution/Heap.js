@@ -25,7 +25,6 @@ heap.peekMin(); // => 4
   Heap = (function() {
     function Heap(dataToHeapify) {
       var i, item, _i, _j, _len, _ref;
-
       if (dataToHeapify == null) {
         dataToHeapify = [];
       }
@@ -54,6 +53,7 @@ heap.peekMin(); // => 4
       
       _Returns:_ the value added.
       */
+
       if (value == null) {
         return;
       }
@@ -69,7 +69,6 @@ heap.peekMin(); // => 4
       */
 
       var min;
-
       if (this._data.length === 1) {
         return;
       }
@@ -89,12 +88,12 @@ heap.peekMin(); // => 4
       
       _Returns:_ the smallest item (the root).
       */
+
       return this._data[1];
     };
 
     Heap.prototype._upHeap = function(index) {
       var valueHolder, _ref;
-
       valueHolder = this._data[index];
       while (this._data[index] < this._data[_parent(index)] && index > 1) {
         _ref = [this._data[_parent(index)], this._data[index]], this._data[index] = _ref[0], this._data[_parent(index)] = _ref[1];
@@ -104,7 +103,6 @@ heap.peekMin(); // => 4
 
     Heap.prototype._downHeap = function() {
       var currentIndex, smallerChildIndex, _ref;
-
       currentIndex = 1;
       while (_leftChild(currentIndex < this._data.length)) {
         smallerChildIndex = _leftChild(currentIndex);

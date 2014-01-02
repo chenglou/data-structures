@@ -43,7 +43,6 @@ rbt.remove(8); // => 8
   RedBlackTree = (function() {
     function RedBlackTree(valuesToAdd) {
       var value, _i, _len;
-
       if (valuesToAdd == null) {
         valuesToAdd = [];
       }
@@ -71,7 +70,6 @@ rbt.remove(8); // => 8
       */
 
       var currentNode, foundNode, nodeToInsert, _ref;
-
       if (value == null) {
         return;
       }
@@ -151,7 +149,6 @@ rbt.remove(8); // => 8
       */
 
       var foundNode;
-
       foundNode = _findNode(this._root, function(node) {
         if (value === node.value) {
           return NODE_FOUND;
@@ -176,7 +173,6 @@ rbt.remove(8); // => 8
       */
 
       var _ref;
-
       return (_ref = _peekMinNode(this._root)) != null ? _ref.value : void 0;
     };
 
@@ -188,7 +184,6 @@ rbt.remove(8); // => 8
       */
 
       var _ref;
-
       return (_ref = _peekMaxNode(this._root)) != null ? _ref.value : void 0;
     };
 
@@ -198,7 +193,6 @@ rbt.remove(8); // => 8
       */
 
       var foundNode;
-
       foundNode = _findNode(this._root, function(node) {
         if (value === node.value) {
           return NODE_FOUND;
@@ -222,7 +216,6 @@ rbt.remove(8); // => 8
       */
 
       var nodeToRemove, valueToReturn;
-
       nodeToRemove = _peekMinNode(this._root);
       if (!nodeToRemove) {
         return;
@@ -238,7 +231,6 @@ rbt.remove(8); // => 8
       */
 
       var nodeToRemove, valueToReturn;
-
       nodeToRemove = _peekMaxNode(this._root);
       if (!nodeToRemove) {
         return;
@@ -250,7 +242,6 @@ rbt.remove(8); // => 8
 
     RedBlackTree.prototype._removeNode = function(root, node) {
       var sibling, successor, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
-
       if (node._left && node._right) {
         successor = _peekMinNode(node._right);
         node.value = successor.value;
@@ -348,7 +339,6 @@ rbt.remove(8); // => 8
 
     RedBlackTree.prototype._rotateLeft = function(node) {
       var _ref, _ref1;
-
       if ((_ref = node._parent) != null) {
         _ref[_leftOrRight(node)] = node._right;
       }
@@ -366,7 +356,6 @@ rbt.remove(8); // => 8
 
     RedBlackTree.prototype._rotateRight = function(node) {
       var _ref, _ref1;
-
       if ((_ref = node._parent) != null) {
         _ref[_leftOrRight(node)] = node._left;
       }
@@ -400,7 +389,6 @@ rbt.remove(8); // => 8
 
   _findNode = function(startingNode, comparator) {
     var comparisonResult, currentNode, foundNode;
-
     currentNode = startingNode;
     foundNode = void 0;
     while (currentNode) {
@@ -442,7 +430,6 @@ rbt.remove(8); // => 8
 
   _grandParentOf = function(node) {
     var _ref;
-
     return (_ref = node._parent) != null ? _ref._parent : void 0;
   };
 

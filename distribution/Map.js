@@ -53,7 +53,6 @@ map.forEach(function(key, value) {
       */
 
       var key, value;
-
       this._content = {};
       this._itemId = 0;
       this._id = Map._newMapId();
@@ -67,7 +66,6 @@ map.forEach(function(key, value) {
 
     Map.prototype.hash = function(key, makeHash) {
       var propertyForMap, type;
-
       if (makeHash == null) {
         makeHash = false;
       }
@@ -96,6 +94,7 @@ map.forEach(function(key, value) {
       /*
       _Returns:_ value.
       */
+
       if (!this.has(key)) {
         this.size++;
       }
@@ -109,7 +108,6 @@ map.forEach(function(key, value) {
       */
 
       var _ref;
-
       return (_ref = this._content[this.hash(key)]) != null ? _ref[0] : void 0;
     };
 
@@ -119,6 +117,7 @@ map.forEach(function(key, value) {
       
       _Returns:_ true or false.
       */
+
       return this.hash(key) in this._content;
     };
 
@@ -132,7 +131,6 @@ map.forEach(function(key, value) {
       */
 
       var hashedKey;
-
       hashedKey = this.hash(key);
       if (hashedKey in this._content) {
         delete this._content[hashedKey];
@@ -153,9 +151,9 @@ map.forEach(function(key, value) {
       */
 
       var key, value, _ref;
-
       _ref = this._content;
       for (key in _ref) {
+        if (!__hasProp.call(_ref, key)) continue;
         value = _ref[key];
         operation(value[1], value[0]);
       }
@@ -167,7 +165,6 @@ map.forEach(function(key, value) {
 
   _isSpecialType = function(key) {
     var simpleHashableTypes, simpleType, type, _i, _len;
-
     simpleHashableTypes = ['Boolean', 'Number', 'String', 'Undefined', 'Null', 'RegExp', 'Function'];
     type = _extractDataType(key);
     for (_i = 0, _len = simpleHashableTypes.length; _i < _len; _i++) {

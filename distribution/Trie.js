@@ -22,7 +22,8 @@ trie.remove('beer') // => 'beer'. Removed
 
 
 (function() {
-  var Queue, Trie, WORD_END, _hasAtLeastNChildren;
+  var Queue, Trie, WORD_END, _hasAtLeastNChildren,
+    __hasProp = {}.hasOwnProperty;
 
   Queue = require('./Queue');
 
@@ -31,7 +32,6 @@ trie.remove('beer') // => 'beer'. Removed
   Trie = (function() {
     function Trie(words) {
       var word, _i, _len;
-
       if (words == null) {
         words = [];
       }
@@ -56,7 +56,6 @@ trie.remove('beer') // => 'beer'. Removed
       */
 
       var currentNode, letter, _i, _len;
-
       if (word == null) {
         return;
       }
@@ -79,7 +78,6 @@ trie.remove('beer') // => 'beer'. Removed
       */
 
       var currentNode, letter, _i, _len;
-
       if (word == null) {
         return false;
       }
@@ -114,7 +112,6 @@ trie.remove('beer') // => 'beer'. Removed
       */
 
       var currentNode, letter, prefix, _i, _len;
-
       if (word == null) {
         return '';
       }
@@ -154,7 +151,6 @@ trie.remove('beer') // => 'beer'. Removed
       */
 
       var accumulatedLetters, currentNode, letter, node, queue, subNode, words, _i, _len, _ref;
-
       if (prefix == null) {
         return [];
       }
@@ -176,6 +172,7 @@ trie.remove('beer') // => 'beer'. Removed
           words.push(prefix + accumulatedLetters);
         }
         for (letter in node) {
+          if (!__hasProp.call(node, letter)) continue;
           subNode = node[letter];
           queue.enqueue([subNode, accumulatedLetters + letter]);
         }
@@ -191,7 +188,6 @@ trie.remove('beer') // => 'beer'. Removed
       */
 
       var currentNode, i, letter, prefix, _i, _j, _len, _ref;
-
       if (word == null) {
         return;
       }
@@ -232,12 +228,12 @@ trie.remove('beer') // => 'beer'. Removed
 
   _hasAtLeastNChildren = function(node, n) {
     var child, childCount;
-
     if (n === 0) {
       return true;
     }
     childCount = 0;
     for (child in node) {
+      if (!__hasProp.call(node, child)) continue;
       childCount++;
       if (childCount >= n) {
         return true;

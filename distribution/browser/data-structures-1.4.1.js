@@ -1,4 +1,4 @@
-require=(function(e,t,n){function i(n,s){if(!t[n]){if(!e[n]){var o=typeof require=="function"&&require;if(!s&&o)return o(n,!0);if(r)return r(n,!0);throw new Error("Cannot find module '"+n+"'")}var u=t[n]={exports:{}};e[n][0](function(t){var r=e[n][1][t];return i(r?r:t)},u,u.exports)}return t[n].exports}var r=typeof require=="function"&&require;for(var s=0;s<n.length;s++)i(n[s]);return i})({"data-structures":[function(require,module,exports){
+require=(function(e,t,n){function i(n,s){if(!t[n]){if(!e[n]){var o=typeof require=="function"&&require;if(!s&&o)return o(n,!0);if(r)return r(n,!0);throw new Error("Cannot find module '"+n+"'")}var u=t[n]={exports:{}};e[n][0].call(u.exports,function(t){var r=e[n][1][t];return i(r?r:t)},u,u.exports)}return t[n].exports}var r=typeof require=="function"&&require;for(var s=0;s<n.length;s++)i(n[s]);return i})({"data-structures":[function(require,module,exports){
 module.exports=require('EerzU6');
 },{}],"EerzU6":[function(require,module,exports){
 (function() {
@@ -14,7 +14,7 @@ module.exports=require('EerzU6');
 
 }).call(this);
 
-},{"./Graph":1,"./Heap":2,"./LinkedList":3,"./Map":4,"./Queue":5,"./RedBlackTree":6,"./Trie":7}],1:[function(require,module,exports){
+},{"./Graph":1,"./LinkedList":2,"./Heap":3,"./Map":4,"./Queue":5,"./RedBlackTree":6,"./Trie":7}],1:[function(require,module,exports){
 /*
 Graph implemented as a modified incidence list. O(1) for every typical
 operation except `removeNode()` at O(E) where E is the number of edges.
@@ -57,7 +57,8 @@ graph.removeEdge('A', 'B'); // => the edge object removed
 
 
 (function() {
-  var Graph;
+  var Graph,
+    __hasProp = {}.hasOwnProperty;
 
   Graph = (function() {
     function Graph() {
@@ -80,6 +81,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       on it for graph algorithms' needs. **Undefined if node id already exists**,
       as to avoid accidental overrides.
       */
+
       if (!this._nodes[id]) {
         this.nodeSize++;
         return this._nodes[id] = {
@@ -94,6 +96,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       _Returns:_ the node object. Feel free to attach additional custom properties
       on it for graph algorithms' needs.
       */
+
       return this._nodes[id];
     };
 
@@ -103,16 +106,19 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       first place.
       */
 
-      var inEdgeId, nodeToRemove, outEdgeId;
-
+      var inEdgeId, nodeToRemove, outEdgeId, _ref, _ref1;
       nodeToRemove = this._nodes[id];
       if (!nodeToRemove) {
         return;
       } else {
-        for (outEdgeId in nodeToRemove._outEdges) {
+        _ref = nodeToRemove._outEdges;
+        for (outEdgeId in _ref) {
+          if (!__hasProp.call(_ref, outEdgeId)) continue;
           this.removeEdge(id, outEdgeId);
         }
-        for (inEdgeId in nodeToRemove._inEdges) {
+        _ref1 = nodeToRemove._inEdges;
+        for (inEdgeId in _ref1) {
+          if (!__hasProp.call(_ref1, inEdgeId)) continue;
           this.removeEdge(inEdgeId, id);
         }
         this.nodeSize--;
@@ -123,7 +129,6 @@ graph.removeEdge('A', 'B'); // => the edge object removed
 
     Graph.prototype.addEdge = function(fromId, toId, weight) {
       var edgeToAdd, fromNode, toNode;
-
       if (weight == null) {
         weight = 1;
       }
@@ -163,7 +168,6 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       */
 
       var fromNode, toNode;
-
       fromNode = this._nodes[fromId];
       toNode = this._nodes[toId];
       if (!fromNode || !toNode) {
@@ -179,7 +183,6 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       */
 
       var edgeToDelete, fromNode, toNode;
-
       fromNode = this._nodes[fromId];
       toNode = this._nodes[toId];
       edgeToDelete = this.getEdge(fromId, toId);
@@ -198,11 +201,12 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       empty array if no such edge or node exists.
       */
 
-      var fromId, inEdges, toNode;
-
+      var fromId, inEdges, toNode, _ref;
       toNode = this._nodes[nodeId];
       inEdges = [];
-      for (fromId in toNode != null ? toNode._inEdges : void 0) {
+      _ref = toNode != null ? toNode._inEdges : void 0;
+      for (fromId in _ref) {
+        if (!__hasProp.call(_ref, fromId)) continue;
         inEdges.push(this.getEdge(fromId, nodeId));
       }
       return inEdges;
@@ -214,11 +218,12 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       if no such edge or node exists.
       */
 
-      var fromNode, outEdges, toId;
-
+      var fromNode, outEdges, toId, _ref;
       fromNode = this._nodes[nodeId];
       outEdges = [];
-      for (toId in fromNode != null ? fromNode._outEdges : void 0) {
+      _ref = fromNode != null ? fromNode._outEdges : void 0;
+      for (toId in _ref) {
+        if (!__hasProp.call(_ref, toId)) continue;
         outEdges.push(this.getEdge(nodeId, toId));
       }
       return outEdges;
@@ -236,7 +241,6 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       */
 
       var i, inEdges, outEdges, selfEdge, _i, _ref, _ref1;
-
       inEdges = this.getInEdgesOf(nodeId);
       outEdges = this.getOutEdgesOf(nodeId);
       if (inEdges.length === 0) {
@@ -262,9 +266,9 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       */
 
       var nodeId, nodeObject, _ref;
-
       _ref = this._nodes;
       for (nodeId in _ref) {
+        if (!__hasProp.call(_ref, nodeId)) continue;
         nodeObject = _ref[nodeId];
         operation(nodeObject);
       }
@@ -279,12 +283,13 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       */
 
       var edgeObject, nodeId, nodeObject, toId, _ref, _ref1;
-
       _ref = this._nodes;
       for (nodeId in _ref) {
+        if (!__hasProp.call(_ref, nodeId)) continue;
         nodeObject = _ref[nodeId];
         _ref1 = nodeObject._outEdges;
         for (toId in _ref1) {
+          if (!__hasProp.call(_ref1, toId)) continue;
           edgeObject = _ref1[toId];
           operation(edgeObject);
         }
@@ -299,7 +304,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
 
 }).call(this);
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /*
 Minimum heap, i.e. smallest node at root.
 
@@ -327,7 +332,6 @@ heap.peekMin(); // => 4
   Heap = (function() {
     function Heap(dataToHeapify) {
       var i, item, _i, _j, _len, _ref;
-
       if (dataToHeapify == null) {
         dataToHeapify = [];
       }
@@ -356,6 +360,7 @@ heap.peekMin(); // => 4
       
       _Returns:_ the value added.
       */
+
       if (value == null) {
         return;
       }
@@ -371,7 +376,6 @@ heap.peekMin(); // => 4
       */
 
       var min;
-
       if (this._data.length === 1) {
         return;
       }
@@ -391,12 +395,12 @@ heap.peekMin(); // => 4
       
       _Returns:_ the smallest item (the root).
       */
+
       return this._data[1];
     };
 
     Heap.prototype._upHeap = function(index) {
       var valueHolder, _ref;
-
       valueHolder = this._data[index];
       while (this._data[index] < this._data[_parent(index)] && index > 1) {
         _ref = [this._data[_parent(index)], this._data[index]], this._data[index] = _ref[0], this._data[_parent(index)] = _ref[1];
@@ -406,7 +410,6 @@ heap.peekMin(); // => 4
 
     Heap.prototype._downHeap = function() {
       var currentIndex, smallerChildIndex, _ref;
-
       currentIndex = 1;
       while (_leftChild(currentIndex < this._data.length)) {
         smallerChildIndex = _leftChild(currentIndex);
@@ -444,7 +447,7 @@ heap.peekMin(); // => 4
 
 }).call(this);
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 /*
 Doubly Linked.
 
@@ -480,7 +483,6 @@ list.indexOf(5, 1); // => 1
   LinkedList = (function() {
     function LinkedList(valuesToAdd) {
       var value, _i, _len;
-
       if (valuesToAdd == null) {
         valuesToAdd = [];
       }
@@ -525,7 +527,6 @@ list.indexOf(5, 1); // => 1
       */
 
       var currentNode, i, _i, _j, _ref;
-
       if (!((-this.size <= position && position < this.size))) {
         return;
       }
@@ -546,7 +547,6 @@ list.indexOf(5, 1); // => 1
 
     LinkedList.prototype.add = function(value, position) {
       var currentNode, nodeToAdd, _ref, _ref1, _ref2;
-
       if (position == null) {
         position = this.size;
       }
@@ -586,7 +586,6 @@ list.indexOf(5, 1); // => 1
 
     LinkedList.prototype.removeAt = function(position) {
       var currentNode, valueToReturn, _ref;
-
       if (position == null) {
         position = this.size - 1;
       }
@@ -637,7 +636,6 @@ list.indexOf(5, 1); // => 1
       */
 
       var currentNode;
-
       if (value == null) {
         return;
       }
@@ -666,7 +664,6 @@ list.indexOf(5, 1); // => 1
 
     LinkedList.prototype.indexOf = function(value, startingPosition) {
       var currentNode, position;
-
       if (startingPosition == null) {
         startingPosition = 0;
       }
@@ -779,7 +776,6 @@ map.forEach(function(key, value) {
       */
 
       var key, value;
-
       this._content = {};
       this._itemId = 0;
       this._id = Map._newMapId();
@@ -793,7 +789,6 @@ map.forEach(function(key, value) {
 
     Map.prototype.hash = function(key, makeHash) {
       var propertyForMap, type;
-
       if (makeHash == null) {
         makeHash = false;
       }
@@ -822,6 +817,7 @@ map.forEach(function(key, value) {
       /*
       _Returns:_ value.
       */
+
       if (!this.has(key)) {
         this.size++;
       }
@@ -835,7 +831,6 @@ map.forEach(function(key, value) {
       */
 
       var _ref;
-
       return (_ref = this._content[this.hash(key)]) != null ? _ref[0] : void 0;
     };
 
@@ -845,6 +840,7 @@ map.forEach(function(key, value) {
       
       _Returns:_ true or false.
       */
+
       return this.hash(key) in this._content;
     };
 
@@ -858,7 +854,6 @@ map.forEach(function(key, value) {
       */
 
       var hashedKey;
-
       hashedKey = this.hash(key);
       if (hashedKey in this._content) {
         delete this._content[hashedKey];
@@ -879,9 +874,9 @@ map.forEach(function(key, value) {
       */
 
       var key, value, _ref;
-
       _ref = this._content;
       for (key in _ref) {
+        if (!__hasProp.call(_ref, key)) continue;
         value = _ref[key];
         operation(value[1], value[0]);
       }
@@ -893,7 +888,6 @@ map.forEach(function(key, value) {
 
   _isSpecialType = function(key) {
     var simpleHashableTypes, simpleType, type, _i, _len;
-
     simpleHashableTypes = ['Boolean', 'Number', 'String', 'Undefined', 'Null', 'RegExp', 'Function'];
     type = _extractDataType(key);
     for (_i = 0, _len = simpleHashableTypes.length; _i < _len; _i++) {
@@ -958,6 +952,7 @@ queue.peek(); // => undefined
       /*
       _Returns:_ the item.
       */
+
       this.size++;
       this._content.push(item);
       return item;
@@ -969,7 +964,6 @@ queue.peek(); // => undefined
       */
 
       var itemToDequeue;
-
       if (this.size === 0) {
         return;
       }
@@ -989,6 +983,7 @@ queue.peek(); // => undefined
       
       _Returns:_ the item.
       */
+
       return this._content[this._dequeueIndex];
     };
 
@@ -1046,7 +1041,6 @@ rbt.remove(8); // => 8
   RedBlackTree = (function() {
     function RedBlackTree(valuesToAdd) {
       var value, _i, _len;
-
       if (valuesToAdd == null) {
         valuesToAdd = [];
       }
@@ -1074,7 +1068,6 @@ rbt.remove(8); // => 8
       */
 
       var currentNode, foundNode, nodeToInsert, _ref;
-
       if (value == null) {
         return;
       }
@@ -1154,7 +1147,6 @@ rbt.remove(8); // => 8
       */
 
       var foundNode;
-
       foundNode = _findNode(this._root, function(node) {
         if (value === node.value) {
           return NODE_FOUND;
@@ -1179,7 +1171,6 @@ rbt.remove(8); // => 8
       */
 
       var _ref;
-
       return (_ref = _peekMinNode(this._root)) != null ? _ref.value : void 0;
     };
 
@@ -1191,7 +1182,6 @@ rbt.remove(8); // => 8
       */
 
       var _ref;
-
       return (_ref = _peekMaxNode(this._root)) != null ? _ref.value : void 0;
     };
 
@@ -1201,7 +1191,6 @@ rbt.remove(8); // => 8
       */
 
       var foundNode;
-
       foundNode = _findNode(this._root, function(node) {
         if (value === node.value) {
           return NODE_FOUND;
@@ -1225,7 +1214,6 @@ rbt.remove(8); // => 8
       */
 
       var nodeToRemove, valueToReturn;
-
       nodeToRemove = _peekMinNode(this._root);
       if (!nodeToRemove) {
         return;
@@ -1241,7 +1229,6 @@ rbt.remove(8); // => 8
       */
 
       var nodeToRemove, valueToReturn;
-
       nodeToRemove = _peekMaxNode(this._root);
       if (!nodeToRemove) {
         return;
@@ -1253,7 +1240,6 @@ rbt.remove(8); // => 8
 
     RedBlackTree.prototype._removeNode = function(root, node) {
       var sibling, successor, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
-
       if (node._left && node._right) {
         successor = _peekMinNode(node._right);
         node.value = successor.value;
@@ -1351,7 +1337,6 @@ rbt.remove(8); // => 8
 
     RedBlackTree.prototype._rotateLeft = function(node) {
       var _ref, _ref1;
-
       if ((_ref = node._parent) != null) {
         _ref[_leftOrRight(node)] = node._right;
       }
@@ -1369,7 +1354,6 @@ rbt.remove(8); // => 8
 
     RedBlackTree.prototype._rotateRight = function(node) {
       var _ref, _ref1;
-
       if ((_ref = node._parent) != null) {
         _ref[_leftOrRight(node)] = node._left;
       }
@@ -1403,7 +1387,6 @@ rbt.remove(8); // => 8
 
   _findNode = function(startingNode, comparator) {
     var comparisonResult, currentNode, foundNode;
-
     currentNode = startingNode;
     foundNode = void 0;
     while (currentNode) {
@@ -1445,7 +1428,6 @@ rbt.remove(8); // => 8
 
   _grandParentOf = function(node) {
     var _ref;
-
     return (_ref = node._parent) != null ? _ref._parent : void 0;
   };
 
@@ -1497,7 +1479,8 @@ trie.remove('beer') // => 'beer'. Removed
 
 
 (function() {
-  var Queue, Trie, WORD_END, _hasAtLeastNChildren;
+  var Queue, Trie, WORD_END, _hasAtLeastNChildren,
+    __hasProp = {}.hasOwnProperty;
 
   Queue = require('./Queue');
 
@@ -1506,7 +1489,6 @@ trie.remove('beer') // => 'beer'. Removed
   Trie = (function() {
     function Trie(words) {
       var word, _i, _len;
-
       if (words == null) {
         words = [];
       }
@@ -1531,7 +1513,6 @@ trie.remove('beer') // => 'beer'. Removed
       */
 
       var currentNode, letter, _i, _len;
-
       if (word == null) {
         return;
       }
@@ -1554,7 +1535,6 @@ trie.remove('beer') // => 'beer'. Removed
       */
 
       var currentNode, letter, _i, _len;
-
       if (word == null) {
         return false;
       }
@@ -1589,7 +1569,6 @@ trie.remove('beer') // => 'beer'. Removed
       */
 
       var currentNode, letter, prefix, _i, _len;
-
       if (word == null) {
         return '';
       }
@@ -1629,7 +1608,6 @@ trie.remove('beer') // => 'beer'. Removed
       */
 
       var accumulatedLetters, currentNode, letter, node, queue, subNode, words, _i, _len, _ref;
-
       if (prefix == null) {
         return [];
       }
@@ -1651,6 +1629,7 @@ trie.remove('beer') // => 'beer'. Removed
           words.push(prefix + accumulatedLetters);
         }
         for (letter in node) {
+          if (!__hasProp.call(node, letter)) continue;
           subNode = node[letter];
           queue.enqueue([subNode, accumulatedLetters + letter]);
         }
@@ -1666,7 +1645,6 @@ trie.remove('beer') // => 'beer'. Removed
       */
 
       var currentNode, i, letter, prefix, _i, _j, _len, _ref;
-
       if (word == null) {
         return;
       }
@@ -1707,12 +1685,12 @@ trie.remove('beer') // => 'beer'. Removed
 
   _hasAtLeastNChildren = function(node, n) {
     var child, childCount;
-
     if (n === 0) {
       return true;
     }
     childCount = 0;
     for (child in node) {
+      if (!__hasProp.call(node, child)) continue;
       childCount++;
       if (childCount >= n) {
         return true;

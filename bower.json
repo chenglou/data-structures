@@ -1,9 +1,9 @@
 {
   "name": "data-structures",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "author": "chenglou <chenglou92@gmail.com>",
   "description": "JavaScript data structures written in CoffeeScript.",
-  "main": "./distribution/browser/data-structures-1.3.4.js",
+  "main": "./distribution/browser/data-structures-1.4.1.js",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -30,8 +30,6 @@
     "heap",
     "trie"
   ],
-  "dependencies": {
-  },
   "devDependencies": {
     "coffee-script": ">=1.6.0",
     "jasmine-node": ">=1.4.0",

@@ -40,7 +40,8 @@ graph.removeEdge('A', 'B'); // => the edge object removed
 
 
 (function() {
-  var Graph;
+  var Graph,
+    __hasProp = {}.hasOwnProperty;
 
   Graph = (function() {
     function Graph() {
@@ -63,6 +64,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       on it for graph algorithms' needs. **Undefined if node id already exists**,
       as to avoid accidental overrides.
       */
+
       if (!this._nodes[id]) {
         this.nodeSize++;
         return this._nodes[id] = {
@@ -77,6 +79,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       _Returns:_ the node object. Feel free to attach additional custom properties
       on it for graph algorithms' needs.
       */
+
       return this._nodes[id];
     };
 
@@ -86,16 +89,19 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       first place.
       */
 
-      var inEdgeId, nodeToRemove, outEdgeId;
-
+      var inEdgeId, nodeToRemove, outEdgeId, _ref, _ref1;
       nodeToRemove = this._nodes[id];
       if (!nodeToRemove) {
         return;
       } else {
-        for (outEdgeId in nodeToRemove._outEdges) {
+        _ref = nodeToRemove._outEdges;
+        for (outEdgeId in _ref) {
+          if (!__hasProp.call(_ref, outEdgeId)) continue;
           this.removeEdge(id, outEdgeId);
         }
-        for (inEdgeId in nodeToRemove._inEdges) {
+        _ref1 = nodeToRemove._inEdges;
+        for (inEdgeId in _ref1) {
+          if (!__hasProp.call(_ref1, inEdgeId)) continue;
           this.removeEdge(inEdgeId, id);
         }
         this.nodeSize--;
@@ -106,7 +112,6 @@ graph.removeEdge('A', 'B'); // => the edge object removed
 
     Graph.prototype.addEdge = function(fromId, toId, weight) {
       var edgeToAdd, fromNode, toNode;
-
       if (weight == null) {
         weight = 1;
       }
@@ -146,7 +151,6 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       */
 
       var fromNode, toNode;
-
       fromNode = this._nodes[fromId];
       toNode = this._nodes[toId];
       if (!fromNode || !toNode) {
@@ -162,7 +166,6 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       */
 
       var edgeToDelete, fromNode, toNode;
-
       fromNode = this._nodes[fromId];
       toNode = this._nodes[toId];
       edgeToDelete = this.getEdge(fromId, toId);
@@ -181,11 +184,12 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       empty array if no such edge or node exists.
       */
 
-      var fromId, inEdges, toNode;
-
+      var fromId, inEdges, toNode, _ref;
       toNode = this._nodes[nodeId];
       inEdges = [];
-      for (fromId in toNode != null ? toNode._inEdges : void 0) {
+      _ref = toNode != null ? toNode._inEdges : void 0;
+      for (fromId in _ref) {
+        if (!__hasProp.call(_ref, fromId)) continue;
         inEdges.push(this.getEdge(fromId, nodeId));
       }
       return inEdges;
@@ -197,11 +201,12 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       if no such edge or node exists.
       */
 
-      var fromNode, outEdges, toId;
-
+      var fromNode, outEdges, toId, _ref;
       fromNode = this._nodes[nodeId];
       outEdges = [];
-      for (toId in fromNode != null ? fromNode._outEdges : void 0) {
+      _ref = fromNode != null ? fromNode._outEdges : void 0;
+      for (toId in _ref) {
+        if (!__hasProp.call(_ref, toId)) continue;
         outEdges.push(this.getEdge(nodeId, toId));
       }
       return outEdges;
@@ -219,7 +224,6 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       */
 
       var i, inEdges, outEdges, selfEdge, _i, _ref, _ref1;
-
       inEdges = this.getInEdgesOf(nodeId);
       outEdges = this.getOutEdgesOf(nodeId);
       if (inEdges.length === 0) {
@@ -245,9 +249,9 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       */
 
       var nodeId, nodeObject, _ref;
-
       _ref = this._nodes;
       for (nodeId in _ref) {
+        if (!__hasProp.call(_ref, nodeId)) continue;
         nodeObject = _ref[nodeId];
         operation(nodeObject);
       }
@@ -262,12 +266,13 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       */
 
       var edgeObject, nodeId, nodeObject, toId, _ref, _ref1;
-
       _ref = this._nodes;
       for (nodeId in _ref) {
+        if (!__hasProp.call(_ref, nodeId)) continue;
         nodeObject = _ref[nodeId];
         _ref1 = nodeObject._outEdges;
         for (toId in _ref1) {
+          if (!__hasProp.call(_ref1, toId)) continue;
           edgeObject = _ref1[toId];
           operation(edgeObject);
         }
