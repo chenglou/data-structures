@@ -46,5 +46,5 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'test', [ 'exec:test' ]
 
-  grunt.registerTask 'default', ['coffeelint', 'clean', 'coffee',
-                                 'test', 'browserify2', 'uglify']
+  grunt.registerTask 'default', ['coffeelint', 'test', 'clean', 'coffee',
+                                 'browserify2', 'uglify']
