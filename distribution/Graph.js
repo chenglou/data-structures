@@ -253,7 +253,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       for (nodeId in _ref) {
         if (!__hasProp.call(_ref, nodeId)) continue;
         nodeObject = _ref[nodeId];
-        operation(nodeObject);
+        operation(nodeObject, nodeId);
       }
     };
 
