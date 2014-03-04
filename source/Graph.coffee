@@ -185,7 +185,7 @@ class Graph
   forEachNode: (operation) ->
     ###
     Traverse through the graph in an arbitrary manner, visiting each node once.
-    Pass a function of the form `fn(nodeObject, [nodeId])`.
+    Pass a function of the form `fn(nodeObject, nodeId)`.
 
     _Returns:_ undefined.
     ###
