@@ -185,12 +185,12 @@ class Graph
   forEachNode: (operation) ->
     ###
     Traverse through the graph in an arbitrary manner, visiting each node once.
-    Pass a function of the form `fn(nodeObject)`.
+    Pass a function of the form `fn(nodeObject, nodeId)`.
 
     _Returns:_ undefined.
     ###
     for own nodeId, nodeObject of @_nodes
-      operation nodeObject
+      operation nodeObject, nodeId
     # Manually return. This is to avoid CoffeeScript's nature of returning an
     # expression, unneeded and wastful (array) in this case.
     return

@@ -243,7 +243,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
     Graph.prototype.forEachNode = function(operation) {
       /*
       Traverse through the graph in an arbitrary manner, visiting each node once.
-      Pass a function of the form `fn(nodeObject)`.
+      Pass a function of the form `fn(nodeObject, nodeId)`.
       
       _Returns:_ undefined.
       */
@@ -253,7 +253,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       for (nodeId in _ref) {
         if (!__hasProp.call(_ref, nodeId)) continue;
         nodeObject = _ref[nodeId];
-        operation(nodeObject);
+        operation(nodeObject, nodeId);
       }
     };
 

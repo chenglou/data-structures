@@ -1,6 +1,6 @@
 require=(function(e,t,n){function i(n,s){if(!t[n]){if(!e[n]){var o=typeof require=="function"&&require;if(!s&&o)return o(n,!0);if(r)return r(n,!0);throw new Error("Cannot find module '"+n+"'")}var u=t[n]={exports:{}};e[n][0].call(u.exports,function(t){var r=e[n][1][t];return i(r?r:t)},u,u.exports)}return t[n].exports}var r=typeof require=="function"&&require;for(var s=0;s<n.length;s++)i(n[s]);return i})({"data-structures":[function(require,module,exports){
-module.exports=require('EerzU6');
-},{}],"EerzU6":[function(require,module,exports){
+module.exports=require('SuzRTw');
+},{}],"SuzRTw":[function(require,module,exports){
 (function() {
   module.exports = {
     Graph: require('./Graph'),
@@ -14,7 +14,7 @@ module.exports=require('EerzU6');
 
 }).call(this);
 
-},{"./Graph":1,"./LinkedList":2,"./Heap":3,"./Map":4,"./Queue":5,"./RedBlackTree":6,"./Trie":7}],1:[function(require,module,exports){
+},{"./Graph":1,"./Heap":2,"./LinkedList":3,"./Map":4,"./Queue":5,"./RedBlackTree":6,"./Trie":7}],1:[function(require,module,exports){
 /*
 Graph implemented as a modified incidence list. O(1) for every typical
 operation except `removeNode()` at O(E) where E is the number of edges.
@@ -260,7 +260,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
     Graph.prototype.forEachNode = function(operation) {
       /*
       Traverse through the graph in an arbitrary manner, visiting each node once.
-      Pass a function of the form `fn(nodeObject)`.
+      Pass a function of the form `fn(nodeObject, nodeId)`.
       
       _Returns:_ undefined.
       */
@@ -270,7 +270,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
       for (nodeId in _ref) {
         if (!__hasProp.call(_ref, nodeId)) continue;
         nodeObject = _ref[nodeId];
-        operation(nodeObject);
+        operation(nodeObject, nodeId);
       }
     };
 
@@ -304,7 +304,7 @@ graph.removeEdge('A', 'B'); // => the edge object removed
 
 }).call(this);
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 /*
 Minimum heap, i.e. smallest node at root.
 
@@ -447,7 +447,7 @@ heap.peekMin(); // => 4
 
 }).call(this);
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /*
 Doubly Linked.
 
@@ -1703,5 +1703,5 @@ trie.remove('beer') // => 'beer'. Removed
 
 }).call(this);
 
-},{"./Queue":5}]},{},["EerzU6"])
+},{"./Queue":5}]},{},["SuzRTw"])
 ;
