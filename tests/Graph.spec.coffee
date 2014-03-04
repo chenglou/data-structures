@@ -301,6 +301,12 @@ describe "Traverse through each node", ->
     callback = jasmine.createSpy()
     graph.forEachNode callback
     expect(callback.callCount).toBe 6
+  it "should pass nodeObject and nodeId to the callback", ->
+    callback = jasmine.createSpy()
+    graph.forEachNode callback
+    expect(callback.mostRecentCall.args.length).toBe 2
+    expect(callback.mostRecentCall.args[0] instanceof Object).toBeTruthy
+    expect(callback.mostRecentCall.args[1]).toBe "6"
 
 describe "Traverse through each edge", ->
   graph = new Graph()
