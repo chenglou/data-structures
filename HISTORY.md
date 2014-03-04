@@ -1,3 +1,6 @@
+### 1.4.2 (March 4th 2014)
+- Graph's `forEachNode`'s callback now passes you the `nodeId` as a second param, in addition to the `nodeObject`.
+
 ### 1.4.1 (January 2nd 2014)
 - All traversals now protect against looping through properties on `Object.prototype`.
 
